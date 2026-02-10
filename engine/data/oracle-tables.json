@@ -1,0 +1,332 @@
+{
+  "npc_name": {
+    "dice": "1d20",
+    "subtypes": {
+      "dwarf": ["Hera","Torin","Ginny","Gant","Olga","Dendor","Ygrid","Pike","Sarda","Brigg","Zorli","Yorin","Jorgena","Trogin","Riga","Barton","Katrina","Egrim","Elsa","Orgo"],
+      "elf": ["Sarenia","Ravos","Imeria","Farond","Isolden","Kieren","Mirenel","Riarden","Allindra","Arlomas","Sylara","Tyr","Rinariel","Saramir","Vedana","Elindos","Ophelia","Cydaros","Tiramel","Varond"],
+      "goblin": ["Kog","Dibbs","Fronk","Irv","Squag","Mort","Vig","Sticks","Gorb","Yogg","Plok","Zrak","Dent","Krik","Mizzo","Bort","Nabo","Hink","Bree","Kreeb"],
+      "halfling": ["Myrtle","Robby","Nora","Percy","Daisy","Jolly","Evelyn","Horace","Willie","Gertie","Peri","Carlsby","Nyx","Kellan","Fern","Harlow","Moira","Sage","Reenie","Wendry"],
+      "half_orc": ["Troga","Boraal","Urgana","Zoraal","Scalga","Krell","Voraga","Morak","Draga","Sorak","Varga","Ulgar","Jala","Kresh","Zana","Torvash","Rokara","Gartak","Iskana","Ziraak"],
+      "human": ["Hesta","Matteo","Rosalin","Endric","Kiara","Yao","Corina","Rowan","Hariko","Ikam","Mariel","Jin","Hana","Lios","Indra","Remy","Nura","Vakesh","Una","Nabilo"]
+    }
+  },
+  "creature_activity": {
+    "dice": "2d6",
+    "entries": {
+      "2-4": "Hunting",
+      "5-6": "Eating",
+      "7-8": "Building/nesting",
+      "9-10": "Socializing/playing",
+      "11": "Guarding",
+      "12": "Sleeping"
+    }
+  },
+  "creature_reaction": {
+    "dice": "2d6",
+    "note": "Add CHA modifier of interacting character",
+    "entries": {
+      "0-6": "Hostile",
+      "7-8": "Suspicious",
+      "9": "Neutral",
+      "10-11": "Curious",
+      "12+": "Friendly"
+    }
+  },
+  "starting_distance": {
+    "dice": "1d6",
+    "entries": {
+      "1": "Close",
+      "2-4": "Near",
+      "5-6": "Far"
+    }
+  },
+  "background": {
+    "dice": "1d20",
+    "entries": ["Urchin","Wanted","Cult Initiate","Thieves' Guild","Banished","Orphaned","Wizard's Apprentice","Jeweler","Herbalist","Barbarian","Mercenary","Sailor","Acolyte","Soldier","Ranger","Scout","Minstrel","Scholar","Noble","Chirurgeon"]
+  },
+  "trap": {
+    "dice": "1d12",
+    "entries": [
+      {"trap": "Crossbow", "trigger": "Tripwire", "damage": "1d6"},
+      {"trap": "Hail of needles", "trigger": "Pressure plate", "damage": "1d6/sleep"},
+      {"trap": "Toxic gas", "trigger": "Opening a door", "damage": "1d6/paralyze"},
+      {"trap": "Barbed net", "trigger": "Switch or button", "damage": "1d6/blind"},
+      {"trap": "Rolling boulder", "trigger": "False step on stairs", "damage": "2d6"},
+      {"trap": "Slicing blade", "trigger": "Closing a door", "damage": "2d8/sleep"},
+      {"trap": "Spiked pit", "trigger": "Breaking a light beam", "damage": "2d8/paralyze"},
+      {"trap": "Javelin", "trigger": "Pulling a lever", "damage": "2d8/confuse"},
+      {"trap": "Magical glyph", "trigger": "A word is spoken", "damage": "3d6"},
+      {"trap": "Blast of fire", "trigger": "Hook on a thread", "damage": "3d10/paralyze"},
+      {"trap": "Falling block", "trigger": "Removing an object", "damage": "3d10/unconscious"},
+      {"trap": "Cursed statue", "trigger": "Casting a spell", "damage": "3d10/petrify"}
+    ]
+  },
+  "hazard_movement": {
+    "dice": "1d12",
+    "entries": ["Quicksand","Caltrops","Loose debris","Tar field","Grasping vines","Steep incline","Slippery ice","Rushing water","Sticky webs","Gale force wind","Greased floor","Illusory terrain"]
+  },
+  "hazard_damage": {
+    "dice": "1d12",
+    "entries": ["Acid pools","Exploding rocks","Icy water","Lava","Pummeling hail","Steam vents","Toxic mold","Falling debris","Acid rain","Curtain of fire","Electrified field","Gravity flux"]
+  },
+  "hazard_weaken": {
+    "dice": "1d12",
+    "entries": ["Blinding smoke","Magnetic field","Exhausting runes","Antimagic zone","Snuffs light sources","Disorienting sound","Magical silence","Numbing cold","Sickening smell","Sleep-inducing spores","Confusing reflections","Memory-stealing"]
+  },
+  "random_gear": {
+    "dice": "1d12",
+    "entries": ["Torch","Dagger","Pole","Rations (3)","Rope, 60'","Oil, flask","Crowbar","Iron spikes (10)","Flint and steel","Grappling hook","Shield","Caltrops (one bag)"]
+  },
+  "adventure_name": {
+    "dice": "1d20",
+    "columns": {
+      "name_1": ["Mines","Abbey","Tower","Caves","Barrow","Warrens","Crypt","Monastery","Ruin","Tunnels","Citadel","Tomb","Castle","Temple","Fortress","Isle","Keep","Dungeon","Necropolis","Shrine"],
+      "name_2": ["of the Cursed","of the Whispering","of the Bleeding","of the Shrouded","of the Lost","of the Dead","of the Deepwood","of the Fallen","of the Revenant","of the Frozen","of the Shimmering","of the Chaos","of the Abandoned","of the Blighted","of the Forgotten","of the Slumbering","of the Savage","of the Unholy","of the Enchanted","of the Immortal"],
+      "name_3": ["Flame","Ghost","Darkness","Peak","Borderlands","King","Twilight","Depths","Jewel","God","Lands","Storm","Swamp","Ravine","Valley","Horde","Skull","Queen","Wastes","Hero"]
+    }
+  },
+  "magic_item_name": {
+    "dice": "1d20",
+    "columns": {
+      "name_1": ["The Crimson","The Ashen","Ortival's","The Doom","The Twilight","The Astral","Krull's","The Vicious","Memnon's","The Blessed","The Infernal","Madeera's","The Whispering","The Unholy","Shune's","The Lost","Ord's","The Righteous","The Demonic","The Primordial"],
+      "name_2": ["Blade","Poultice","Rite","Axe","Hammer","Wand","Cape","Tome","Litany","Staff","Scroll","Skull","Bow","Sword","Shield","Dagger","Armor","Orb","Eye","Elixir"],
+      "name_3": ["of Thundering Death","of Ages","of the Archmage","of Destruction","of Brak","of Power","of the Covenant","of the Wilds","of the Horde","of Blood","of Time","of the Lich Queen","of the Elders","of Madness","of Withering","of Annihilation","of the Dragon","of the Risen","of Elemental Fury","of the Spirits"]
+    }
+  },
+  "beastman_npc": {
+    "dice": "1d10",
+    "columns": {
+      "name": ["Rat/Gobbo","Barto/Hule","Egor/Ralk","Dent/Borvin","Nila/Bugg","Tail/Ludo","Skred/Billo","Halda/Yarv","Crag/Dorel","Lorga/Mouse"],
+      "appearance": ["Patchy/Sickly","Scarred/Fat","Broken jaw or nose","Stooped/Short","Elderly/Stout","Missing ear or tooth","Braided hair/Bald","White fur/Skinny","Clean/Blank stare","Wild eyes/Lanky"],
+      "behavior": ["Glares/Lurks","Whispers/Burps","Scratches/Snorts","Picks nose/Growls","Creeps/Rushes","Yawns/Drools","Limps/Sulks","Paces/Chews nails","Polite/Complains","Curses/Silent"]
+    }
+  },
+  "ettercap_npc": {
+    "dice": "1d10",
+    "columns": {
+      "name": ["Skalt/Trisk","Kreel/Bisky","Slivin/Slaask","Tiri/Vilis","Chiska/Liss","Jarla/Miri","Char/Squill","Fisk/Yeek","Chirr/Vim","Rask/Miska"],
+      "appearance": ["Groomed/Rotund","Singed fur/Gangly","Blue eyes/Spotted","Pained/Hunched","Springy/Withered","Sickly/Molting","Missing limb/Tall","Scarred/Lumpish","Filthy/Hulking","Jewelry/Clothing"],
+      "behavior": ["Preening/Haughty","Twitches/Cowers","Bossy/Skeptical","Delicate/Squeamish","Hasty/Alarmist","Distracted/Mutters","Clicks claws/Hisses","Nosy/Gossips","Critical/Sarcastic","Rude/Surly"]
+    }
+  },
+  "treasure_0_3": {
+    "dice": "1d100",
+    "entries": {
+      "01": "Bent tin fork (1 cp)",
+      "02-03": "Muddy torch (2 cp)",
+      "04-05": "Bag of smooth pebbles (2 cp)",
+      "06-07": "10 cp in a greasy pouch",
+      "08-09": "Rusty lantern with shattered glass (1 gp)",
+      "10-11": "Silver tooth (1 gp)",
+      "12-13": "Dull dagger (1 gp)",
+      "14-15": "Two empty glass vials (6 gp)",
+      "16-17": "60 sp in a rotten boot",
+      "18-19": "Cracked, handheld mirror (8 gp)",
+      "20-21": "Chipped greataxe (9 gp)",
+      "22-23": "10 gp in a moldy, wood box",
+      "24-25": "Chip of an emerald (10 gp)",
+      "26-27": "Longbow and bundle of 40 arrows (10 gp)",
+      "28-29": "Dusty, leather armor dyed black (10 gp)",
+      "30-31": "Scuffed, heavy shield (10 gp)",
+      "32-33": "Simple, well-made bastard sword (10 gp)",
+      "34-35": "12 gp in the pocket of a ripped cloak",
+      "36-37": "Wavy-bladed greatsword (12 gp)",
+      "38-39": "Pair of elf-forged shortswords (14 gp)",
+      "40-41": "Golden bowl (15 gp)",
+      "42-43": "Obsidian statuette of Shune the Vile (15 gp)",
+      "44-45": "Undersized pearl (20 gp)",
+      "46-47": "Jade-and-gold scarab pin (20 gp)",
+      "48-49": "Bag of 10 silver spikes (2 gp each)",
+      "50-53": "Mithral locket with a painting of a halfling (20 gp)",
+      "54-55": "Two finely forged dwarven shields (20 gp)",
+      "56-57": "Pair of silvered daggers (10 gp each)",
+      "58-59": "Copper-and-gold mead tankard (20 gp)",
+      "60-61": "Bundle of five red dragon scales (5 gp each)",
+      "62-63": "Light, warm cloak woven of spidersilk (25 gp)",
+      "64-65": "Fine set of ivory game pieces (25 gp)",
+      "66-67": "Half-finished suit of chainmail (30 gp)",
+      "68-69": "Matched trio of warhammers (10 gp each)",
+      "70-71": "Fragment of a sapphire (30 gp)",
+      "72-73": "Set of silk slippers and a robe (35 gp)",
+      "74-75": "Silver-and-gold circlet (40 gp)",
+      "76-77": "Radiant, polished pearl (40 gp)",
+      "78-79": "Mithral shield etched with soaring dragons (40 gp)",
+      "80-81": "Gold monkey idol with a ruby gripped in its teeth (60 gp)",
+      "82-83": "Fine suit of chainmail (60 gp)",
+      "84-85": "Cracked emerald (60 gp)",
+      "86-87": "Two lustrous pearls (40 gp each)",
+      "88-89": "1st-tier spell scroll (80 gp)",
+      "90-91": "Potion of Invisibility (80 gp)",
+      "92-93": "Magic wand, 2nd-tier spell (100 gp)",
+      "94-95": "Egg of The Cockatrice (100 gp)",
+      "96-97": "+1 armor (benefit, curse) (150 gp)",
+      "98-99": "Bag of Holding (virtue, flaw) (150 gp)",
+      "00": "+1 magic weapon (benefit) (200 gp)"
+    }
+  },
+  "something_happens": {
+    "dice": "1d100",
+    "entries": {
+      "01": "The ground shakes violently and a massive fissure opens",
+      "02-03": "An unseen foe leaps out of hiding at close range",
+      "04-05": "A horrible buzzing fills the air, growing louder and louder",
+      "06-07": "You catch the acrid smell of smoke and flame",
+      "08-09": "A bright star appears in the sky, visible even at midday",
+      "10-11": "You spot a half-open bag with gold coins glinting inside",
+      "12-13": "A man slips a note and an odd potion into your hand",
+      "14-15": "Someone observing you from afar steps out of sight",
+      "16-17": "A dwarf in a red hat hands you a rose, bows, and leaves",
+      "18-19": "A cowled stranger in a black cloak approaches you",
+      "20-21": "Someone tries to pick your pocket",
+      "22-23": "A strange ticking sound comes from inside your bag",
+      "24-25": "A frothing, frantic horse with a saddle but no rider appears",
+      "26-27": "A mound in the earth quickly burrows toward you",
+      "28-29": "You sense you are being magically scryed upon",
+      "30-31": "Someone tries to plant an object on your person",
+      "32-33": "You are filled with a strong sense of dread and danger",
+      "34-35": "A woman hands you a black cat and then runs away",
+      "36-37": "A small, woodland creature jumps out of a backpack",
+      "38-39": "You smell lilacs and hear faint, ghostly laughter",
+      "40-41": "A note wrapped around a thin dagger lands next to you",
+      "42-43": "A green-glowing meteor streaks through the sky",
+      "44-45": "Someone nearby is staring at you and mouthing words",
+      "46-47": "A pair of yellow eyes watches you from the darkness",
+      "48-49": "An orc with an arrow in her back crashes through a door",
+      "50-53": "You hear a beast cry out in pain just up ahead",
+      "54-55": "A huge swarm of bats crashes over you and swirls away",
+      "56-57": "A frail beggar whispers that he has a secret to tell you",
+      "58-59": "An object falls from above and barely misses your head",
+      "60-61": "A seagull lands on your head and coughs up an odd bottle",
+      "62-63": "The smell of ozone rises and electricity crackles in the air",
+      "64-65": "You spot a trail of tiny silver coins leading around a bend",
+      "66-67": "A wild-eyed man approaches with a holy book held high",
+      "68-69": "Every light source suddenly extinguishes",
+      "70-71": "A stampede of wild animals bursts into view",
+      "72-73": "An old woman points at you and yells, \"There they are!\"",
+      "74-75": "A passing stranger presses an ancient coin into your hand",
+      "76-77": "A chorus of howls echo in the distance",
+      "78-79": "Two pinching and slapping goblins tumble into sight",
+      "80-81": "You realize you are not alone; something is behind you",
+      "82-83": "The sudden sound of rushing water crashes toward you",
+      "84-85": "You hear an ear-splitting scream that nobody else hears",
+      "86-87": "A man slaps you with a glove and throws it at your feet",
+      "88-89": "A violent, windy storm kicks up without warning",
+      "90-91": "Lightning strikes close and leaves a glowing object behind",
+      "92-93": "A multicolored orb drifts up to you and then zips away",
+      "94-95": "A runaway wagon crashes toward you",
+      "96-97": "An NPC throws off their disguise, revealing an enemy",
+      "98-99": "A demon appears to you and presents a tempting offer",
+      "00": "A radiant being appears to you with a message of warning"
+    }
+  },
+  "rumors": {
+    "dice": "1d100",
+    "entries": {
+      "01": "An armored beast the size of a ship is rampaging nearby",
+      "02-03": "A team of assassins is on its way to kill your group",
+      "04-05": "The local ruler has placed a 2,000 gp bounty on your heads",
+      "06-07": "The cult of Shune is planning a fiery coup at midnight",
+      "08-09": "An ancient, stone door has been found in the castle cellar",
+      "10-11": "Lizardfolk have been raiding caravans near the swamp",
+      "12-13": "Armored skeletons are roaming the misty graveyard",
+      "14-15": "An earthquake uncovered a ruin inside a deep rift",
+      "16-17": "A warband of orcs has taken over an abandoned keep",
+      "18-19": "There is a hall of golden statues underneath the well",
+      "20-21": "Those who survive the Trial of the Lotus gain a strange gift",
+      "22-23": "A Captain of the Guard has been taken hostage by thugs",
+      "24-25": "The Crystal Caves are home to a cult of psychic sorcerers",
+      "26-27": "A crocodile dragged a richly-laden mule into the sewers",
+      "28-29": "A fortune-telling witch speaks true omens and portents",
+      "30-31": "Every full moon, the Prancing Unicorn's larder is robbed",
+      "32-33": "A famous group of crawlers hasn't returned from a delve",
+      "34-35": "A glowing meteor crashed deep inside the marshlands",
+      "36-37": "Fire will not light or burn within sight of the Lion Fountain",
+      "38-39": "The lost Jewel of Barbalt is hidden in the Howling Caves",
+      "40-41": "A dwarven mining team has uncovered a tentacled statue",
+      "42-43": "The Red Owl tavern has a trapdoor to the Shadowdark",
+      "44-45": "Viperian warriors guard a shrine to a medusa in the jungle",
+      "46-47": "Three thieves just pulled off a gemstone heist nearby",
+      "48-49": "Harpies keep watch from the cliffs around Diridia's Tomb",
+      "50-53": "A gorgon stalks the ruins of the Underhill Halls",
+      "54-55": "Beneath the Red Abbey is the forgotten Barrow of Ur-Din",
+      "56-57": "A dying sage is calling for a mighty group of heroes",
+      "58-59": "A wizard accidentally let his trio of cockatrices escape",
+      "60-61": "A local lord has somehow been stranded atop a high roof",
+      "62-63": "Bartomeu the Pirate Prince will be hanged at noon",
+      "64-65": "Goblin spelunkers found an underground cathedral",
+      "66-67": "A Kytherian Cog was lost in the sea near Myrkhos",
+      "68-69": "Rare and valuable mushrooms grow inside an old crypt",
+      "70-71": "The Church of St. Terragnis will pay for the return of a relic",
+      "72-73": "A volcanic eruption revealed tunnels in the caldera's walls",
+      "74-75": "The cyclopean ruins of Tal-Yool lie deep within the forest",
+      "76-77": "A famous gambler will bet a ruby on a Wizard Thief game",
+      "78-79": "The Moon Druids will bless a sword used to slay a werewolf",
+      "80-81": "Gravediggers found a chained coffin in an unmarked plot",
+      "82-83": "An abandoned wizard's tower is full of clockwork creatures",
+      "84-85": "The Thieves' Guild is about to attack a rival merchant lord",
+      "86-87": "Windstorms uncovered a stone monolith in the desert",
+      "88-89": "A rival group of crawlers found the map to Jiraal's Hoard",
+      "90-91": "A monstrosity called The Oracle lurks below the university",
+      "92-93": "The Ophidian Armor is in Ekmara's Keep in the wasteland",
+      "94-95": "The princess has been kidnapped by a group of sorcerers",
+      "96-97": "A Chaos Knight's tomb has been found beneath a temple",
+      "98-99": "The fabled Library of Gehemna appeared outside the city",
+      "00": "The dragon Ixamir has awoken from her 200-year slumber"
+    }
+  },
+  "random_encounter_ruins": {
+    "dice": "1d100",
+    "entries": {
+      "01": "A mutated cave brute explodes through a crumbling wall",
+      "02-03": "A silent gelatinous cube sweeps up a corridor",
+      "04-05": "A roving brown bear scavenges for dead bodies to eat",
+      "06-07": "Rival crawlers confront the PCs; they were \"here first\"",
+      "08-09": "1d6 rust monsters swarm a crack bubbling with mercury",
+      "10-11": "A legless suit of animated armor pulls itself along the floor",
+      "12-13": "A groaning wall collapses at the slightest touch",
+      "14-15": "A chalk note on the wall: \"Karov, we'll be at the Loyal Hog\"",
+      "16-17": "Mort the goblin is digging in cracks for grubs and beetles",
+      "18-19": "The floor collapses into a pit 1d6 x 10 feet deep",
+      "20-21": "A raiding team of 2d4 hobgoblins moves in tight formation",
+      "22-23": "2d4 web-covered skeletons form from scattered bones",
+      "24-25": "1d4 giant dung beetles roll huge balls of dried excrement",
+      "26-27": "An ochre jelly hides inside a pond or sinkhole",
+      "28-29": "A single, perfect rose grows up between the flagstones",
+      "30-31": "2d4 bandits shutter lanterns and set up a hasty ambush",
+      "32-33": "Three goblins toughen each other's skulls with frying pans",
+      "34-35": "2d6 beastmen pummel a giant centipede with rocks",
+      "36-37": "A gas leak causes all light sources to explode and go out",
+      "38-39": "A gelatinous cube full of handy items is stuck inside a pit",
+      "40-41": "A swarm of clattering, gold scarab beetles flies into sight",
+      "42-43": "A wounded NPC staggers up to the PCs and begs for help",
+      "44-45": "A rusty portcullis slams down, separating the PCs",
+      "46-47": "A giant spider hides above an old, rotten backpack",
+      "48-49": "A weeping ghost floats by, distracted by its own ranting",
+      "50-53": "2d4 kobolds sneak up behind the PCs for a surprise attack",
+      "54-55": "Ancient clay pots vibrate with hypnotizing resonance",
+      "56-57": "1d6 gricks shred dead giant rats and use the fur for nesting",
+      "58-59": "Rival crawlers escort a frail noble tourist on an \"adventure\"",
+      "60-61": "3d4 goblin scavengers barter and trade for odd trinkets",
+      "62-63": "2d4 dwarven miners (soldiers) shore up a collapsing wall",
+      "64-65": "2d4 giant wasps build a huge, papery nest on the ceiling",
+      "66-67": "A dense cloud of sulfuric mist rises from a floor crack",
+      "68-69": "A swarm of spiders surges out of a gauzy egg sack",
+      "70-71": "An ogre named Lud scratches rude words into the wall",
+      "72-73": "1d6 goblins brawl with 2d4 kobolds over a grick carcass",
+      "74-75": "2d4 giant bats roost on the ceiling; light disturbs them",
+      "76-77": "An ettercap spins web cocoons around its still-living prey",
+      "78-79": "1d6 cultists hunt for humanoid bones for a nefarious ritual",
+      "80-81": "A dryad searches for her tree that bugbears chopped up",
+      "82-83": "A deep gnome plays haunting music on humming fungi",
+      "84-85": "2d6 kobolds work in a makeshift, volatile alchemy lab",
+      "86-87": "A stone golem endlessly stacks the same rocks into piles",
+      "88-89": "Two darkmantles circle each other in a duel of intimidation",
+      "90-91": "2d6 goblins carry their bugbear king on a rickety litter",
+      "92-93": "2d4 cave creepers swarm up the hallway",
+      "94-95": "A recent campfire still burns with glowing cinders",
+      "96-97": "A minotaur guides a mysterious merchant along a path",
+      "98-99": "Roll two encounters and combine the results (reroll 98-99)",
+      "00": "The body of a dead crawler holds a random magic item"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "glintlock-engine": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/engine/dist/index.js"],
+      "env": {
+        "GLINTLOCK_DB_PATH": "${CLAUDE_PLUGIN_ROOT}/world/state.db",
+        "GLINTLOCK_ORACLE_PATH": "${CLAUDE_PLUGIN_ROOT}/engine/data/oracle-tables.json"
+      }
+    }
+  }
+}
