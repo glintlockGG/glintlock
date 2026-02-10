@@ -19,4 +19,32 @@ export function addNote(params) {
         throw err;
     }
 }
+export function queryNotes(params) {
+    const { entity_id, tag, text_search, limit = 20, since } = params;
+    const conditions = [];
+    const values = [];
+    if (entity_id) {
+        conditions.push("entity_id = ?");
+        values.push(entity_id);
+    }
+    if (tag) {
+        conditions.push("tag = ?");
+        values.push(tag);
+    }
+    if (text_search) {
+        conditions.push("text LIKE ?");
+        values.push(`%${text_search}%`);
+    }
+    if (since) {
+        conditions.push("created_at > ?");
+        values.push(since);
+    }
+    let sql = "SELECT * FROM notes";
+    if (conditions.length > 0)
+        sql += ` WHERE ${conditions.join(" AND ")}`;
+    sql += " ORDER BY created_at DESC LIMIT ?";
+    values.push(limit);
+    const notes = db.prepare(sql).all(...values);
+    return { count: notes.length, notes };
+}
 //# sourceMappingURL=notes.js.map

@@ -1,4 +1,4 @@
-import { type Database as DatabaseType } from "better-sqlite3";
-declare const db: DatabaseType;
+import { DatabaseSync } from "node:sqlite";
+declare const db: DatabaseSync;
 export default db;
 //# sourceMappingURL=db.d.ts.map

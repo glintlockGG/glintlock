@@ -1,5 +1,7 @@
 import db from "../db.js";
 
+type SqlValue = null | number | bigint | string;
+
 // --- Static whitelists for SQL injection prevention ---
 
 const COMPONENT_TABLES = [
@@ -12,7 +14,7 @@ type ComponentTable = (typeof COMPONENT_TABLES)[number];
 const COMPONENT_FIELDS: Record<ComponentTable, readonly string[]> = {
   stats: ["str", "dex", "con", "int", "wis", "cha"],
   health: ["current", "max"],
-  character_info: ["ancestry", "class", "level", "xp", "alignment", "title", "background", "ac", "languages"],
+  character_info: ["ancestry", "class", "level", "xp", "alignment", "title", "background", "ac", "languages", "talents", "hit_die", "weapon_proficiencies", "armor_proficiencies", "class_features", "ancestry_traits"],
   spells: ["known", "lost", "penance"],
   position: ["location_id", "sub_location"],
   inventory: ["items", "gold", "silver", "copper", "gear_slots_used", "gear_slots_max"],
@@ -22,7 +24,7 @@ const COMPONENT_FIELDS: Record<ComponentTable, readonly string[]> = {
 };
 
 const JSON_COLUMNS: Record<string, Set<string>> = {
-  character_info: new Set(["languages"]),
+  character_info: new Set(["languages", "talents", "weapon_proficiencies", "armor_proficiencies", "class_features", "ancestry_traits"]),
   spells: new Set(["known", "lost", "penance"]),
   inventory: new Set(["items"]),
   location_data: new Set(["connections"]),
@@ -46,6 +48,63 @@ function parseJsonField(value: unknown): unknown {
     try { return JSON.parse(value); } catch { return value; }
   }
   return value;
+}
+
+// --- Defaults for NOT NULL columns without SQL defaults ---
+// These tables need explicit values when inserting a bare row
+const COMPONENT_NOT_NULL_DEFAULTS: Partial<Record<ComponentTable, Record<string, SqlValue>>> = {
+  health: { current: 1, max: 1 },
+  combat_data: { ac: 10 },
+  description: { text: "" },
+};
+
+// --- Error message helpers ---
+
+function buildFieldError(field: string, component: ComponentTable): string {
+  const validFields = COMPONENT_FIELDS[component];
+  let msg = `Invalid field "${field}" for component "${component}". Valid fields: ${validFields.join(", ")}`;
+
+  // Fuzzy suggestion: check if field is a substring of any valid field or vice versa
+  const lower = field.toLowerCase();
+  const suggestions = validFields.filter(f =>
+    f.includes(lower) || lower.includes(f) || levenshteinClose(lower, f)
+  );
+  if (suggestions.length > 0) {
+    msg += `. Did you mean: ${suggestions.map(s => `"${s}"`).join(", ")}?`;
+  }
+
+  // Check if field exists in a different component
+  for (const [otherComp, otherFields] of Object.entries(COMPONENT_FIELDS)) {
+    if (otherComp === component) continue;
+    if ((otherFields as readonly string[]).includes(lower)) {
+      msg += ` Note: "${field}" exists in the "${otherComp}" component.`;
+      break;
+    }
+  }
+
+  return msg;
+}
+
+function levenshteinClose(a: string, b: string): boolean {
+  // Simple check: same length ±1 and share >60% characters
+  if (Math.abs(a.length - b.length) > 2) return false;
+  const setA = new Set(a);
+  const setB = new Set(b);
+  let shared = 0;
+  for (const c of setA) if (setB.has(c)) shared++;
+  return shared / Math.max(setA.size, setB.size) > 0.6;
+}
+
+function upsertComponentRow(component: ComponentTable, entityId: string): void {
+  const defaults = COMPONENT_NOT_NULL_DEFAULTS[component];
+  if (defaults) {
+    const cols = ["entity_id", ...Object.keys(defaults)];
+    const placeholders = cols.map(() => "?").join(", ");
+    const vals: SqlValue[] = [entityId, ...Object.values(defaults)];
+    db.prepare(`INSERT INTO ${component} (${cols.join(", ")}) VALUES (${placeholders})`).run(...vals);
+  } else {
+    db.prepare(`INSERT INTO ${component} (entity_id) VALUES (?)`).run(entityId);
+  }
 }
 
 // --- Load all components for an entity ---
@@ -84,7 +143,7 @@ export function getEntity(params: GetEntityParams) {
   }
 
   const conditions: string[] = [];
-  const values: unknown[] = [];
+  const values: SqlValue[] = [];
 
   if (entity_id) {
     conditions.push("id = ?");
@@ -129,13 +188,18 @@ export interface UpdateEntityParams {
 }
 
 export function updateEntity(params: UpdateEntityParams) {
-  const { entity_id, component, operation, field, value } = params;
+  const { entity_id, component, operation, value } = params;
+  // Normalize stat fields to lowercase (STR → str, DEX → dex, etc.)
+  let { field } = params;
+  if (component === "stats") {
+    field = field.toLowerCase();
+  }
 
   if (!isValidComponent(component)) {
-    throw new Error(`Invalid component: "${component}". Valid: ${COMPONENT_TABLES.join(", ")}`);
+    throw new Error(`Invalid component: "${component}". Valid components: ${COMPONENT_TABLES.join(", ")}`);
   }
   if (!isValidField(component, field)) {
-    throw new Error(`Invalid field "${field}" for component "${component}". Valid: ${COMPONENT_FIELDS[component].join(", ")}`);
+    throw new Error(buildFieldError(field, component));
   }
 
   // Verify entity exists
@@ -146,10 +210,14 @@ export function updateEntity(params: UpdateEntityParams) {
 
   const isJson = isJsonColumn(component, field);
 
-  // Read current value
-  const currentRow = db.prepare(`SELECT ${field} FROM ${component} WHERE entity_id = ?`).get(entity_id) as Record<string, unknown> | undefined;
+  // Read current value — auto-create component row if missing (upsert)
+  let currentRow = db.prepare(`SELECT ${field} FROM ${component} WHERE entity_id = ?`).get(entity_id) as Record<string, unknown> | undefined;
   if (!currentRow) {
-    throw new Error(`Entity "${entity_id}" has no ${component} component. Create it first with create_entity or add the component row.`);
+    upsertComponentRow(component, entity_id);
+    currentRow = db.prepare(`SELECT ${field} FROM ${component} WHERE entity_id = ?`).get(entity_id) as Record<string, unknown> | undefined;
+    if (!currentRow) {
+      throw new Error(`Failed to create ${component} component for entity "${entity_id}".`);
+    }
   }
 
   const oldRaw = currentRow[field];
@@ -159,7 +227,7 @@ export function updateEntity(params: UpdateEntityParams) {
   switch (operation) {
     case "set": {
       newValue = value;
-      const writeVal = isJson ? JSON.stringify(value) : value;
+      const writeVal = (isJson ? JSON.stringify(value) : value) as SqlValue;
       const info = db.prepare(`UPDATE ${component} SET ${field} = ? WHERE entity_id = ?`).run(writeVal, entity_id);
       if (info.changes === 0) throw new Error("Update failed — no rows changed.");
       break;
@@ -169,7 +237,7 @@ export function updateEntity(params: UpdateEntityParams) {
         throw new Error(`Delta requires numeric values. Current: ${typeof oldValue}, provided: ${typeof value}`);
       }
       newValue = oldValue + value;
-      db.prepare(`UPDATE ${component} SET ${field} = ? WHERE entity_id = ?`).run(newValue, entity_id);
+      db.prepare(`UPDATE ${component} SET ${field} = ? WHERE entity_id = ?`).run(newValue as SqlValue, entity_id);
       break;
     }
     case "push": {
@@ -227,28 +295,34 @@ export function createEntity(params: CreateEntityParams) {
     "INSERT INTO entities (id, type, name) VALUES (?, ?, ?)"
   );
 
-  const createTx = db.transaction(() => {
+  db.exec("BEGIN");
+  try {
     insertEntity.run(entityId, entity_type, name);
 
     if (components) {
-      for (const [compName, fields] of Object.entries(components)) {
+      for (const [compName, rawFields] of Object.entries(components)) {
         if (!isValidComponent(compName)) {
-          throw new Error(`Invalid component: "${compName}". Valid: ${COMPONENT_TABLES.join(", ")}`);
+          throw new Error(`Invalid component: "${compName}". Valid components: ${COMPONENT_TABLES.join(", ")}`);
         }
+
+        // Normalize stat fields to lowercase (STR → str, DEX → dex, etc.)
+        const fields = compName === "stats"
+          ? Object.fromEntries(Object.entries(rawFields).map(([k, v]) => [k.toLowerCase(), v]))
+          : rawFields;
 
         // Validate all field names
         for (const fieldName of Object.keys(fields)) {
           if (!isValidField(compName, fieldName)) {
-            throw new Error(`Invalid field "${fieldName}" for component "${compName}". Valid: ${COMPONENT_FIELDS[compName].join(", ")}`);
+            throw new Error(buildFieldError(fieldName, compName));
           }
         }
 
         const columns = ["entity_id", ...Object.keys(fields)];
         const placeholders = columns.map(() => "?").join(", ");
-        const values = [
+        const values: SqlValue[] = [
           entityId,
           ...Object.entries(fields).map(([f, v]) =>
-            isJsonColumn(compName, f) ? JSON.stringify(v) : v
+            (isJsonColumn(compName, f) ? JSON.stringify(v) : v) as SqlValue
           ),
         ];
 
@@ -257,9 +331,12 @@ export function createEntity(params: CreateEntityParams) {
         ).run(...values);
       }
     }
-  });
 
-  createTx();
+    db.exec("COMMIT");
+  } catch (err) {
+    db.exec("ROLLBACK");
+    throw err;
+  }
 
   return {
     success: true,
@@ -286,7 +363,7 @@ export function queryEntities(params: QueryEntitiesParams) {
   const { entity_type, location_id, filters, limit = 20 } = params;
 
   const conditions: string[] = [];
-  const values: unknown[] = [];
+  const values: SqlValue[] = [];
   const joins: Set<string> = new Set();
 
   if (entity_type) {
@@ -307,15 +384,15 @@ export function queryEntities(params: QueryEntitiesParams) {
         throw new Error(`Invalid filter key "${dotKey}". Use "component.field" format.`);
       }
       if (!isValidComponent(comp)) {
-        throw new Error(`Invalid component in filter: "${comp}".`);
+        throw new Error(`Invalid component in filter: "${comp}". Valid components: ${COMPONENT_TABLES.join(", ")}`);
       }
       if (!isValidField(comp, field)) {
-        throw new Error(`Invalid field "${field}" for component "${comp}".`);
+        throw new Error(buildFieldError(field, comp));
       }
 
       joins.add(comp);
       conditions.push(`${comp}.${field} = ?`);
-      const writeVal = isJsonColumn(comp, field) ? JSON.stringify(filterVal) : filterVal;
+      const writeVal = (isJsonColumn(comp, field) ? JSON.stringify(filterVal) : filterVal) as SqlValue;
       values.push(writeVal);
     }
   }
@@ -344,4 +421,31 @@ export function queryEntities(params: QueryEntitiesParams) {
   }));
 
   return { count: entities.length, entities };
+}
+
+// --- delete_entity ---
+
+export interface DeleteEntityParams {
+  entity_id: string;
+  confirm: boolean;
+}
+
+export function deleteEntity(params: DeleteEntityParams) {
+  const { entity_id, confirm } = params;
+
+  if (!confirm) {
+    throw new Error("Must set confirm: true to delete. This is permanent.");
+  }
+
+  const entity = db.prepare("SELECT id, type, name FROM entities WHERE id = ?")
+    .get(entity_id) as { id: string; type: string; name: string } | undefined;
+
+  if (!entity) {
+    throw new Error(`Entity "${entity_id}" not found.`);
+  }
+
+  // CASCADE deletes all component rows and attached notes
+  db.prepare("DELETE FROM entities WHERE id = ?").run(entity_id);
+
+  return { success: true, entity_id, entity_name: entity.name, entity_type: entity.type };
 }

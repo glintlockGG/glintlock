@@ -1,11 +1,12 @@
 {
   "mcpServers": {
     "glintlock-engine": {
-      "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/engine/dist/index.js"],
+      "command": "bash",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/engine/scripts/start-engine.sh"],
       "env": {
-        "GLINTLOCK_DB_PATH": "${CLAUDE_PLUGIN_ROOT}/world/state.db",
-        "GLINTLOCK_ORACLE_PATH": "${CLAUDE_PLUGIN_ROOT}/engine/data/oracle-tables.json"
+        "GLINTLOCK_DB_PATH": "${CLAUDE_PLUGIN_ROOT}/.mcpb-cache/state.db",
+        "GLINTLOCK_ORACLE_PATH": "${CLAUDE_PLUGIN_ROOT}/engine/data/oracle-tables.json",
+        "ELEVENLABS_API_KEY": "${ELEVENLABS_API_KEY}"
       }
     }
   }

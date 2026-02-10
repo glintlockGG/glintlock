@@ -6,3 +6,5 @@ world/sessions/*.jsonl
 world/expertise.yaml
 *.pdf
 .DS_Store
+.mcpb-cache/
+glintlock-plugin.zip

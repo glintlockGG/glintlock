@@ -63,4 +63,14 @@ export declare function queryEntities(params: QueryEntitiesParams): {
         components: Record<string, Record<string, unknown>>;
     }[];
 };
+export interface DeleteEntityParams {
+    entity_id: string;
+    confirm: boolean;
+}
+export declare function deleteEntity(params: DeleteEntityParams): {
+    success: boolean;
+    entity_id: string;
+    entity_name: string;
+    entity_type: string;
+};
 //# sourceMappingURL=ecs.d.ts.map

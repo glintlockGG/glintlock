@@ -1,13 +1,42 @@
-import Database, { type Database as DatabaseType } from "better-sqlite3";
+import { DatabaseSync } from "node:sqlite";
 import path from "node:path";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, writeFileSync, unlinkSync, accessSync, existsSync, constants } from "node:fs";
 
-const dbPath = path.resolve(process.env.GLINTLOCK_DB_PATH ?? "./world/state.db");
-mkdirSync(path.dirname(dbPath), { recursive: true });
+function resolveWritableDbPath(): string {
+  const configured = path.resolve(process.env.GLINTLOCK_DB_PATH ?? "./world/state.db");
+  const uid = process.getuid?.() ?? "default";
+  const fallback = `/tmp/glintlock-${uid}/state.db`;
 
-const db: DatabaseType = new Database(dbPath);
-db.pragma("journal_mode = WAL");
-db.pragma("foreign_keys = ON");
+  for (const candidate of [configured, fallback]) {
+    try {
+      const dir = path.dirname(candidate);
+      mkdirSync(dir, { recursive: true });
+      // Test directory writability
+      const probe = path.join(dir, ".glintlock-write-probe");
+      writeFileSync(probe, "");
+      unlinkSync(probe);
+      // Test existing DB file writability
+      if (existsSync(candidate)) {
+        accessSync(candidate, constants.W_OK);
+      }
+      return candidate;
+    } catch {
+      console.error(`[glintlock] DB path not writable: ${candidate}`);
+    }
+  }
+  throw new Error("[glintlock] FATAL: No writable database path found");
+}
+
+const dbPath = resolveWritableDbPath();
+console.error(`[glintlock] Database: ${dbPath}`);
+
+const db = new DatabaseSync(dbPath, { enableForeignKeyConstraints: true });
+try {
+  db.exec("PRAGMA journal_mode = WAL");
+} catch {
+  console.error("[glintlock] WAL mode unavailable, using DELETE journal mode");
+  db.exec("PRAGMA journal_mode = DELETE");
+}
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS entities (
@@ -112,5 +141,18 @@ CREATE INDEX IF NOT EXISTS idx_position_location ON position(location_id);
 CREATE INDEX IF NOT EXISTS idx_notes_entity ON notes(entity_id);
 CREATE INDEX IF NOT EXISTS idx_notes_tag ON notes(tag);
 `);
+
+// Migrations — ALTER TABLE ADD COLUMN throws if column exists, so wrap in try/catch
+const migrations = [
+  "ALTER TABLE character_info ADD COLUMN talents TEXT DEFAULT '[]'",
+  "ALTER TABLE character_info ADD COLUMN hit_die TEXT",
+  "ALTER TABLE character_info ADD COLUMN weapon_proficiencies TEXT DEFAULT '[]'",
+  "ALTER TABLE character_info ADD COLUMN armor_proficiencies TEXT DEFAULT '[]'",
+  "ALTER TABLE character_info ADD COLUMN class_features TEXT DEFAULT '[]'",
+  "ALTER TABLE character_info ADD COLUMN ancestry_traits TEXT DEFAULT '[]'",
+];
+for (const sql of migrations) {
+  try { db.exec(sql); } catch { /* column already exists */ }
+}
 
 export default db;
