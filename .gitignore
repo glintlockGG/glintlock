@@ -1,9 +1,9 @@
 node_modules/
-world/state.db
-world/state.db-shm
-world/state.db-wal
-world/sessions/*.jsonl
-world/expertise.yaml
+**/state.db
+**/state.db-shm
+**/state.db-wal
+**/sessions/*.jsonl
+**/expertise.yaml
 *.pdf
 .DS_Store
 .mcpb-cache/
