@@ -240,6 +240,7 @@ Written once during `/glintlock:new-session`. Updated only if the campaign premi
 **Setting:** The frontier town of Millhaven, on the edge of the Thornwood.
 **Premise:** Caravans have been disappearing on the trade road. The Merchant Guild is desperate for answers. Something stirs in the ruins of the Obsidian Keep.
 **Tone:** Grim frontier survival. Resources are scarce, allies are few, and the darkness is hungry.
+**Language:** eng
 **Starting Date:** Day 1 of the Harvest Moon.
 ```
 

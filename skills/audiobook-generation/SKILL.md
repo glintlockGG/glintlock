@@ -70,6 +70,36 @@ The agent understands narrative context, can track who is speaking across paragr
 7. **Don't split narration unnecessarily.** Consecutive narration paragraphs can be combined into one segment, but keep segments under ~500 characters for natural TTS pacing.
 8. **Every line of dialogue must have a speaker.** If truly ambiguous, use the most recent named speaker from context.
 
+## Language Support
+
+ElevenLabs v3 (`eleven_v3`) supports 70+ languages with the same voices. No voice changes needed — pass `language_code` to `tts_narrate` and the model handles it.
+
+### Language Codes
+
+ISO 639-3 three-letter codes: `eng` (English), `fra` (French), `deu` (German), `spa` (Spanish), `ita` (Italian), `por` (Portuguese), `jpn` (Japanese), `kor` (Korean), `cmn` (Mandarin Chinese), `hin` (Hindi), `ara` (Arabic), `pol` (Polish), `nld` (Dutch), `swe` (Swedish), `tur` (Turkish), `rus` (Russian), `ukr` (Ukrainian), and many more.
+
+### Campaign Default
+
+The campaign's default language is set in `world/campaign-context.md` (e.g. `**Language:** eng`). All audiobook output uses this language unless additional languages are requested.
+
+### Multi-Language Generation
+
+When generating in multiple languages:
+- The default language's outputs have **no language suffix** (backwards compatible)
+- Additional languages get a suffix: `chapter-01-title.fra.mp3`
+- **SFX and music are language-independent** — generated once, shared across all languages
+- **Translation is free** — the agent translates the annotated_scenes text (Claude does it)
+- **Extra cost is TTS only** — one TTS generation pass per additional language
+
+### Translation Guidelines
+
+When translating `annotated_scenes` for a non-default language:
+- Translate narration and dialogue text naturally, preserving tone and style
+- Keep proper nouns (character names, place names) in their original form
+- Preserve segment types, scene structure, and ordering
+- Maintain approximate text length — don't expand significantly
+- Keep speaker names unchanged (they map to voice_ids)
+
 ## Voice Assignment Protocol
 
 1. **Check NPC files** — Read each speaker's NPC file from `world/npcs/`. If `voice_id` is set in frontmatter, use it.
@@ -119,26 +149,38 @@ voice_settings: { stability: 0.7, similarity_boost: 0.8, style: 0.1 }
 
 ```
 world/audiobooks/
-  chapter-01-the-living-marble.mp3    <- final output
-  .build/                              <- intermediate (gitignored)
+  chapter-01-the-living-marble.mp3              <- default lang, full mix
+  chapter-01-the-living-marble.narration.mp3    <- default lang, narration only
+  chapter-01-the-living-marble.no-music.mp3     <- default lang, spine + SFX
+  chapter-01-the-living-marble.fra.mp3          <- French, full mix
+  chapter-01-the-living-marble.fra.narration.mp3 <- French, narration only
+  .build/                                        <- intermediate (gitignored)
     chapter-01/
-      manifest.json                    <- annotated manifest
-      seg-001-chunk-001.mp3            <- TTS segments
-      seg-001-chunk-002.mp3
-      sfx-seg-005.mp3                  <- SFX files
-      music-scene-00.mp3               <- Music files
-      spine.mp3                        <- Concatenated speech
+      eng/                                       <- default language TTS
+        manifest.json
+        seg-001-chunk-001.mp3
+        seg-001-chunk-002.mp3
+        spine.mp3
+      fra/                                       <- additional language TTS
+        manifest.json
+        seg-001-chunk-001.mp3
+        spine.mp3
+      sfx-seg-005.mp3                            <- SFX (shared across languages)
+      music-scene-00.mp3                         <- Music (shared across languages)
 ```
+
+Default-language outputs have no language suffix in filenames (backwards compatible). Additional languages use the ISO 639-3 code as suffix.
 
 ## Cost Awareness
 
 ElevenLabs charges by character for TTS and by generation for SFX/music:
-- **TTS:** ~$0.30 per 1,000 characters. A 3,000-word chapter ~ 18,000 chars ~ **$5.40**
-- **SFX:** ~$0.10 per generation. 5-8 SFX per chapter ~ **$0.50-0.80**
-- **Music:** ~$0.20 per generation. 5-6 scenes ~ **$1.00-1.20**
-- **Total estimate:** **$2-7 per chapter** depending on length and ElevenLabs plan
+- **TTS:** ~$0.30 per 1,000 characters. A 3,000-word chapter ~ 18,000 chars ~ **$5.40 per language**
+- **SFX:** ~$0.10 per generation. 5-8 SFX per chapter ~ **$0.50-0.80** (shared, one-time)
+- **Music:** ~$0.20 per generation. 5-6 scenes ~ **$1.00-1.20** (shared, one-time)
+- **Single language total:** **$2-7 per chapter** depending on length and ElevenLabs plan
+- **Each additional language:** adds ~$5-6 TTS cost only (SFX/music are reused, translation is free)
 
-Inform the player of the estimated cost before generating.
+Inform the player of the estimated cost before generating. For multi-language runs, break down per-language vs shared costs.
 
 ## Iterating Chunks
 
@@ -153,6 +195,16 @@ Process chunks sequentially to avoid overwhelming the API. Report progress every
 
 ## After Mixing
 
+The mixer automatically produces up to three variants at no extra API cost (reuses the same spine, music bed, and SFX files):
+
+| Variant | Contents | Filename |
+|---------|----------|----------|
+| `full` | Spine + music + SFX | `chapter-NN-title.mp3` |
+| `narration` | Spine only | `chapter-NN-title.narration.mp3` |
+| `no-music` | Spine + SFX | `chapter-NN-title.no-music.mp3` (only if SFX exist) |
+
+All variant paths are returned in the result's `outputs` array.
+
 1. Write the final annotated manifest to `{build_dir}/manifest.json` for debugging
-2. Report: final MP3 path, total duration (formatted as MM:SS), estimated cost
+2. Report: all variant MP3 paths, total duration (formatted as MM:SS), estimated cost
 3. Offer to play a preview (call `tts_narrate` without output_path on the first paragraph)

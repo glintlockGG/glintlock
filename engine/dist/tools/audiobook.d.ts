@@ -34,6 +34,7 @@ export interface AudioScene {
 export interface AudioManifest {
     chapter_number: number;
     chapter_title: string;
+    language_code?: string;
     scenes: AudioScene[];
     total_estimated_duration_ms: number;
     total_chunks: number;
@@ -51,6 +52,7 @@ export interface RenderAudiobookParams {
     chapter_markdown: string;
     chapter_number: number;
     chapter_title: string;
+    language_code?: string;
     narrator_voice_id?: string;
     voices?: Record<string, string>;
     annotated_scenes?: AnnotatedScene[];

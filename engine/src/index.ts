@@ -68,6 +68,7 @@ server.tool(
   {
     text: z.string().describe("The text to speak aloud. Keep under ~500 chars for best latency."),
     voice_id: z.string().optional().describe("ElevenLabs voice ID. Omit for default narrator voice. Use different voices for distinct NPCs."),
+    language_code: z.string().optional().describe("ISO 639-3 language code (e.g. 'eng', 'fra', 'jpn'). Optional — auto-detected from text if omitted."),
     speed: z.number().optional().describe("Speech speed multiplier. Default 1.0. Range 0.5-2.0."),
     stability: z.number().optional().describe("Voice consistency (0=variable, 1=stable). Default 0.5."),
     similarity_boost: z.number().optional().describe("Voice clarity vs expressiveness (0–1). Default 0.75."),
@@ -183,6 +184,7 @@ server.tool(
     chapter_markdown: z.string().describe("The full markdown text of the chronicle chapter."),
     chapter_number: z.number().describe("Chapter number (e.g. 1, 2, 3)."),
     chapter_title: z.string().describe("Chapter title (e.g. 'The Living Marble')."),
+    language_code: z.string().optional().describe("ISO 639-3 language code for the chapter audio (e.g. 'eng', 'fra', 'jpn')."),
     narrator_voice_id: z.string().optional().describe("Voice ID for narrator. Defaults to Glintlock narrator voice."),
     voices: z.record(z.string(), z.string()).optional().describe("Map of speaker name to ElevenLabs voice ID (e.g. {\"Silvio\": \"abc123\", \"Viola\": \"def456\"})."),
     annotated_scenes: z.array(z.object({

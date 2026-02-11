@@ -5,7 +5,7 @@ import { join, dirname } from "node:path";
 import { getAudioDurationMs } from "./audio-utils.js";
 const DEFAULT_VOICE_ID = "w8SDQBLZWRZYxv1YDGss"; // Glintlock narrator voice
 export async function ttsNarrate(params) {
-    const { text, speed, stability = 0.5, similarity_boost = 0.75, style, output_path } = params;
+    const { text, language_code, speed, stability = 0.5, similarity_boost = 0.75, style, output_path } = params;
     const voiceId = params.voice_id || DEFAULT_VOICE_ID;
     const apiKey = process.env.ELEVENLABS_API_KEY;
     if (!apiKey) {
@@ -28,7 +28,8 @@ export async function ttsNarrate(params) {
             },
             body: JSON.stringify({
                 text,
-                model_id: "eleven_multilingual_v2",
+                model_id: "eleven_v3",
+                ...(language_code ? { language_code } : {}),
                 voice_settings: {
                     stability,
                     similarity_boost,

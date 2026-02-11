@@ -1,6 +1,7 @@
 export interface TtsParams {
     text: string;
     voice_id?: string;
+    language_code?: string;
     speed?: number;
     stability?: number;
     similarity_boost?: number;

@@ -13,10 +13,14 @@ export interface MixAudiobookParams {
     build_dir: string;
     output_path: string;
 }
+export interface MixVariantOutput {
+    variant: string;
+    path: string;
+    duration_ms: number;
+}
 export interface MixAudiobookResult {
     success: boolean;
-    output_path?: string;
-    duration_ms?: number;
+    outputs?: MixVariantOutput[];
     error?: string;
 }
 export declare function mixAudiobook(params: MixAudiobookParams): Promise<MixAudiobookResult>;

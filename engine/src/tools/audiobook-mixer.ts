@@ -29,10 +29,15 @@ export interface MixAudiobookParams {
   output_path: string;
 }
 
+export interface MixVariantOutput {
+  variant: string;
+  path: string;
+  duration_ms: number;
+}
+
 export interface MixAudiobookResult {
   success: boolean;
-  output_path?: string;
-  duration_ms?: number;
+  outputs?: MixVariantOutput[];
   error?: string;
 }
 
@@ -62,15 +67,35 @@ export async function mixAudiobook(
     // Phase 3: Collect SFX with timestamps
     const sfxEntries = collectSfxTimestamps(manifest);
 
-    // Phase 4: Final mix
-    await finalMix(spinePath, musicBedPath, sfxEntries, output_path, spineDuration);
+    // Phase 4: Mix variants
+    // Derive variant paths from output_path: "foo.mp3" → "foo.narration.mp3", "foo.no-music.mp3"
+    const variantPath = (variant: string) => {
+      if (variant === "full") return output_path;
+      return output_path.replace(/\.mp3$/i, `.${variant}.mp3`);
+    };
 
-    const finalDuration = await getAudioDurationMs(output_path);
+    const outputs: MixVariantOutput[] = [];
+
+    // Full mix: spine + music + SFX
+    const fullPath = variantPath("full");
+    await finalMix(spinePath, musicBedPath, sfxEntries, fullPath, spineDuration);
+    outputs.push({ variant: "full", path: fullPath, duration_ms: await getAudioDurationMs(fullPath) });
+
+    // Narration only: spine with fade, no music, no SFX
+    const narrationPath = variantPath("narration");
+    await finalMix(spinePath, undefined, [], narrationPath, spineDuration);
+    outputs.push({ variant: "narration", path: narrationPath, duration_ms: await getAudioDurationMs(narrationPath) });
+
+    // No-music: spine + SFX, no music bed
+    if (sfxEntries.length > 0) {
+      const noMusicPath = variantPath("no-music");
+      await finalMix(spinePath, undefined, sfxEntries, noMusicPath, spineDuration);
+      outputs.push({ variant: "no-music", path: noMusicPath, duration_ms: await getAudioDurationMs(noMusicPath) });
+    }
 
     return {
       success: true,
-      output_path,
-      duration_ms: finalDuration,
+      outputs,
     };
   } catch (err) {
     return {

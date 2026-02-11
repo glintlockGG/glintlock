@@ -38,6 +38,7 @@ export interface AudioScene {
 export interface AudioManifest {
   chapter_number: number;
   chapter_title: string;
+  language_code?: string;
   scenes: AudioScene[];
   total_estimated_duration_ms: number;
   total_chunks: number;
@@ -60,6 +61,7 @@ export interface RenderAudiobookParams {
   chapter_markdown: string;
   chapter_number: number;
   chapter_title: string;
+  language_code?: string;
   narrator_voice_id?: string;
   voices?: Record<string, string>; // speaker name -> voice_id
   annotated_scenes?: AnnotatedScene[]; // if provided, skip markdown parsing
@@ -95,6 +97,7 @@ export function renderAudiobook(params: RenderAudiobookParams): AudioManifest {
   const {
     chapter_number,
     chapter_title,
+    language_code,
     narrator_voice_id = DEFAULT_NARRATOR_VOICE,
     voices = {},
     annotated_scenes,
@@ -113,13 +116,14 @@ export function renderAudiobook(params: RenderAudiobookParams): AudioManifest {
       annotated_scenes,
       chapter_number,
       chapter_title,
+      language_code,
       narrator_voice_id,
       voices,
       voicesUsed
     );
   }
 
-  return renderFromMarkdown(params, narrator_voice_id, voices, voicesUsed);
+  return renderFromMarkdown(params, language_code, narrator_voice_id, voices, voicesUsed);
 }
 
 // --- Path 1: Agent-annotated scenes ---
@@ -128,6 +132,7 @@ function renderFromAnnotations(
   annotatedScenes: AnnotatedScene[],
   chapterNumber: number,
   chapterTitle: string,
+  languageCode: string | undefined,
   narratorVoiceId: string,
   voices: Record<string, string>,
   voicesUsed: Record<string, string>
@@ -190,6 +195,7 @@ function renderFromAnnotations(
   return {
     chapter_number: chapterNumber,
     chapter_title: chapterTitle,
+    ...(languageCode ? { language_code: languageCode } : {}),
     scenes,
     total_estimated_duration_ms: totalDuration,
     total_chunks: totalChunks,
@@ -201,6 +207,7 @@ function renderFromAnnotations(
 
 function renderFromMarkdown(
   params: RenderAudiobookParams,
+  languageCode: string | undefined,
   narratorVoiceId: string,
   voices: Record<string, string>,
   voicesUsed: Record<string, string>
@@ -452,6 +459,7 @@ function renderFromMarkdown(
   return {
     chapter_number,
     chapter_title,
+    ...(languageCode ? { language_code: languageCode } : {}),
     scenes,
     total_estimated_duration_ms: totalDuration,
     total_chunks: totalChunks,

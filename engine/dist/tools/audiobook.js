@@ -23,7 +23,7 @@ const QUOTE_RE = /[\u201c"""]([^\u201d"""]+)[\u201d"""]/g;
 // Pronouns that need resolution
 const PRONOUN_SET = new Set(["he", "she", "they", "it"]);
 export function renderAudiobook(params) {
-    const { chapter_number, chapter_title, narrator_voice_id = DEFAULT_NARRATOR_VOICE, voices = {}, annotated_scenes, } = params;
+    const { chapter_number, chapter_title, language_code, narrator_voice_id = DEFAULT_NARRATOR_VOICE, voices = {}, annotated_scenes, } = params;
     const voicesUsed = {
         [narrator_voice_id]: "Narrator",
     };
@@ -32,12 +32,12 @@ export function renderAudiobook(params) {
     }
     // Choose input path
     if (annotated_scenes && annotated_scenes.length > 0) {
-        return renderFromAnnotations(annotated_scenes, chapter_number, chapter_title, narrator_voice_id, voices, voicesUsed);
+        return renderFromAnnotations(annotated_scenes, chapter_number, chapter_title, language_code, narrator_voice_id, voices, voicesUsed);
     }
-    return renderFromMarkdown(params, narrator_voice_id, voices, voicesUsed);
+    return renderFromMarkdown(params, language_code, narrator_voice_id, voices, voicesUsed);
 }
 // --- Path 1: Agent-annotated scenes ---
-function renderFromAnnotations(annotatedScenes, chapterNumber, chapterTitle, narratorVoiceId, voices, voicesUsed) {
+function renderFromAnnotations(annotatedScenes, chapterNumber, chapterTitle, languageCode, narratorVoiceId, voices, voicesUsed) {
     let segmentCounter = 0;
     let chunkCounter = 0;
     const scenes = [];
@@ -84,6 +84,7 @@ function renderFromAnnotations(annotatedScenes, chapterNumber, chapterTitle, nar
     return {
         chapter_number: chapterNumber,
         chapter_title: chapterTitle,
+        ...(languageCode ? { language_code: languageCode } : {}),
         scenes,
         total_estimated_duration_ms: totalDuration,
         total_chunks: totalChunks,
@@ -91,7 +92,7 @@ function renderFromAnnotations(annotatedScenes, chapterNumber, chapterTitle, nar
     };
 }
 // --- Path 2: Regex-based markdown parsing (fallback) ---
-function renderFromMarkdown(params, narratorVoiceId, voices, voicesUsed) {
+function renderFromMarkdown(params, languageCode, narratorVoiceId, voices, voicesUsed) {
     const { chapter_markdown, chapter_number, chapter_title } = params;
     // Split into scenes on `---` lines
     const rawScenes = chapter_markdown
@@ -291,6 +292,7 @@ function renderFromMarkdown(params, narratorVoiceId, voices, voicesUsed) {
     return {
         chapter_number,
         chapter_title,
+        ...(languageCode ? { language_code: languageCode } : {}),
         scenes,
         total_estimated_duration_ms: totalDuration,
         total_chunks: totalChunks,
