@@ -87,7 +87,4 @@ Update `_series-meta.md` after each chapter with new NPCs, continuity notes, and
 
 ## Audiobook Generation
 
-If the player requests an audiobook version:
-1. Split the chapter into chunks of ~400 characters at natural sentence breaks
-2. Use `tts_narrate` for each chunk sequentially
-3. Note: Audio files are written to temp directory by the TTS tool — the player would need to collect them manually. This is an experimental feature.
+For audiobook generation, use the `/glintlock:audiobook` command after writing the chapter. It uses the dedicated audiobook pipeline with voice assignment, SFX, background music, and ffmpeg mixing.

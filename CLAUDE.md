@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Glintlock is a Claude Code plugin that turns Claude into a solo TTRPG Game Master for Shadowdark RPG. Plugin components (agents, commands, skills, hooks) live at the repository root for auto-discovery. The MCP server (`engine/`) provides dice, oracle, TTS, and session metadata tools.
+Glintlock is a Claude Code plugin that turns Claude into a solo TTRPG Game Master for Shadowdark RPG. Plugin components (agents, commands, skills, hooks) live at the repository root for auto-discovery. The MCP server (`engine/`) provides dice, oracle, TTS, sound effects, music, voice browsing, and session metadata tools.
 
 ## Development Commands
 
@@ -27,7 +27,7 @@ There are no tests yet. The MCP server is tested by installing the plugin in Cla
 
 1. **Plugin shell** — Auto-discovered at plugin root. Agent identity (`agents/gm.md`), slash commands (`commands/`), game rules and templates (`skills/`), hooks (`hooks/`), and MCP config (`.mcp.json`). Manifest at `.claude-plugin/plugin.json`.
 
-2. **MCP server** (`engine/`) — Lightweight. Node.js/TypeScript process spawned by Claude Code over stdio. Exposes 4 tools via `@modelcontextprotocol/sdk`: `roll_dice`, `roll_oracle`, `tts_narrate`, `get_session_metadata`.
+2. **MCP server** (`engine/`) — Lightweight. Node.js/TypeScript process spawned by Claude Code over stdio. Exposes 9 tools via `@modelcontextprotocol/sdk`: `roll_dice`, `roll_oracle`, `tts_narrate`, `generate_sfx`, `play_music`, `list_voices`, `get_session_metadata`, `render_audiobook`, `mix_audiobook`.
 
 ### Data Flow
 
@@ -50,7 +50,8 @@ Claude Code (claude --plugin-dir ./glintlock)
   │   ├── campaign-context.md     → Campaign premise
   │   ├── expertise.yaml          → GM learning
   │   ├── dashboard.html          → Generated visual dashboard
-  │   └── chronicles/             → Generated story chapters
+  │   ├── chronicles/             → Generated story chapters
+  │   └── audiobooks/             → Generated audiobook MP3s
   └── MCP (stdio) ──→ engine/dist/index.js
                         └── engine/data/oracle-tables.json
 ```
@@ -74,11 +75,17 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 
 | File | Implements |
 |------|-----------|
-| `engine/src/index.ts` | MCP server entry, stdio transport, 4 tool registrations |
+| `engine/src/index.ts` | MCP server entry, stdio transport, 9 tool registrations |
 | `engine/src/tools/dice.ts` | `roll_dice` — NdS+M parser, `crypto.randomInt` RNG, advantage/disadvantage |
 | `engine/src/tools/oracle.ts` | `roll_oracle` — loads oracle-tables.json, handles subtypes + range matching + multi-column rolls |
-| `engine/src/tools/tts.ts` | `tts_narrate` — ElevenLabs API, background audio playback |
+| `engine/src/tools/tts.ts` | `tts_narrate` — ElevenLabs TTS with voice settings (stability, similarity, style) |
+| `engine/src/tools/sfx.ts` | `generate_sfx` — ElevenLabs sound generation, background playback |
+| `engine/src/tools/music.ts` | `play_music` — ElevenLabs music generation, looping playback, single-track management |
+| `engine/src/tools/voices.ts` | `list_voices` — ElevenLabs voice browsing with search/filter |
 | `engine/src/tools/metadata.ts` | `get_session_metadata` — session count, dates, read/write JSON |
+| `engine/src/tools/audiobook.ts` | `render_audiobook` — parses chapter markdown into audio manifest (segments, chunks, voice assignments) |
+| `engine/src/tools/audiobook-mixer.ts` | `mix_audiobook` — ffmpeg-based mixing: speech spine + music bed + SFX → final MP3 |
+| `engine/src/tools/audio-utils.ts` | Shared utilities: `getAudioDurationMs` (ffprobe), `generateSilence` (ffmpeg) |
 
 ### Oracle Tables
 
@@ -101,6 +108,7 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 | `state-management` | Entity file templates (PC, NPC, location, item, faction) |
 | `dashboard-generation` | HTML dashboard template |
 | `story-generation` | Chronicle/prose generation guidelines |
+| `audiobook-generation` | Audiobook pipeline: voice assignment, SFX/music cues, rendering, mixing |
 
 ### Commands
 
@@ -114,13 +122,14 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 | `/glintlock:dashboard` | Generate visual HTML dashboard |
 | `/glintlock:chronicle` | Generate a narrative story chapter from session events |
 | `/glintlock:recap` | Deep audit of full campaign state |
+| `/glintlock:audiobook` | Generate an audiobook from a chronicle chapter |
 
 ### Environment Variables
 
 The MCP server reads env vars (set in `.mcp.json`):
 - `GLINTLOCK_WORLD_DIR` — Path to world/ directory
 - `GLINTLOCK_ORACLE_PATH` — Oracle tables JSON path
-- `ELEVENLABS_API_KEY` — ElevenLabs TTS API key (optional)
+- `ELEVENLABS_API_KEY` — ElevenLabs API key for TTS, sound effects, music, and voice browsing (optional)
 
 ### Config Details
 
@@ -139,3 +148,6 @@ When the plugin is active during Shadowdark play:
 - Update `world/quests.md` when quests change
 - Standard DCs: easy 9, normal 12, hard 15, extreme 18
 - Only call for checks when: time pressure + consequences + requires skill
+- Use `generate_sfx` for environmental and combat sounds at dramatic moments
+- Use `play_music` to set mood when entering new areas or shifting tone; stop for tense silence
+- Use `list_voices` when creating important NPCs — store `voice_id` in frontmatter, use it with `tts_narrate`

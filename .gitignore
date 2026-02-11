@@ -17,6 +17,7 @@ world/session-log.md
 world/session-metadata.json
 world/dashboard.html
 world/expertise.yaml
+world/audiobooks/
 
 # Keep directory structure with .gitkeep files
 !world/**/.gitkeep

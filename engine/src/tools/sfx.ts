@@ -4,47 +4,46 @@ import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { getAudioDurationMs } from "./audio-utils.js";
 
-const DEFAULT_VOICE_ID = "w8SDQBLZWRZYxv1YDGss"; // Glintlock narrator voice
-
-export interface TtsParams {
+export interface SfxParams {
   text: string;
-  voice_id?: string;
-  speed?: number;
-  stability?: number;
-  similarity_boost?: number;
-  style?: number;
+  duration_seconds?: number;
+  prompt_influence?: number;
   output_path?: string;
 }
 
-export interface TtsResult {
-  spoken: boolean;
+export interface SfxResult {
+  played: boolean;
   rendered?: boolean;
-  text_length: number;
-  voice_id: string;
+  text: string;
+  duration_seconds?: number;
   output_path?: string;
   duration_ms?: number;
   error?: string;
 }
 
-export async function ttsNarrate(params: TtsParams): Promise<TtsResult> {
-  const { text, speed, stability = 0.5, similarity_boost = 0.75, style, output_path } = params;
-  const voiceId = params.voice_id || DEFAULT_VOICE_ID;
+export async function generateSfx(params: SfxParams): Promise<SfxResult> {
+  const { text, duration_seconds, prompt_influence, output_path } = params;
 
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) {
     return {
-      spoken: false,
-      text_length: text.length,
-      voice_id: voiceId,
-      error: "ELEVENLABS_API_KEY not set. TTS disabled — continuing with text-only narration.",
+      played: false,
+      text,
+      error: "ELEVENLABS_API_KEY not set. Sound effects disabled.",
     };
   }
 
-  // Call ElevenLabs API
   let audioBuffer: ArrayBuffer;
   try {
+    const body: Record<string, unknown> = {
+      text,
+      model_id: "eleven_text_to_sound_v2",
+    };
+    if (duration_seconds != null) body.duration_seconds = duration_seconds;
+    if (prompt_influence != null) body.prompt_influence = prompt_influence;
+
     const res = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}`,
+      "https://api.elevenlabs.io/v1/sound-generation",
       {
         method: "POST",
         headers: {
@@ -52,35 +51,24 @@ export async function ttsNarrate(params: TtsParams): Promise<TtsResult> {
           "Content-Type": "application/json",
           Accept: "audio/mpeg",
         },
-        body: JSON.stringify({
-          text,
-          model_id: "eleven_multilingual_v2",
-          voice_settings: {
-            stability,
-            similarity_boost,
-            ...(style != null ? { style } : {}),
-            ...(speed != null ? { speed } : {}),
-          },
-        }),
+        body: JSON.stringify(body),
       }
     );
 
     if (!res.ok) {
-      const body = await res.text().catch(() => "");
+      const errBody = await res.text().catch(() => "");
       return {
-        spoken: false,
-        text_length: text.length,
-        voice_id: voiceId,
-        error: `ElevenLabs API error ${res.status}: ${body}`,
+        played: false,
+        text,
+        error: `ElevenLabs API error ${res.status}: ${errBody}`,
       };
     }
 
     audioBuffer = await res.arrayBuffer();
   } catch (err) {
     return {
-      spoken: false,
-      text_length: text.length,
-      voice_id: voiceId,
+      played: false,
+      text,
       error: `ElevenLabs request failed: ${(err as Error).message}`,
     };
   }
@@ -93,32 +81,27 @@ export async function ttsNarrate(params: TtsParams): Promise<TtsResult> {
     try {
       duration_ms = await getAudioDurationMs(output_path);
     } catch {
-      // ffprobe not available — estimate from text length (~65ms per char)
-      duration_ms = Math.round(text.length * 65);
+      duration_ms = duration_seconds ? Math.round(duration_seconds * 1000) : undefined;
     }
     return {
-      spoken: false,
+      played: false,
       rendered: true,
-      text_length: text.length,
-      voice_id: voiceId,
+      text,
+      duration_seconds,
       output_path,
       duration_ms,
     };
   }
 
-  // Write to temp file
-  const tmpPath = join(tmpdir(), `glintlock-tts-${Date.now()}.mp3`);
+  const tmpPath = join(tmpdir(), `glintlock-sfx-${Date.now()}.mp3`);
   await writeFile(tmpPath, Buffer.from(audioBuffer));
 
-  // Spawn platform-appropriate audio player (detached, non-blocking)
   const playerCmd = getAudioPlayer(tmpPath);
   if (!playerCmd) {
-    // Clean up temp file since we can't play it
     unlink(tmpPath).catch(() => {});
     return {
-      spoken: false,
-      text_length: text.length,
-      voice_id: voiceId,
+      played: false,
+      text,
       error: `No audio player found for platform: ${process.platform}`,
     };
   }
@@ -128,16 +111,14 @@ export async function ttsNarrate(params: TtsParams): Promise<TtsResult> {
     stdio: "ignore",
   });
   child.unref();
-
-  // Clean up temp file after playback finishes
   child.on("exit", () => {
     unlink(tmpPath).catch(() => {});
   });
 
   return {
-    spoken: true,
-    text_length: text.length,
-    voice_id: voiceId,
+    played: true,
+    text,
+    duration_seconds,
   };
 }
 

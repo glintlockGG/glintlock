@@ -73,6 +73,8 @@ name: Merchant Vela
 status: alive
 location: market-square
 disposition: friendly
+voice_id: ""
+voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0 }
 ---
 # Merchant Vela
 
@@ -97,6 +99,8 @@ name: Grukk
 status: alive
 location: obsidian-keep-level-1
 disposition: hostile
+voice_id: ""
+voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0 }
 hp: { current: 9, max: 9 }
 ac: 11
 stats: { str: 14, dex: 10, con: 12, int: 6, wis: 8, cha: 6 }
