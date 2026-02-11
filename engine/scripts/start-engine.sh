@@ -7,4 +7,4 @@ ENGINE_DIR="$(dirname "$SCRIPT_DIR")"
 
 cd "$ENGINE_DIR"
 
-exec node --experimental-sqlite dist/index.js
+exec node dist/index.js

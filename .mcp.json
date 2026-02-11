@@ -4,7 +4,7 @@
       "command": "bash",
       "args": ["${CLAUDE_PLUGIN_ROOT}/engine/scripts/start-engine.sh"],
       "env": {
-        "GLINTLOCK_DB_PATH": "${CLAUDE_PLUGIN_ROOT}/.mcpb-cache/state.db",
+        "GLINTLOCK_WORLD_DIR": "${CLAUDE_PLUGIN_ROOT}/world",
         "GLINTLOCK_ORACLE_PATH": "${CLAUDE_PLUGIN_ROOT}/engine/data/oracle-tables.json",
         "ELEVENLABS_API_KEY": "${ELEVENLABS_API_KEY}"
       }

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Glintlock is a Claude Code plugin that turns Claude into a solo TTRPG Game Master for Shadowdark RPG. Plugin components (agents, commands, skills, hooks) live at the repository root for auto-discovery. The MCP server (`engine/`) provides the game engine tools.
+Glintlock is a Claude Code plugin that turns Claude into a solo TTRPG Game Master for Shadowdark RPG. Plugin components (agents, commands, skills, hooks) live at the repository root for auto-discovery. The MCP server (`engine/`) provides dice, oracle, TTS, and session metadata tools.
 
 ## Development Commands
 
@@ -21,17 +21,13 @@ node engine/dist/index.js
 
 There are no tests yet. The MCP server is tested by installing the plugin in Claude Code and calling tools interactively.
 
-## Current Build Status
-
-The MCP server is fully built (Phase 1 complete). The plugin shell (agent prompt, commands, skills, hooks) is complete and structured for auto-discovery at the plugin root.
-
 ## Architecture
 
 ### Two Halves
 
-1. **Plugin shell** — Auto-discovered at plugin root. Agent identity (`agents/gm.md`), slash commands (`commands/`), Shadowdark rules reference (`skills/`), hooks (`hooks/`), and MCP config (`.mcp.json`). Manifest at `.claude-plugin/plugin.json`.
+1. **Plugin shell** — Auto-discovered at plugin root. Agent identity (`agents/gm.md`), slash commands (`commands/`), game rules and templates (`skills/`), hooks (`hooks/`), and MCP config (`.mcp.json`). Manifest at `.claude-plugin/plugin.json`.
 
-2. **MCP server** (`engine/`) — Fully built. Node.js/TypeScript process spawned by Claude Code over stdio. Exposes 8 tools via `@modelcontextprotocol/sdk`. Uses `better-sqlite3` for game state persistence.
+2. **MCP server** (`engine/`) — Lightweight. Node.js/TypeScript process spawned by Claude Code over stdio. Exposes 4 tools via `@modelcontextprotocol/sdk`: `roll_dice`, `roll_oracle`, `tts_narrate`, `get_session_metadata`.
 
 ### Data Flow
 
@@ -41,30 +37,48 @@ Claude Code (claude --plugin-dir ./glintlock)
   ├── .mcp.json                   → MCP server config (portable paths)
   ├── agents/gm.md                → GM identity + rules
   ├── commands/                   → slash commands (/glintlock:*)
-  ├── skills/                     → Shadowdark rules reference
+  ├── skills/                     → rules, templates, dashboard, story generation
   ├── hooks/hooks.json            → SessionStart hook
+  ├── world/                      → markdown entity files (ground truth)
+  │   ├── characters/             → PC files
+  │   ├── npcs/                   → NPC files
+  │   ├── locations/              → Location files
+  │   ├── items/                  → Item files
+  │   ├── factions/               → Faction files
+  │   ├── quests.md               → Quest board
+  │   ├── session-log.md          → Session events
+  │   ├── campaign-context.md     → Campaign premise
+  │   ├── expertise.yaml          → GM learning
+  │   ├── dashboard.html          → Generated visual dashboard
+  │   └── chronicles/             → Generated story chapters
   └── MCP (stdio) ──→ engine/dist/index.js
-                        ├── world/state.db          (SQLite ECS)
                         └── engine/data/oracle-tables.json
 ```
+
+### State Management
+
+Game state lives in `world/` as human-readable markdown files with YAML frontmatter. The agent reads and writes these files directly using the Read and Write tools. No database.
+
+- **Characters:** `world/characters/{name}.md` — YAML frontmatter for stats/HP/inventory, markdown body for description/notes
+- **NPCs:** `world/npcs/{name}.md` — disposition, location, combat stats if relevant
+- **Locations:** `world/locations/{name}.md` — danger level, light, connections, contents
+- **Items:** `world/items/{name}.md` — properties, owner, history
+- **Factions:** `world/factions/{name}.md` — members, goals, disposition
+- **Quests:** `world/quests.md` — Active / Developing / Completed sections
+- **Session Log:** `world/session-log.md` — append-only tagged entries
+- **Campaign Context:** `world/campaign-context.md` — premise, setting, tone
+
+See `skills/state-management/SKILL.md` for file templates and conventions.
 
 ### MCP Server Modules
 
 | File | Implements |
 |------|-----------|
-| `engine/src/index.ts` | MCP server entry, stdio transport, tool registration |
-| `engine/src/db.ts` | SQLite connection, schema initialization, WAL mode |
-| `engine/src/tools/ecs.ts` | `get_entity`, `update_entity`, `create_entity`, `query_entities` |
+| `engine/src/index.ts` | MCP server entry, stdio transport, 4 tool registrations |
 | `engine/src/tools/dice.ts` | `roll_dice` — NdS+M parser, `crypto.randomInt` RNG, advantage/disadvantage |
 | `engine/src/tools/oracle.ts` | `roll_oracle` — loads oracle-tables.json, handles subtypes + range matching + multi-column rolls |
-| `engine/src/tools/notes.ts` | `add_note` — freeform notes, global or entity-attached |
-| `engine/src/tools/session.ts` | `get_session_summary` — PC status, location, recent notes for cold starts |
-
-### ECS Database Pattern
-
-Game state lives in `world/state.db` (SQLite). Entities have a type (`pc`, `npc`, `location`, `item`, `faction`) and components spread across dedicated tables: `stats`, `health`, `character_info`, `spells`, `position`, `inventory`, `description`, `location_data`, `combat_data`. Notes and session metadata have their own tables.
-
-Entity IDs are auto-generated from type + name (e.g. `npc_merchant_vela`). The `update_entity` tool supports four operations: `set` (replace), `delta` (add/subtract), `push` (append to JSON array), `remove` (delete from JSON array). JSON arrays in SQLite columns store things like inventory items, known spells, and location connections.
+| `engine/src/tools/tts.ts` | `tts_narrate` — ElevenLabs API, background audio playback |
+| `engine/src/tools/metadata.ts` | `get_session_metadata` — session count, dates, read/write JSON |
 
 ### Oracle Tables
 
@@ -74,13 +88,39 @@ Entity IDs are auto-generated from type + name (e.g. `npc_merchant_vela`). The `
 - **Multi-column**: Independent roll per column, results concatenated (e.g. `adventure_name` has `name_1`, `name_2`, `name_3`)
 - **Subtypes**: `npc_name` has per-ancestry arrays selected by a `subtype` parameter
 
-Four d100 tables (`treasure_0_3`, `something_happens`, `rumors`, `random_encounter_ruins`) are fully populated.
+### Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `shadowdark-core` | Core rules, class/ancestry tables, gear lists |
+| `shadowdark-monsters` | Monster stat blocks |
+| `shadowdark-spells` | Spell lists and descriptions |
+| `shadowdark-treasure` | Treasure tables and magic items |
+| `shadowdark-adventure` | Adventure generation guidelines |
+| `shadowdark-adventure-obsidian-keep` | Pre-built adventure: The Obsidian Keep |
+| `state-management` | Entity file templates (PC, NPC, location, item, faction) |
+| `dashboard-generation` | HTML dashboard template |
+| `story-generation` | Chronicle/prose generation guidelines |
+
+### Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/glintlock:new-session` | Start a new campaign with character creation |
+| `/glintlock:continue-session` | Resume an existing campaign |
+| `/glintlock:end-session` | End session with save, world-advance, expertise extraction |
+| `/glintlock:status` | Show PC character sheet |
+| `/glintlock:roll` | Player-initiated dice roll |
+| `/glintlock:dashboard` | Generate visual HTML dashboard |
+| `/glintlock:chronicle` | Generate a narrative story chapter from session events |
+| `/glintlock:recap` | Deep audit of full campaign state |
 
 ### Environment Variables
 
-The MCP server reads two env vars (set in `.mcp.json`):
-- `GLINTLOCK_DB_PATH` — SQLite database path (default: `./world/state.db`)
-- `GLINTLOCK_ORACLE_PATH` — Oracle tables JSON path (default: `./engine/data/oracle-tables.json`)
+The MCP server reads env vars (set in `.mcp.json`):
+- `GLINTLOCK_WORLD_DIR` — Path to world/ directory
+- `GLINTLOCK_ORACLE_PATH` — Oracle tables JSON path
+- `ELEVENLABS_API_KEY` — ElevenLabs TTS API key (optional)
 
 ### Config Details
 
@@ -89,24 +129,13 @@ The MCP server reads two env vars (set in `.mcp.json`):
 - Module resolution: node
 - Strict mode enabled
 
-## Key Spec Reference
-
-`glintlock-plugin-spec.md` is the authoritative source for:
-- All 8 MCP tool input/output schemas
-- Complete SQLite schema (12 tables + indexes)
-- GM agent prompt and behavior rules
-- Oracle table data structures
-- Post-session expertise extraction design
-- Production persistence lifecycle (E2B + R2)
-
-Read this file before implementing any engine code.
-
 ## When Acting as GM
 
 When the plugin is active during Shadowdark play:
 - ALWAYS use `roll_dice` for ALL mechanical resolution — never simulate randomness
 - ALWAYS use `roll_oracle` for random content instead of inventing it
-- The ECS (`world/state.db`) is ground truth — query before narrating, update immediately after
-- Use `add_note` for significant events, rulings, and plot threads
+- The world files (`world/`) are ground truth — Read before narrating, Write immediately after state changes
+- Append significant events to `world/session-log.md` with tags
+- Update `world/quests.md` when quests change
 - Standard DCs: easy 9, normal 12, hard 15, extreme 18
 - Only call for checks when: time pressure + consequences + requires skill

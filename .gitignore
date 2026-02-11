@@ -1,10 +1,22 @@
 node_modules/
-**/state.db
-**/state.db-shm
-**/state.db-wal
-**/sessions/*.jsonl
-**/expertise.yaml
 *.pdf
 .DS_Store
 .mcpb-cache/
 glintlock-plugin.zip
+
+# World state (campaign-specific, not committed)
+world/characters/*
+world/npcs/*
+world/locations/*
+world/items/*
+world/factions/*
+world/chronicles/*
+world/quests.md
+world/campaign-context.md
+world/session-log.md
+world/session-metadata.json
+world/dashboard.html
+world/expertise.yaml
+
+# Keep directory structure with .gitkeep files
+!world/**/.gitkeep
