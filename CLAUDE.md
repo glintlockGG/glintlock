@@ -39,26 +39,13 @@ Claude Code (claude --plugin-dir ./glintlock)
   ├── commands/                   → slash commands (/glintlock:*)
   ├── skills/                     → rules, templates, dashboard, story generation
   ├── hooks/hooks.json            → SessionStart hook
-  ├── world/                      → markdown entity files (ground truth)
-  │   ├── characters/             → PC files
-  │   ├── npcs/                   → NPC files
-  │   ├── locations/              → Location files
-  │   ├── items/                  → Item files
-  │   ├── factions/               → Faction files
-  │   ├── quests.md               → Quest board
-  │   ├── session-log.md          → Session events
-  │   ├── campaign-context.md     → Campaign premise
-  │   ├── CLAUDE.md                → Campaign memory (play style, rulings, threads)
-  │   ├── dashboard.html          → Generated visual dashboard
-  │   ├── chronicles/             → Generated story chapters
-  │   └── audiobooks/             → Generated audiobook MP3s
   └── MCP (stdio) ──→ engine/dist/index.js
                         └── engine/data/oracle-tables.json
 ```
 
 ### State Management
 
-Game state lives in `world/` as human-readable markdown files with YAML frontmatter. The agent reads and writes these files directly using the Read and Write tools. No database.
+Game state lives in `world/` inside the **user's project directory** (not inside the plugin repo). The `world/` directory is created by `/glintlock:new-session` and contains human-readable markdown files with YAML frontmatter. The agent reads and writes these files directly using the Read and Write tools. No database.
 
 - **Characters:** `world/characters/{name}.md` — YAML frontmatter for stats/HP/inventory, markdown body for description/notes
 - **NPCs:** `world/npcs/{name}.md` — disposition, location, combat stats if relevant
@@ -126,7 +113,7 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 ### Environment Variables
 
 The MCP server reads env vars (set in `.mcp.json`):
-- `GLINTLOCK_WORLD_DIR` — Path to world/ directory
+- `GLINTLOCK_WORLD_DIR` — Path to world/ directory (resolves to `./world` in the user's project)
 - `GLINTLOCK_ORACLE_PATH` — Oracle tables JSON path
 - `ELEVENLABS_API_KEY` — ElevenLabs API key for TTS, sound effects, music, and voice browsing (optional)
 

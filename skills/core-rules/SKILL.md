@@ -1,6 +1,6 @@
 ---
 name: core-rules
-description: "Core Torchlit rules. Load when resolving checks, combat, movement, death, resting, light, gear, or any mechanical ruling."
+description: "Core Torchlit rules: ability checks, DCs, combat, initiative, death and dying, movement, light sources, resting, gear, and class/ancestry reference. This skill should be used when resolving checks, running combat, handling death saves, managing light, equipping gear, creating characters, or making any mechanical ruling."
 ---
 
 # Torchlit — Core Rules Reference

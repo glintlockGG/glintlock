@@ -1,4 +1,5 @@
 ---
+name: audiobook-producer
 description: "Audiobook Producer — generates audiobooks from chronicle chapters in the background"
 allowedTools:
   - "mcp:glintlock-engine:render_audiobook"

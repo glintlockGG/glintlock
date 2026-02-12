@@ -1,9 +1,9 @@
 #!/bin/bash
 # SessionStart hook — injects campaign memory context and recent session state
 
-MEMORY_FILE="${CLAUDE_PLUGIN_ROOT}/world/CLAUDE.md"
-CAMPAIGN_FILE="${CLAUDE_PLUGIN_ROOT}/world/campaign-context.md"
-SESSION_LOG="${CLAUDE_PLUGIN_ROOT}/world/session-log.md"
+MEMORY_FILE="./world/CLAUDE.md"
+CAMPAIGN_FILE="./world/campaign-context.md"
+SESSION_LOG="./world/session-log.md"
 
 if [ -f "$MEMORY_FILE" ]; then
   echo "<gm_expertise>"

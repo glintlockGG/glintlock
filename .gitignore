@@ -4,24 +4,8 @@ node_modules/
 .mcpb-cache/
 glintlock-plugin.zip
 
-# World state (campaign-specific, not committed)
-world/characters/*
-world/npcs/*
-world/locations/*
-world/items/*
-world/factions/*
-world/chronicles/*
-world/quests.md
-world/campaign-context.md
-world/session-log.md
-world/session-metadata.json
-world/dashboard.html
-world/CLAUDE.md
-world/session-log-archive.md
-world/audiobooks/
-
-# Keep directory structure with .gitkeep files
-!world/**/.gitkeep
+# World state (lives in user's project directory, not in the plugin repo)
+world/
 
 # Playwright MCP cache
 .playwright-mcp/

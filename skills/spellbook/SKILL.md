@@ -1,6 +1,6 @@
 ---
 name: spellbook
-description: "Spell lists, spellcasting rules, arcane backlash, scrolls/wands. Load when casting spells, learning spells, or resolving magical effects."
+description: "Spell lists, spellcasting rules, arcane backlash, scrolls, wands, focus spells, and talent tables for all four classes. This skill should be used when casting spells, learning spells, resolving magical effects, rolling backlash, checking spells known, or rolling talents on level up."
 ---
 
 # Spellcasting

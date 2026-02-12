@@ -9,7 +9,11 @@ allowed-tools:
   - "Write"
 ---
 
-Continue an existing campaign from where the player left off. Load the `state-management` skill first.
+Continue an existing campaign from where the player left off.
+
+First, check that `world/` exists in the current project directory. If it does not exist, tell the player: "No campaign found in this project. Run `/glintlock:new-session` to start a new campaign."
+
+Load the `state-management` skill first.
 
 1. Read `world/campaign-context.md` for the campaign premise and setting
 2. Read the PC file from `world/characters/` (there should be one PC file)

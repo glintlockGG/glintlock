@@ -1,5 +1,6 @@
 ---
-description: "Entity file templates and state management conventions for Glintlock world files"
+name: state-management
+description: "Entity file templates and state management conventions for world files. This skill should be used when creating characters, NPCs, locations, items, or factions, updating entity files, writing to the session log or quest board, or formatting campaign memory."
 ---
 
 # State Management — Markdown Entity Files

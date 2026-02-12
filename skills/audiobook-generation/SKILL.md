@@ -1,5 +1,6 @@
 ---
-description: "Audiobook generation pipeline — voice assignment, SFX/music cues, rendering, and mixing"
+name: audiobook-generation
+description: "Audiobook generation pipeline: voice assignment, SFX/music cues, rendering, and mixing. This skill should be used when the player runs /glintlock:audiobook or requests an audiobook from a chronicle chapter."
 ---
 
 # Audiobook Generation

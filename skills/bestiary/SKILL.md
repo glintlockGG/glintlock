@@ -1,6 +1,6 @@
 ---
 name: bestiary
-description: "Monster stat blocks and attributes for Torchlit. Load when spawning monsters, running combat, or checking monster abilities."
+description: "Monster stat blocks and attributes for Torchlit, alphabetical from Aboleth to Wolf (LV 0-12). This skill should be used when spawning monsters, running monster combat, looking up creature AC/HP/attacks, or generating encounters."
 ---
 
 # Monster Attributes

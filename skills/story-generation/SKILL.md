@@ -1,5 +1,6 @@
 ---
-description: "Transform gameplay session logs into narrative prose chapters"
+name: story-generation
+description: "Transform gameplay session logs into narrative prose chronicle chapters. This skill should be used when the player requests a chronicle, runs /glintlock:chronicle, or asks to turn session events into a story."
 ---
 
 # Story Generation — Chronicles

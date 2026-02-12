@@ -19,9 +19,6 @@ A [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code) that turn
 # Clone the plugin
 git clone https://github.com/glintlockGG/glintlock.git
 
-# Build the MCP server
-cd glintlock/engine && npm install && npm run build && cd ..
-
 # Set your ElevenLabs API key (optional)
 export ELEVENLABS_API_KEY=your-key-here
 
@@ -121,7 +118,7 @@ Markdown files at the repository root, auto-discovered by Claude Code. These def
 ```
 agents/gm.md              — GM identity and behavioral rules
 commands/                  — 9 slash commands
-skills/                    — 10 skills (rules, templates, generation pipelines)
+skills/                    — 9 skills (rules, templates, generation pipelines)
 hooks/hooks.json           — SessionStart hook (loads campaign context)
 .claude-plugin/plugin.json — Plugin manifest
 .mcp.json                  — MCP server configuration
@@ -161,22 +158,22 @@ Skills are bundles of rules and templates that load on demand when the GM needs 
 
 ### State Management
 
-All game state lives in `world/` as human-readable markdown with YAML frontmatter. No database.
+All game state lives in `world/` inside your **project directory** (not inside the plugin). The `/glintlock:new-session` command creates this directory automatically. Files are human-readable markdown with YAML frontmatter. No database.
 
 ```
-world/
-  characters/          # Player character sheets
-  npcs/                # NPC files with disposition, stats, voice_id
-  locations/           # Explored areas with connections and contents
-  items/               # Notable items and artifacts
-  factions/            # Groups and their goals
-  quests.md            # Active / Developing / Completed quest board
-  session-log.md       # Append-only tagged event log
-  campaign-context.md  # Campaign premise and setting
-  CLAUDE.md            # Campaign memory (play style, rulings, active threads)
-  dashboard.html       # Generated campaign dashboard
-  chronicles/          # Generated prose story chapters
-  audiobooks/          # Generated audiobook MP3s
+world/                   # Created in your project directory
+  characters/            # Player character sheets
+  npcs/                  # NPC files with disposition, stats, voice_id
+  locations/             # Explored areas with connections and contents
+  items/                 # Notable items and artifacts
+  factions/              # Groups and their goals
+  quests.md              # Active / Developing / Completed quest board
+  session-log.md         # Append-only tagged event log
+  campaign-context.md    # Campaign premise and setting
+  CLAUDE.md              # Campaign memory (play style, rulings, active threads)
+  dashboard.html         # Generated campaign dashboard
+  chronicles/            # Generated prose story chapters
+  audiobooks/            # Generated audiobook MP3s
 ```
 
 ### Data Flow
@@ -184,7 +181,7 @@ world/
 ```
 Claude Code (claude --plugin-dir ./glintlock)
   ├── Plugin shell (agents, commands, skills, hooks)
-  ├── world/ (markdown entity files — ground truth)
+  ├── world/ (in user's project dir — markdown entity files, ground truth)
   └── MCP (stdio) ──→ engine/dist/index.js
                         ├── Dice + oracle tools (local)
                         └── Audio tools (ElevenLabs API)
@@ -216,7 +213,7 @@ The following are configured automatically by the plugin and do not need to be s
 
 | Variable | Description |
 |----------|-------------|
-| `GLINTLOCK_WORLD_DIR` | Path to `world/` directory (set via `${CLAUDE_PLUGIN_ROOT}`) |
+| `GLINTLOCK_WORLD_DIR` | Path to `world/` directory (resolves to `./world` in user's project) |
 | `GLINTLOCK_ORACLE_PATH` | Path to oracle tables JSON (set via `${CLAUDE_PLUGIN_ROOT}`) |
 
 `ffmpeg` and `ffprobe` must be on your PATH for audiobook mixing.

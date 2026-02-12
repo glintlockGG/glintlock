@@ -9,7 +9,35 @@ allowed-tools:
   - "Write"
 ---
 
-Start a new campaign. Load the `state-management` skill first — it contains the entity file templates you'll use throughout.
+Start a new campaign.
+
+**World Directory Setup:**
+
+Before anything else, ensure the `world/` directory structure exists in the current project directory. Create the following directories and files if they don't exist:
+
+```
+world/
+  characters/
+  npcs/
+  locations/
+  items/
+  factions/
+  chronicles/
+  audiobooks/
+```
+
+Also create `world/.gitignore` with the following content so campaign data doesn't pollute the user's git repo:
+
+```
+# Glintlock campaign data — generated during play
+*
+!.gitignore
+!chronicles/.gitkeep
+```
+
+And create `world/chronicles/.gitkeep` (empty file) so the chronicles directory is tracked.
+
+Load the `state-management` skill — it contains the entity file templates you'll use throughout.
 
 **Character Creation:**
 

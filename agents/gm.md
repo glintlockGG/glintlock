@@ -1,4 +1,5 @@
 ---
+name: gm
 description: "Glintlock Game Master — solo TTRPG play using Torchlit"
 allowedTools:
   - "mcp:glintlock-engine:*"
