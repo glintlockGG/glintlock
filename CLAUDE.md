@@ -48,7 +48,7 @@ Claude Code (claude --plugin-dir ./glintlock)
   │   ├── quests.md               → Quest board
   │   ├── session-log.md          → Session events
   │   ├── campaign-context.md     → Campaign premise
-  │   ├── expertise.yaml          → GM learning
+  │   ├── CLAUDE.md                → Campaign memory (play style, rulings, threads)
   │   ├── dashboard.html          → Generated visual dashboard
   │   ├── chronicles/             → Generated story chapters
   │   └── audiobooks/             → Generated audiobook MP3s
@@ -116,7 +116,7 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 |---------|---------|
 | `/glintlock:new-session` | Start a new campaign with character creation |
 | `/glintlock:continue-session` | Resume an existing campaign |
-| `/glintlock:end-session` | End session with save, world-advance, expertise extraction |
+| `/glintlock:end-session` | End session with save, world-advance, campaign memory update |
 | `/glintlock:status` | Show PC character sheet |
 | `/glintlock:roll` | Player-initiated dice roll |
 | `/glintlock:dashboard` | Generate visual HTML dashboard |

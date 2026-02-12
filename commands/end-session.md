@@ -33,22 +33,31 @@ End the current play session gracefully. Load the `state-management` skill first
    - Weather or seasonal changes
    - Rumors spread
 
-**Expertise Extraction:**
+**Update Campaign Memory:**
 
-7. Analyze the full session and extract observations about:
-   - **play_style**: tone preferences, pacing, what the player enjoys
-   - **narrative_patterns**: what worked (effective), what fell flat
-   - **rulings**: precedent-setting rule interpretations
-   - **player_character**: personality notes, combat style, decision patterns
-   - **unresolved_threads**: open plot hooks for future sessions
-8. Read `world/expertise.yaml`, merge observations (append to arrays, don't overwrite existing entries), increment `sessions_played`, set `last_updated` to today's date, and Write the updated file back
+7. Read `world/CLAUDE.md`. Update each section based on this session:
+   - **Character**: Update HP, location, level, any major status changes
+   - **Play Style**: Add new preferences observed (if any). Remove if player's taste has changed.
+   - **Player Character**: Add new personality or combat observations
+   - **Narrative Patterns**: Add patterns that worked or fell flat this session
+   - **Rulings**: Add any new precedent-setting rulings from this session
+   - **Active Threads**: Add new threads, update status of existing ones, remove resolved ones
+   - **World State**: Rewrite the summary paragraph to reflect current state
+8. Write the updated `world/CLAUDE.md` back
+
+**Session Log Rotation:**
+
+9. If `world/session-log.md` exceeds ~150 lines:
+   - Identify session boundaries (lines starting with `## Session`)
+   - Keep the most recent 2 sessions in `world/session-log.md`
+   - Prepend the older sessions to `world/session-log-archive.md` (create if needed)
 
 **Session Metadata:**
 
-9. Update session metadata via `get_session_metadata` (action: "update") — set `last_played` to today
+10. Update session metadata via `get_session_metadata` (action: "update") — set `last_played` to today
 
 **Wrap Up:**
 
-10. Present a brief summary to the player: key events, current status, active quests
-11. Tell the player they can resume with `/glintlock:continue-session`
-12. Suggest running `/glintlock:dashboard` for a visual overview or `/glintlock:chronicle` to generate a story chapter
+11. Present a brief summary to the player: key events, current status, active quests
+12. Tell the player they can resume with `/glintlock:continue-session`
+13. Suggest running `/glintlock:dashboard` for a visual overview or `/glintlock:chronicle` to generate a story chapter

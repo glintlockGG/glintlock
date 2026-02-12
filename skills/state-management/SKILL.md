@@ -196,6 +196,63 @@ A coalition of traders and shopkeepers in Millhaven. They control the market squ
 - Will pay 50 gp for proof of what's causing the disappearances
 ```
 
+## Campaign Memory (`world/CLAUDE.md`)
+
+A curated hot cache of the most important campaign state, loaded at the start of every session by the SessionStart hook. Uses markdown tables for compact, scannable content. Updated at the end of each session.
+
+```markdown
+# Campaign Memory
+
+## Character
+{Name}, {Ancestry} {Class}, Level {N}. {current}/{max} HP. Currently in {location}.
+→ Full sheet: world/characters/{name}.md
+
+## Play Style
+| Preference | Detail |
+|-----------|--------|
+| Tone | {tone preferences} |
+| Pacing | {pacing preferences} |
+| Likes | {what the player enjoys} |
+| Dislikes | {what the player dislikes} |
+
+## Player Character
+| Trait | Detail |
+|-------|--------|
+| Personality | {personality observations} |
+| Social | {social behavior patterns} |
+| Combat | {combat preferences and tactics} |
+
+## Narrative Patterns
+| What Works | What to Avoid |
+|-----------|---------------|
+| {effective pattern} | {pattern to avoid} |
+
+## Rulings
+| Situation | Ruling |
+|-----------|--------|
+| {situation} | {ruling} |
+
+## Active Threads
+| Thread | Status |
+|--------|--------|
+| {thread name} | {current status} |
+
+## World State
+{1-3 sentence summary of where the campaign stands}
+
+→ Quests: world/quests.md
+→ NPCs: world/npcs/
+→ Locations: world/locations/
+→ Session history: world/session-log.md
+```
+
+**Update rules:**
+- Updated at the end of each session (see `/glintlock:end-session`)
+- Keep total length under ~80 lines
+- Tables are additive — add new rows for new observations, remove rows only when they're wrong or outdated
+- The World State paragraph should be rewritten each session to reflect the current state
+- Active Threads should be kept current — remove resolved threads, add new ones, update status
+
 ## Quest Board (`world/quests.md`)
 
 ```markdown

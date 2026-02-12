@@ -14,7 +14,7 @@ Perform a comprehensive audit of the entire campaign state. Read ALL world files
 3. Read `world/quests.md`
 4. Read `world/session-log.md` (full file)
 5. Read `world/campaign-context.md`
-6. Read `world/expertise.yaml` if it exists
+6. Read `world/CLAUDE.md` if it exists
 7. Read session metadata via `get_session_metadata`
 
 Present a structured audit report:
@@ -46,4 +46,4 @@ Present a structured audit report:
 - Plot threads that could be developed next session
 - NPCs who haven't been revisited
 - Quest deadlines approaching
-- Narrative opportunities based on expertise.yaml patterns
+- Narrative opportunities based on campaign memory patterns

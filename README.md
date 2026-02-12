@@ -46,7 +46,7 @@ You talk. Claude runs the game. Describe what your character does in natural lan
 - **18 oracle tables** — Curated Shadowdark random tables for NPC names (6 ancestries: dwarf, elf, goblin, halfling, half-orc, human), random encounters, treasure, traps, rumors, hazards, creature behavior, backgrounds, gear, adventure names, and magic item names. The GM rolls on these instead of inventing content, keeping results surprising for both player and AI.
 - **Full Shadowdark rules** — 4 classes (Fighter, Priest, Thief, Wizard), 6 ancestries, 52 monster stat blocks (LV 0–8+), 36 spells (Priest and Wizard, Tiers 1–2), complete combat, death and dying, light and darkness, gear, encumbrance, and talent tables. All encoded as skills that load on demand.
 - **Persistent world state** — Characters, NPCs, locations, items, factions, quests, and a session log are stored as human-readable markdown files with YAML frontmatter. No database. Files are version-controllable and editable by hand.
-- **GM learning** — The plugin tracks play style preferences, rulings precedents, and narrative patterns across sessions in an expertise file. It remembers that you prefer exploration over combat, or that swimming in armor gives disadvantage, without being told twice.
+- **GM learning** — The plugin tracks play style preferences, rulings precedents, narrative patterns, and active threads across sessions in a campaign memory file (`world/CLAUDE.md`). It remembers that you prefer exploration over combat, or that swimming in armor gives disadvantage, without being told twice.
 
 ### Audio
 
@@ -83,7 +83,7 @@ Requires an [ElevenLabs](https://elevenlabs.io/) API key. All audio plays in the
 |---------|-------------|
 | `/glintlock:new-session` | Start a new campaign with character creation |
 | `/glintlock:continue-session` | Resume an existing campaign |
-| `/glintlock:end-session` | End session with save, world-advance, and GM learning |
+| `/glintlock:end-session` | End session with save, world-advance, and campaign memory update |
 | `/glintlock:status` | Show your character sheet |
 | `/glintlock:roll` | Player-initiated dice roll |
 | `/glintlock:dashboard` | Generate a visual HTML campaign dashboard |
@@ -155,7 +155,7 @@ world/
   quests.md            # Active / Developing / Completed quest board
   session-log.md       # Append-only tagged event log
   campaign-context.md  # Campaign premise and setting
-  expertise.yaml       # GM learning (play style, rulings, narrative patterns)
+  CLAUDE.md            # Campaign memory (play style, rulings, active threads)
   dashboard.html       # Generated campaign dashboard
   chronicles/          # Generated prose story chapters
   audiobooks/          # Generated audiobook MP3s

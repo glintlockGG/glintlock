@@ -86,5 +86,5 @@ Also extract all room descriptions from "The Lost Citadel of the Scarlet Minotau
 - Oracle tables: small tables are complete, d100 tables need PDF extraction
 - Adventure module: room descriptions need PDF extraction
 - `world/state.db` is auto-created on first MCP server run
-- `world/expertise.yaml` is a template, will be populated after play sessions
+- `world/CLAUDE.md` is the campaign memory file, populated after play sessions
 - No Docker, no E2B, no backend needed — this is all local Claude Code
