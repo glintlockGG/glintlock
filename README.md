@@ -17,7 +17,7 @@ A [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code) that turn
 
 ```bash
 # Clone the plugin
-git clone https://github.com/dakeobac/glintlock.git
+git clone https://github.com/glintlockGG/glintlock.git
 
 # Build the MCP server
 cd glintlock/engine && npm install && npm run build && cd ..
