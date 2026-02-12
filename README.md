@@ -1,8 +1,6 @@
 # Glintlock
 
-A [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code) that turns Claude into a solo TTRPG Game Master for [Shadowdark RPG](https://www.thearcanelibrary.com/pages/shadowdark).
-
-Glintlock runs persistent campaigns with real dice, curated random tables, voice-acted NPCs, background music, sound effects, and full audiobook generation from your session logs.
+A [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code) that turns Claude into a solo TTRPG Game Master for [Shadowdark RPG](https://www.thearcanelibrary.com/pages/shadowdark). It runs persistent campaigns with real dice, curated random tables, voice-acted NPCs, atmospheric audio, and full audiobook generation — all in the terminal.
 
 ## Quick Start
 
@@ -10,8 +8,8 @@ Glintlock runs persistent campaigns with real dice, curated random tables, voice
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
 - Node.js 18+
-- [ElevenLabs API key](https://elevenlabs.io/) (optional, for voice/audio features)
-- `ffmpeg` and `ffprobe` (optional, for audiobook mixing)
+- [ElevenLabs API key](https://elevenlabs.io/) (optional — enables voice narration, sound effects, music, and audiobooks)
+- `ffmpeg` and `ffprobe` on your PATH (optional — required for audiobook mixing)
 
 ### Install
 
@@ -32,66 +30,52 @@ claude --plugin-dir ./glintlock
 ### Play
 
 ```
-> /glintlock:new-session     # Create a character and start playing
-> /glintlock:continue-session # Resume where you left off
+> /glintlock:new-session        # Create a character and start playing
+> /glintlock:continue-session   # Resume where you left off
 ```
 
-## What It Does
+## How It Works
 
-**You talk. Claude runs the game.** Describe what your character does. Claude narrates the world, voices NPCs, rolls dice, tracks your inventory, and plays atmospheric audio — all in the terminal.
+You talk. Claude runs the game. Describe what your character does in natural language. Claude narrates the world, voices NPCs, rolls dice, tracks your inventory, manages quests, and plays atmospheric audio — all in the terminal. Game state is saved automatically to markdown files as you play, so you can pick up exactly where you left off.
 
-### During Play
+## Features
 
-- Dice rolls use cryptographic randomness via the `roll_dice` MCP tool
-- NPCs, encounters, and treasure come from curated Shadowdark random tables
-- Game state is saved automatically to markdown files as you play
-- Background music shifts as you explore new areas
-- Important NPCs get persistent ElevenLabs voices
+### Gameplay
 
-### After a Session
+- **Real dice** — All rolls use cryptographic randomness (`crypto.randomInt`) via the `roll_dice` tool. Standard NdS+M notation with advantage and disadvantage.
+- **18 oracle tables** — Curated Shadowdark random tables for NPC names (6 ancestries: dwarf, elf, goblin, halfling, half-orc, human), random encounters, treasure, traps, rumors, hazards, creature behavior, backgrounds, gear, adventure names, and magic item names. The GM rolls on these instead of inventing content, keeping results surprising for both player and AI.
+- **Full Shadowdark rules** — 4 classes (Fighter, Priest, Thief, Wizard), 6 ancestries, 52 monster stat blocks (LV 0–8+), 36 spells (Priest and Wizard, Tiers 1–2), complete combat, death and dying, light and darkness, gear, encumbrance, and talent tables. All encoded as skills that load on demand.
+- **Persistent world state** — Characters, NPCs, locations, items, factions, quests, and a session log are stored as human-readable markdown files with YAML frontmatter. No database. Files are version-controllable and editable by hand.
+- **GM learning** — The plugin tracks play style preferences, rulings precedents, and narrative patterns across sessions in an expertise file. It remembers that you prefer exploration over combat, or that swimming in armor gives disadvantage, without being told twice.
 
-- `/glintlock:chronicle` transforms your session log into a prose story chapter
-- `/glintlock:audiobook` generates a full audiobook from that chapter (narration, character voices, SFX, music) in the background while you keep playing
-- `/glintlock:dashboard` builds an HTML campaign dashboard you can open in a browser
+### Audio
 
-## Architecture
+Requires an [ElevenLabs](https://elevenlabs.io/) API key. All audio plays in the background without blocking gameplay.
 
-The plugin has two halves:
+- **Voice narration** — Text-to-speech via ElevenLabs v3. The GM narrates dramatic moments, reads item descriptions, and speaks as NPCs.
+- **Per-NPC voice casting** — Browse the ElevenLabs voice library with `list_voices` to find a fitting voice for important NPCs. Voice IDs are stored in NPC frontmatter and used consistently across sessions.
+- **Voice settings** — Control stability, similarity boost, style exaggeration, and speech speed per utterance.
+- **Multilingual narration** — The `language_code` parameter (ISO 639-3) enables narration in any supported language using the same voices.
+- **Sound effects** — AI-generated environmental and combat sounds (door creaks, sword clashes, thunder, monster roars) at dramatic moments.
+- **Background music** — AI-generated mood music that loops automatically. One track at a time — new music crossfades with the previous track. The GM shifts music when you enter new areas or the tone changes, and stops it for tense silence.
 
-**Plugin shell** — Markdown files auto-discovered by Claude Code at the repository root. Agent identity, slash commands, game rules, templates, and hooks.
+### Story & Output
 
-**MCP server** (`engine/`) — A lightweight Node.js/TypeScript process that provides 9 tools over stdio:
+- **Chronicles** — `/glintlock:chronicle` transforms the session log into a 2,000–4,000 word prose chapter. An agent resolves dialogue attribution (which NPC said what) and produces narrative fiction from the raw event log.
+- **Dashboard** — `/glintlock:dashboard` generates an HTML campaign dashboard you can open in any browser. Character sheet, quest board, NPC roster, location map, session journal — all in a single file using pure CSS tabs (no JavaScript framework).
+- **Audiobooks** — `/glintlock:audiobook` runs a full production pipeline in the background:
+  1. Read a chronicle chapter
+  2. Assign ElevenLabs voices to each speaker
+  3. Annotate the chapter with speaker/narration segments
+  4. Call `render_audiobook` to produce a structured audio manifest (scenes → segments → chunks)
+  5. Add SFX cues (1–2 per scene) and music cues (1 per scene)
+  6. Generate TTS for each chunk with `tts_narrate` (narrator voice + character voices)
+  7. Generate sound effects with `generate_sfx`
+  8. Generate music tracks with `play_music`
+  9. Update the manifest with actual file paths and durations
+  10. Call `mix_audiobook` to combine everything into a final MP3 via ffmpeg
 
-| Tool | What it does |
-|------|-------------|
-| `roll_dice` | Parse NdS+M expressions, cryptographic RNG, advantage/disadvantage |
-| `roll_oracle` | Roll on curated Shadowdark random tables (NPCs, encounters, treasure, rumors) |
-| `tts_narrate` | ElevenLabs text-to-speech with per-character voice settings |
-| `generate_sfx` | ElevenLabs sound effect generation (doors, swords, thunder, monsters) |
-| `play_music` | ElevenLabs music generation with looping background playback |
-| `list_voices` | Browse ElevenLabs voice library to cast NPC voices |
-| `get_session_metadata` | Track session count and campaign dates |
-| `render_audiobook` | Parse a story chapter into an audio production manifest |
-| `mix_audiobook` | Mix narration + music + SFX into a final MP3 via ffmpeg |
-
-### State Management
-
-All game state lives in `world/` as human-readable markdown with YAML frontmatter. No database.
-
-```
-world/
-  characters/       # Player character sheets
-  npcs/             # NPC files with disposition, stats, voice_id
-  locations/        # Explored areas with connections and contents
-  items/            # Notable items and artifacts
-  factions/         # Groups and their goals
-  quests.md         # Active / Developing / Completed quest board
-  session-log.md    # Append-only tagged event log
-  campaign-context.md
-  dashboard.html    # Generated campaign dashboard
-  chronicles/       # Generated prose story chapters
-  audiobooks/       # Generated audiobook MP3s
-```
+  Multilingual audiobooks are supported — SFX and music are generated once and shared across language variants.
 
 ## Commands
 
@@ -107,6 +91,87 @@ world/
 | `/glintlock:recap` | Deep audit of full campaign state |
 | `/glintlock:audiobook` | Generate an audiobook from a chronicle chapter (runs in background) |
 
+## Architecture
+
+The plugin has two halves:
+
+### Plugin Shell
+
+Markdown files at the repository root, auto-discovered by Claude Code. These define the GM's identity, available commands, game rules, and automation hooks.
+
+```
+agents/gm.md              — GM identity and behavioral rules
+commands/                  — 9 slash commands
+skills/                    — 10 skills (rules, templates, generation pipelines)
+hooks/hooks.json           — SessionStart hook (loads campaign context)
+.claude-plugin/plugin.json — Plugin manifest
+.mcp.json                  — MCP server configuration
+```
+
+### MCP Server
+
+A lightweight Node.js/TypeScript process (`engine/`) spawned by Claude Code over stdio. Provides 9 tools:
+
+| Tool | What it does |
+|------|-------------|
+| `roll_dice` | Parse NdS+M expressions, cryptographic RNG, advantage/disadvantage |
+| `roll_oracle` | Roll on 18 curated Shadowdark random tables with subtype and range matching |
+| `tts_narrate` | ElevenLabs v3 text-to-speech with per-character voice settings and multilingual support |
+| `generate_sfx` | AI sound effect generation with background playback |
+| `play_music` | AI music generation with looping playback, single-track management |
+| `list_voices` | Browse ElevenLabs voice library with search and category filtering |
+| `get_session_metadata` | Track session count and campaign dates |
+| `render_audiobook` | Parse a story chapter into a structured audio manifest (scenes → segments → chunks) |
+| `mix_audiobook` | Mix narration + music + SFX into a final MP3 via ffmpeg |
+
+### Skills
+
+Skills are bundles of rules and templates that load on demand when the GM needs them:
+
+| Skill | Content |
+|-------|---------|
+| `shadowdark-core` | Core rules: 4 classes, 6 ancestries, combat, death, light/darkness, gear, talent tables |
+| `shadowdark-monsters` | 52 monster stat blocks with AC, HP, attacks, abilities, and level |
+| `shadowdark-spells` | 36 spells (Priest + Wizard, Tiers 1–2), spellcasting, mishaps, scrolls, wands |
+| `shadowdark-treasure` | Treasure tables, magic item generation, loot rules |
+| `shadowdark-adventure` | Adventure generation guidelines |
+| `shadowdark-adventure-obsidian-keep` | Pre-built adventure module: Raiding the Obsidian Keep |
+| `state-management` | Entity file templates (PC, NPC, location, item, faction) and conventions |
+| `dashboard-generation` | HTML dashboard template with pure CSS tabs |
+| `story-generation` | Guidelines for transforming session logs into prose chapters |
+| `audiobook-generation` | Full audiobook pipeline: voice assignment, SFX/music cues, rendering, mixing |
+
+### State Management
+
+All game state lives in `world/` as human-readable markdown with YAML frontmatter. No database.
+
+```
+world/
+  characters/          # Player character sheets
+  npcs/                # NPC files with disposition, stats, voice_id
+  locations/           # Explored areas with connections and contents
+  items/               # Notable items and artifacts
+  factions/            # Groups and their goals
+  quests.md            # Active / Developing / Completed quest board
+  session-log.md       # Append-only tagged event log
+  campaign-context.md  # Campaign premise and setting
+  expertise.yaml       # GM learning (play style, rulings, narrative patterns)
+  dashboard.html       # Generated campaign dashboard
+  chronicles/          # Generated prose story chapters
+  audiobooks/          # Generated audiobook MP3s
+```
+
+### Data Flow
+
+```
+Claude Code (claude --plugin-dir ./glintlock)
+  ├── Plugin shell (agents, commands, skills, hooks)
+  ├── world/ (markdown entity files — ground truth)
+  └── MCP (stdio) ──→ engine/dist/index.js
+                        ├── Dice + oracle tools (local)
+                        └── Audio tools (ElevenLabs API)
+```
+
 ## Development
 
 ```bash
@@ -121,13 +186,20 @@ npm run dev
 
 There are no automated tests yet. The MCP server is tested by installing the plugin in Claude Code and calling tools interactively.
 
-## Environment Variables
+### Environment Variables
 
-Set in your shell or in a `.env` file. The plugin reads them via `.mcp.json`:
+Set in your shell before launching Claude Code. The plugin passes them to the MCP server via `.mcp.json`:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `ELEVENLABS_API_KEY` | No | Enables voice narration, sound effects, music, and audiobook generation |
+
+The following are configured automatically by the plugin and do not need to be set manually:
+
+| Variable | Description |
+|----------|-------------|
+| `GLINTLOCK_WORLD_DIR` | Path to `world/` directory (set via `${CLAUDE_PLUGIN_ROOT}`) |
+| `GLINTLOCK_ORACLE_PATH` | Path to oracle tables JSON (set via `${CLAUDE_PLUGIN_ROOT}`) |
 
 `ffmpeg` and `ffprobe` must be on your PATH for audiobook mixing.
 
