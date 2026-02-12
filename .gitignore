@@ -22,3 +22,6 @@ world/audiobooks/
 
 # Keep directory structure with .gitkeep files
 !world/**/.gitkeep
+
+# Playwright MCP cache
+.playwright-mcp/
