@@ -23,7 +23,7 @@ All game state lives in `world/` as human-readable markdown files with YAML fron
 type: pc
 name: Kael
 ancestry: Human
-class: Fighter
+class: Sellsword
 level: 1
 alignment: Neutral
 title: ""
@@ -33,9 +33,9 @@ hp: { current: 8, max: 8 }
 ac: 14
 stats: { str: 16, dex: 12, con: 14, int: 8, wis: 10, cha: 11 }
 hit_die: d8
-talents: ["Weapon Mastery (+1 to melee damage)"]
-languages: ["Common", "Dwarvish"]
-class_features: ["Hauler (+2 gear slots)", "Weapon Mastery (+1 melee/ranged damage)"]
+talents: ["Blade Mastery (+1 to melee damage)"]
+languages: ["Common", "Ironspeak"]
+class_features: ["Pack Mule (+2 gear slots)", "Blade Mastery (+1 melee/ranged damage)"]
 ancestry_traits: ["Ambitious (advantage on one roll per session)"]
 weapon_proficiencies: ["All weapons"]
 armor_proficiencies: ["All armor", "Shields"]
@@ -57,7 +57,7 @@ A weathered sellsword with a scar across his left cheek and calloused hands that
 **Gear Slots:** 5/10
 
 ## Spells
-*(None — Fighter)*
+*(None — Sellsword)*
 
 ## Notes
 - Hired by the merchant guild to investigate disappearances near the ruins

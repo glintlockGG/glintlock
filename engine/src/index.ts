@@ -14,7 +14,7 @@ import { mixAudiobook } from "./tools/audiobook-mixer.js";
 
 const server = new McpServer({
   name: "glintlock-engine",
-  version: "0.3.0",
+  version: "1.0.0",
 });
 
 // --- roll_dice ---
@@ -40,16 +40,16 @@ server.tool(
 // --- roll_oracle ---
 server.tool(
   "roll_oracle",
-  "Roll on a random oracle table from the Shadowdark RPG system. Returns a real random result from curated content. Use instead of inventing NPCs, encounters, treasure, etc.",
+  "Roll on a random oracle table from the Torchlit rules. Returns a real random result from curated content. Use instead of inventing NPCs, encounters, treasure, etc.",
   {
     table: z.enum([
       "npc_name", "random_encounter_ruins", "something_happens", "rumors",
       "treasure_0_3", "creature_activity", "creature_reaction", "starting_distance",
       "trap", "hazard_movement", "hazard_damage", "hazard_weaken",
-      "adventure_name", "magic_item_name", "beastman_npc", "ettercap_npc",
+      "adventure_name", "magic_item_name", "brinehound_npc", "webspinner_npc",
       "background", "random_gear",
     ]).describe("Which oracle table to roll on"),
-    subtype: z.string().optional().describe("Subtype filter. For npc_name: ancestry ('dwarf','elf','goblin','halfling','half_orc','human'). For creature_reaction: CHA modifier as string (e.g. '+2', '-1')."),
+    subtype: z.string().optional().describe("Subtype filter. For npc_name: ancestry ('ironborn','faekin','gremlin','duskfolk','brute','human'). For creature_reaction: CHA modifier as string (e.g. '+2', '-1')."),
   },
   async (params) => {
     try {

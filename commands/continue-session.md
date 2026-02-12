@@ -1,5 +1,5 @@
 ---
-description: "Resume an existing Shadowdark campaign"
+description: "Resume an existing campaign"
 allowed-tools:
   - "mcp:glintlock-engine:roll_dice"
   - "mcp:glintlock-engine:roll_oracle"

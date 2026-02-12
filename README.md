@@ -1,6 +1,8 @@
 # Glintlock
 
-A [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code) that turns Claude into a solo TTRPG Game Master for [Shadowdark RPG](https://www.thearcanelibrary.com/pages/shadowdark). It runs persistent campaigns with real dice, curated random tables, voice-acted NPCs, atmospheric audio, and full audiobook generation — all in the terminal.
+A [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code) that turns Claude into a solo TTRPG Game Master. It runs persistent campaigns with real dice, curated random tables, voice-acted NPCs, atmospheric audio, and full audiobook generation — all in the terminal.
+
+**Homepage:** [glintlock.gg](https://glintlock.gg)
 
 ## Quick Start
 
@@ -34,6 +36,23 @@ claude --plugin-dir ./glintlock
 > /glintlock:continue-session   # Resume where you left off
 ```
 
+## Quick Demo
+
+```
+> I search the fallen knight's body for anything useful.
+
+The knight's tabard is soaked through with something dark and viscous — not
+blood, exactly. Beneath it, your fingers find a leather pouch cinched tight.
+
+🎲 roll_dice 1d20+1 (INT check, DC 12) → 15 ✓
+
+Inside: a folded vellum map marking a passage beneath the eastern tower, and
+a glass vial of pale liquid. The vial hums faintly when you hold it near
+the torch.
+
+What do you do with what you've found?
+```
+
 ## How It Works
 
 You talk. Claude runs the game. Describe what your character does in natural language. Claude narrates the world, voices NPCs, rolls dice, tracks your inventory, manages quests, and plays atmospheric audio — all in the terminal. Game state is saved automatically to markdown files as you play, so you can pick up exactly where you left off.
@@ -43,8 +62,8 @@ You talk. Claude runs the game. Describe what your character does in natural lan
 ### Gameplay
 
 - **Real dice** — All rolls use cryptographic randomness (`crypto.randomInt`) via the `roll_dice` tool. Standard NdS+M notation with advantage and disadvantage.
-- **18 oracle tables** — Curated Shadowdark random tables for NPC names (6 ancestries: dwarf, elf, goblin, halfling, half-orc, human), random encounters, treasure, traps, rumors, hazards, creature behavior, backgrounds, gear, adventure names, and magic item names. The GM rolls on these instead of inventing content, keeping results surprising for both player and AI.
-- **Full Shadowdark rules** — 4 classes (Fighter, Priest, Thief, Wizard), 6 ancestries, 52 monster stat blocks (LV 0–8+), 36 spells (Priest and Wizard, Tiers 1–2), complete combat, death and dying, light and darkness, gear, encumbrance, and talent tables. All encoded as skills that load on demand.
+- **18 oracle tables** — Curated random tables for NPC names (6 ancestries: ironborn, faekin, gremlin, duskfolk, brute, human), random encounters, treasure, traps, rumors, hazards, creature behavior, backgrounds, gear, adventure names, and magic item names. The GM rolls on these instead of inventing content, keeping results surprising for both player and AI.
+- **Full Torchlit rules** — 4 classes (Sellsword, Warden, Shade, Arcanist), 6 ancestries, 52 monster stat blocks (LV 0–8+), 36 spells (Warden and Arcanist, Tiers 1–2), complete combat, death and dying, light and darkness, gear, encumbrance, and talent tables. All encoded as skills that load on demand.
 - **Persistent world state** — Characters, NPCs, locations, items, factions, quests, and a session log are stored as human-readable markdown files with YAML frontmatter. No database. Files are version-controllable and editable by hand.
 - **GM learning** — The plugin tracks play style preferences, rulings precedents, narrative patterns, and active threads across sessions in a campaign memory file (`world/CLAUDE.md`). It remembers that you prefer exploration over combat, or that swimming in armor gives disadvantage, without being told twice.
 
@@ -115,7 +134,7 @@ A lightweight Node.js/TypeScript process (`engine/`) spawned by Claude Code over
 | Tool | What it does |
 |------|-------------|
 | `roll_dice` | Parse NdS+M expressions, cryptographic RNG, advantage/disadvantage |
-| `roll_oracle` | Roll on 18 curated Shadowdark random tables with subtype and range matching |
+| `roll_oracle` | Roll on 18 curated Torchlit random tables with subtype and range matching |
 | `tts_narrate` | ElevenLabs v3 text-to-speech with per-character voice settings and multilingual support |
 | `generate_sfx` | AI sound effect generation with background playback |
 | `play_music` | AI music generation with looping playback, single-track management |
@@ -130,12 +149,11 @@ Skills are bundles of rules and templates that load on demand when the GM needs 
 
 | Skill | Content |
 |-------|---------|
-| `shadowdark-core` | Core rules: 4 classes, 6 ancestries, combat, death, light/darkness, gear, talent tables |
-| `shadowdark-monsters` | 52 monster stat blocks with AC, HP, attacks, abilities, and level |
-| `shadowdark-spells` | 36 spells (Priest + Wizard, Tiers 1–2), spellcasting, mishaps, scrolls, wands |
-| `shadowdark-treasure` | Treasure tables, magic item generation, loot rules |
-| `shadowdark-adventure` | Adventure generation guidelines |
-| `shadowdark-adventure-obsidian-keep` | Pre-built adventure module: Raiding the Obsidian Keep |
+| `core-rules` | Core rules: 4 classes (Sellsword, Warden, Shade, Arcanist), 6 ancestries, combat, death, light/darkness, gear, talent tables |
+| `bestiary` | 52 monster stat blocks with AC, HP, attacks, abilities, and level |
+| `spellbook` | 36 spells (Warden + Arcanist, Tiers 1–2), spellcasting, arcane backlash, scrolls, wands |
+| `treasure` | Treasure tables, magic item generation, loot rules |
+| `adventure-sandbox` | West Marches sandbox: home base, hex map, quickstart dungeon, adapted Keep, encounter tables |
 | `state-management` | Entity file templates (PC, NPC, location, item, faction) and conventions |
 | `dashboard-generation` | HTML dashboard template with pure CSS tabs |
 | `story-generation` | Guidelines for transforming session logs into prose chapters |

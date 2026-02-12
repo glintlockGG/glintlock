@@ -1,5 +1,5 @@
 ---
-description: "Start a new Shadowdark RPG campaign"
+description: "Start a new Torchlit campaign"
 allowed-tools:
   - "mcp:glintlock-engine:roll_dice"
   - "mcp:glintlock-engine:roll_oracle"
@@ -9,17 +9,17 @@ allowed-tools:
   - "Write"
 ---
 
-Start a new Shadowdark campaign. Load the `state-management` skill first — it contains the entity file templates you'll use throughout.
+Start a new campaign. Load the `state-management` skill first — it contains the entity file templates you'll use throughout.
 
 **Character Creation:**
 
 1. Ask the player: What is your character's name? (or offer to roll randomly using `roll_oracle` with table "npc_name")
-2. Roll or let player choose: ancestry (d12 table: 1-4 Human, 5-6 Elf, 7-8 Dwarf, 9-10 Halfling, 11 Half-orc, 12 Goblin), class (d4: 1 Fighter, 2 Priest, 3 Thief, 4 Wizard), alignment (d6: 1-3 Lawful, 4-5 Neutral, 6 Chaotic)
+2. Roll or let player choose: ancestry (d12 table: 1-4 Human, 5-6 Faekin, 7-8 Ironborn, 9-10 Duskfolk, 11 Brute, 12 Gremlin), class (d4: 1 Sellsword, 2 Warden, 3 Shade, 4 Arcanist), alignment (d6: 1-3 Lawful, 4-5 Neutral, 6 Chaotic)
 3. Roll stats: 3d6 in order for STR, DEX, CON, INT, WIS, CHA. If none are 14+, offer to reroll.
 4. Roll starting gold: 2d6 × 5 gp
-5. Apply ancestry traits and class features. Roll one class talent. Load `shadowdark-core` skill for class/ancestry tables.
-6. Roll HP: class hit die + CON modifier (minimum 1). Fighter=d8, Priest=d6, Thief=d4, Wizard=d4.
-7. Help the player buy gear with starting gold (load `shadowdark-core` skill for gear tables)
+5. Apply ancestry traits and class features. Roll one class talent. Load `core-rules` skill for class/ancestry tables.
+6. Roll HP: class hit die + CON modifier (minimum 1). Sellsword=d8, Warden=d6, Shade=d4, Arcanist=d4.
+7. Help the player buy gear with starting gold (load `core-rules` skill for gear tables)
 8. Roll or choose background (d20 table)
 
 **World Setup:**

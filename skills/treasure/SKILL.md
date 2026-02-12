@@ -1,5 +1,5 @@
 ---
-name: shadowdark-treasure
+name: treasure
 description: "Treasure tables, magic item generation, and loot rules. Load when generating treasure, rolling loot, or identifying magic items."
 ---
 

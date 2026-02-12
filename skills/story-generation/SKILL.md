@@ -20,7 +20,7 @@ Transform raw gameplay events into polished narrative prose. Each session become
 - **Combat as choreography.** Don't list attack rolls. Write the fight as a scene — the clash of steel, the smell of blood, the moment fear creeps in.
 - **Discoveries as revelations.** Finding a hidden room isn't "the PC rolled 14 on perception." It's the character's fingers finding the groove in the stone, the grinding of ancient machinery.
 - **NPC interactions as dialogue scenes.** Use the NPC's personality from their file. Give them distinct speech patterns.
-- **Environmental atmosphere.** The darkness, the cold, the sounds. Shadowdark is about the oppressive weight of the unknown.
+- **Environmental atmosphere.** The darkness, the cold, the sounds. Torchlit is about the oppressive weight of the unknown.
 
 ## What to Exclude
 

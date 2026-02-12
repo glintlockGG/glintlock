@@ -1,5 +1,8 @@
 {
   "name": "glintlock",
-  "version": "0.2.0",
-  "description": "Solo TTRPG Game Master for Shadowdark RPG — persistent world state, dice rolling, curated random tables, audiobook generation, and campaign dashboard."
+  "version": "1.0.0",
+  "description": "Solo TTRPG Game Master for Torchlit — persistent world state, dice rolling, curated random tables, audiobook generation, and campaign dashboard.",
+  "homepage": "https://glintlock.gg",
+  "author": "dakeobac",
+  "repository": "https://github.com/dakeobac/glintlock"
 }

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Glintlock is a Claude Code plugin that turns Claude into a solo TTRPG Game Master for Shadowdark RPG. Plugin components (agents, commands, skills, hooks) live at the repository root for auto-discovery. The MCP server (`engine/`) provides dice, oracle, TTS, sound effects, music, voice browsing, and session metadata tools.
+Glintlock is a Claude Code plugin that turns Claude into a solo TTRPG Game Master for Torchlit. Plugin components (agents, commands, skills, hooks) live at the repository root for auto-discovery. The MCP server (`engine/`) provides dice, oracle, TTS, sound effects, music, voice browsing, and session metadata tools.
 
 ## Development Commands
 
@@ -99,12 +99,11 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 
 | Skill | Purpose |
 |-------|---------|
-| `shadowdark-core` | Core rules, class/ancestry tables, gear lists |
-| `shadowdark-monsters` | Monster stat blocks |
-| `shadowdark-spells` | Spell lists and descriptions |
-| `shadowdark-treasure` | Treasure tables and magic items |
-| `shadowdark-adventure` | Adventure generation guidelines |
-| `shadowdark-adventure-obsidian-keep` | Pre-built adventure: The Obsidian Keep |
+| `core-rules` | Core rules: 4 classes (Sellsword, Warden, Shade, Arcanist), 6 ancestries, gear, combat |
+| `bestiary` | Monster stat blocks |
+| `spellbook` | Spell lists and descriptions |
+| `treasure` | Treasure tables and magic items |
+| `adventure-sandbox` | West Marches sandbox: home base, hexmap, quickstart dungeon, adapted Keep, encounter tables |
 | `state-management` | Entity file templates (PC, NPC, location, item, faction) |
 | `dashboard-generation` | HTML dashboard template |
 | `story-generation` | Chronicle/prose generation guidelines |
@@ -140,7 +139,7 @@ The MCP server reads env vars (set in `.mcp.json`):
 
 ## When Acting as GM
 
-When the plugin is active during Shadowdark play:
+When the plugin is active during play:
 - ALWAYS use `roll_dice` for ALL mechanical resolution — never simulate randomness
 - ALWAYS use `roll_oracle` for random content instead of inventing it
 - The world files (`world/`) are ground truth — Read before narrating, Write immediately after state changes

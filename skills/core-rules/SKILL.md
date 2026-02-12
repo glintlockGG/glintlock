@@ -1,9 +1,9 @@
 ---
-name: shadowdark-core
-description: "Core Shadowdark RPG rules. Load when resolving checks, combat, movement, death, resting, light, gear, or any mechanical ruling."
+name: core-rules
+description: "Core Torchlit rules. Load when resolving checks, combat, movement, death, resting, light, gear, or any mechanical ruling."
 ---
 
-# Shadowdark RPG — Core Rules Reference
+# Torchlit — Core Rules Reference
 
 ## Checks
 
@@ -50,7 +50,7 @@ Roll d20 + stat modifier ≥ DC = success.
 ## Natural 20 / Natural 1
 
 - **Natural 20:** Maximum success. Attack auto-hits + critical hit (double weapon damage dice). Spellcasting: double one numerical effect.
-- **Natural 1:** Maximum failure. Attack auto-miss. Spellcasting critical failure: lose spell until rest. Wizard: roll mishap table. Priest: deity revokes spell, requires penance.
+- **Natural 1:** Maximum failure. Attack auto-miss. Spellcasting critical failure: lose spell until rest. Arcanist: roll arcane backlash table. Warden: patron revokes spell, requires tithe.
 
 ## Combat
 
@@ -135,7 +135,7 @@ GM awards for exceptional roleplaying, heroism, daring maneuvers. Max 1 per play
 ## XP & Leveling
 
 XP from treasure quality: Poor (0), Normal (1), Fabulous (3), Legendary (10).
-Level up at: current level × 10 XP. XP resets to 0 on level up.
+Level up at: current level x 10 XP. XP resets to 0 on level up.
 Talent roll at levels 1, 3, 5, 7, 9.
 
 ## Random Encounters
@@ -192,7 +192,7 @@ Backpack, flint and steel, 2 torches, 3 rations, 10 iron spikes, grappling hook,
 | Chainmail | 60 gp | 2 | 13 + DEX mod | Disadvantage stealth, swim |
 | Plate mail | 130 gp | 3 | 15 | No swim, disadvantage stealth |
 | Shield | 10 gp | 1 | +2 | One hand occupied |
-| Mithral (metal only) | ×4 cost | -1 slot | same | No stealth/swim penalty |
+| Mithral (metal only) | x4 cost | -1 slot | same | No stealth/swim penalty |
 
 ### Weapons
 
@@ -218,34 +218,34 @@ Backpack, flint and steel, 2 torches, 3 rations, 10 iron spikes, grappling hook,
 
 ## Classes
 
-### Fighter
+### Sellsword
 - **Weapons:** All. **Armor:** All + shields. **HP:** 1d8/level
-- **Hauler:** Add CON mod (if positive) to gear slots
-- **Weapon Mastery:** Choose one weapon type: +1 attack/damage + half level (round down)
+- **Pack Mule:** Add CON mod (if positive) to gear slots
+- **Blade Mastery:** Choose one weapon type: +1 attack/damage + half level (round down)
 - **Grit:** Choose STR or DEX. Advantage on checks to overcome opposing force.
 
-### Priest
+### Warden
 - **Weapons:** Club, crossbow, dagger, mace, longsword, staff, warhammer. **Armor:** All + shields. **HP:** 1d6/level
-- **Languages:** Celestial, Diabolic, or Primordial
-- **Turn Undead:** Free spell (doesn't count toward known spells)
-- **Spellcasting:** WIS-based. Starts with 2 tier 1 priest spells.
+- **Languages:** Luminous, Infernal, or Primordial
+- **Banish the Unquiet:** Free spell (doesn't count toward known spells)
+- **Spellcasting:** WIS-based. Starts with 2 tier 1 Warden spells.
 
-### Thief
+### Shade
 - **Weapons:** Club, crossbow, dagger, shortbow, shortsword. **Armor:** Leather, mithral chainmail. **HP:** 1d4/level
-- **Backstab:** Extra weapon die when target unaware + half level dice (round down)
-- **Thievery:** Advantage on climbing, sneaking, hiding, disguises, finding/disabling traps, picking pockets/locks. Has tools (no gear slots).
+- **Ambush Strike:** Extra weapon die when target unaware + half level dice (round down)
+- **Shadow Craft:** Advantage on climbing, sneaking, hiding, disguises, finding/disabling traps, picking pockets/locks. Has tools (no gear slots).
 
-### Wizard
+### Arcanist
 - **Weapons:** Dagger, staff. **Armor:** None. **HP:** 1d4/level
 - **Languages:** 2 additional common + 2 rare
 - **Learning Spells:** Can learn from scrolls (1 day study, DC 15 INT). Scroll consumed either way.
-- **Spellcasting:** INT-based. Starts with 3 tier 1 wizard spells.
+- **Spellcasting:** INT-based. Starts with 3 tier 1 Arcanist spells.
 
 ## Ancestries
 
-- **Dwarf:** +2 starting HP. Roll HP per level with advantage. Languages: Common, Dwarvish.
-- **Elf:** +1 ranged attack OR +1 spellcasting checks. Languages: Common, Elvish, Sylvan.
-- **Goblin:** Can't be surprised. Languages: Common, Goblin.
-- **Halfling:** Once/day become invisible 3 rounds. Language: Common.
-- **Half-Orc:** +1 melee attack and damage. Languages: Common, Orcish.
+- **Ironborn:** +2 starting HP. Roll HP per level with advantage. Languages: Common, Ironspeak.
+- **Faekin:** +1 ranged attack OR +1 spellcasting checks. Languages: Common, Sylvani, Primordial.
+- **Gremlin:** Can't be surprised. Languages: Common, Chattertongue.
+- **Duskfolk:** Once/day become invisible 3 rounds. Language: Common.
+- **Brute:** +1 melee attack and damage. Languages: Common, Brutish.
 - **Human:** One additional talent roll at 1st level. Languages: Common + one additional common language.

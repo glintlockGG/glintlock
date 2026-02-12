@@ -1,5 +1,5 @@
 ---
-description: "Roll dice for Shadowdark RPG"
+description: "Roll dice for Torchlit"
 argument-hint: "[dice-expression or skill-check]"
 allowed-tools:
   - "mcp:glintlock-engine:roll_dice"
