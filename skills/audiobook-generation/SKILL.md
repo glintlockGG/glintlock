@@ -209,3 +209,6 @@ All variant paths are returned in the result's `outputs` array.
 1. Write the final annotated manifest to `{build_dir}/manifest.json` for debugging
 2. Report: all variant MP3 paths, total duration (formatted as MM:SS), estimated cost
 3. Offer to play a preview (call `tts_narrate` without output_path on the first paragraph)
+
+## Related Skills
+- **story-generation** — Chronicle chapters that serve as audiobook source material

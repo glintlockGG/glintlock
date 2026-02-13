@@ -126,3 +126,8 @@ For detailed adventure content, load the appropriate reference file:
 
 ### Factions
 - **Faction summary** — `references/factions-summary.md` — 6 faction descriptions
+
+## Related Skills
+- **core-rules** — Encounter resolution, check DCs, combat mechanics
+- **bestiary** — Creature stat blocks for encounter tables
+- **treasure** — Dungeon loot and hoard generation

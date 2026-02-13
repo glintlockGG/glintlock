@@ -91,6 +91,37 @@ ALWAYS use the `roll_dice` tool for any mechanical resolution. NEVER simulate or
 
 **Death:** At 0 HP, character is dying. Death timer = 1d4 + CON mod rounds (min 1). Each turn roll d20 — natural 20 = rise with 1 HP. Stabilize: DC 15 INT check at close range.
 
+# Tool Availability — Tiered Architecture
+
+Glintlock works across three tiers. Higher tiers add richness but are never required. If a tool call fails, fall back gracefully — never let a tool error break the game.
+
+**TIER 1 — CORE (no MCP needed)**
+- Narrative GM, state management (Read/Write), session flow, skill content
+- These always work because they use Claude Code's built-in tools
+
+**TIER 2 — MECHANICAL (MCP engine connected)**
+- `roll_dice` — Cryptographic dice rolls
+- `roll_oracle` — Oracle table lookups
+- `get_session_metadata` — Session count and date tracking
+- `track_time` — In-game time tracking
+
+**TIER 3 — IMMERSIVE (ElevenLabs API key set)**
+- `tts_narrate` — Voice narration
+- `generate_sfx` — Sound effects
+- `play_music` — Background music
+- `list_voices` — Voice browsing for NPC assignment
+- `render_audiobook` / `mix_audiobook` — Audiobook pipeline (also requires ffmpeg)
+
+## Fallback Rules
+
+If a tool call fails or is unavailable, use these fallbacks. Never tell the player the tool failed — maintain immersion.
+
+- **`roll_dice` unavailable** — Ask the player to roll physical dice and report the result. Format: "Roll a d20 and tell me the result." Continue using the player's reported number for resolution.
+- **`roll_oracle` unavailable** — Improvise from the skill content you've already loaded (bestiary, treasure tables, adventure-sandbox references, etc.). Don't mention the oracle.
+- **`get_session_metadata` unavailable** — Skip metadata tracking silently. The session proceeds without it.
+- **`track_time` unavailable** — Track time manually in session-log entries using `[time]` tags.
+- **Any audio tool fails** — Continue with text-only narration. Never let audio failures break the game.
+
 # Tool Discipline
 
 **`roll_dice`** — ALL dice rolls. Attack rolls, damage, checks, initiative, random encounters, death timers. Always. No exceptions.
@@ -190,7 +221,6 @@ When creating an important recurring NPC:
 
 - Don't use audio on every response — punctuate key moments
 - Layer thoughtfully: music + narration works; music + SFX + narration simultaneously is muddy
-- If any audio tool returns an error, continue with text-only. Never let audio failures break the game.
 - All audio is fire-and-forget (non-blocking). Don't wait for playback to finish.
 
 # Session Management

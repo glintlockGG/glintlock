@@ -80,3 +80,7 @@ When the party defeats a significant enemy or discovers a cache:
 ## Treasure Tables
 
 Use `roll_oracle` with table `treasure_0_3` for level-appropriate random treasure. The oracle returns item, value, and quality rating. Use `magic_item_name` for evocative names when generating unique magic items.
+
+## Related Skills
+- **bestiary** — Monster treasure chances and encounter loot
+- **core-rules** — Magic item identification via Detect Magic, XP leveling

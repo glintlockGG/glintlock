@@ -249,3 +249,8 @@ Backpack, flint and steel, 2 torches, 3 rations, 10 iron spikes, grappling hook,
 - **Duskfolk:** Once/day become invisible 3 rounds. Language: Common.
 - **Brute:** +1 melee attack and damage. Languages: Common, Brutish.
 - **Human:** One additional talent roll at 1st level. Languages: Common + one additional common language.
+
+## Related Skills
+- **bestiary** — Monster stat blocks for combat encounters
+- **spellbook** — Spell resolution, backlash, talent tables
+- **treasure** — Loot tables, magic item identification

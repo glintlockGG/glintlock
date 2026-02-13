@@ -136,3 +136,6 @@ The template uses:
 - Responsive: sidebar collapses to horizontal nav at 900px, single-column at 600px
 
 Replace `DASHBOARD_DATA` with the actual JSON object (no quotes around it — it should be a JavaScript object literal). For example: `const DATA = {"character":{"name":"Elindos",...},...};`
+
+## Related Skills
+- **state-management** — Entity file formats and frontmatter conventions

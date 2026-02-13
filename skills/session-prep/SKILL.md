@@ -176,3 +176,8 @@ At end-session, unused prep elements are recycled into **prep seeds** — carrie
 - Unused scenes may evolve or expire depending on time passing
 - Player signals (what interested them, what they avoided) shape next session's emphasis
 - 2-3 suggested strong start ideas based on where the session ended
+
+## Related Skills
+- **adventure-sandbox** — Hex map, dungeon content, and encounter tables for prepping scenes
+- **bestiary** — Monster stat blocks for encounter prep
+- **treasure** — Pre-rolled loot for session rewards

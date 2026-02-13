@@ -89,3 +89,6 @@ Update `_series-meta.md` after each chapter with new NPCs, continuity notes, and
 ## Audiobook Generation
 
 For audiobook generation, use the `/glintlock:audiobook` command after writing the chapter. It uses the dedicated audiobook pipeline with voice assignment, SFX, background music, and ffmpeg mixing.
+
+## Related Skills
+- **audiobook-generation** — Chronicle chapters are the source material for audiobooks
