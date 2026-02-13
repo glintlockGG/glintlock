@@ -10,6 +10,7 @@ import { listVoices } from "./tools/voices.js";
 import { getSessionMetadata, updateSessionMetadata } from "./tools/metadata.js";
 import { renderAudiobook } from "./tools/audiobook.js";
 import { mixAudiobook } from "./tools/audiobook-mixer.js";
+import { trackTime } from "./tools/timer.js";
 const server = new McpServer({
     name: "glintlock-engine",
     version: "1.0.0",
@@ -172,6 +173,23 @@ server.tool("mix_audiobook", "Mix rendered audiobook segments into a final MP3 u
         const manifest = JSON.parse(params.manifest);
         const result = await mixAudiobook({ manifest, build_dir: params.build_dir, output_path: params.output_path });
         return { content: [{ type: "text", text: JSON.stringify(result) }], isError: !result.success };
+    }
+    catch (err) {
+        return { content: [{ type: "text", text: err.message }], isError: true };
+    }
+});
+// --- track_time ---
+server.tool("track_time", "Track in-game time, light sources, and random encounter cadence. Crawling rounds are ~10 minutes each. Torches burn 6 rounds (1 hour). Tracks danger level for encounter check timing. Call 'advance' after each significant action or exploration.", {
+    action: z.enum(["status", "advance", "light", "set_danger", "reset"]).describe("'status' to check current state, 'advance' to move forward N rounds, 'light' to add a light source, 'set_danger' to change danger level, 'reset' to start fresh."),
+    rounds: z.number().optional().describe("Number of crawling rounds to advance (default 1). Each round is ~10 minutes."),
+    light_type: z.string().optional().describe("Type of light source: 'torch' (6 rounds), 'lantern' (6 rounds), 'light_spell' (6 rounds), 'glowstone' (48 rounds). Default 'torch'."),
+    light_rounds: z.number().optional().describe("Override duration in rounds for custom light sources."),
+    danger_level: z.enum(["safe", "unsafe", "risky", "deadly"]).optional().describe("Set the current danger level. Affects encounter check frequency: unsafe=every 3 rounds, risky=every 2, deadly=every 1."),
+    note: z.string().optional().describe("Optional note to log at this time mark."),
+}, async (params) => {
+    try {
+        const result = trackTime(params);
+        return { content: [{ type: "text", text: JSON.stringify(result) }] };
     }
     catch (err) {
         return { content: [{ type: "text", text: err.message }], isError: true };

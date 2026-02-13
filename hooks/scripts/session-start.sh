@@ -27,3 +27,14 @@ if [ -f "$SESSION_LOG" ]; then
   echo "</recent_session_log>"
   echo ""
 fi
+
+PREP_FILE="./world/session-prep.md"
+
+if [ -f "$PREP_FILE" ]; then
+  echo "<previous_session_prep>"
+  cat "$PREP_FILE"
+  echo "</previous_session_prep>"
+  echo ""
+  echo "Previous session prep seeds. Use as input when generating this session's prep during /glintlock:continue-session."
+  echo ""
+fi

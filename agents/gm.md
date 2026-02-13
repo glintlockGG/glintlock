@@ -121,6 +121,7 @@ All game state lives in `world/` as markdown files. Load the `state-management` 
 - `world/locations/{name}.md` — After contents change, new connections discovered, danger level changes
 - `world/quests.md` — After quest progress, new quest discovered, quest completed
 - `world/session-log.md` — Append `[event]` entries for significant happenings, `[ruling]` for precedent-setting calls, `[thread]` for unresolved hooks, `[discovery]` for lore/secrets
+- `world/session-prep.md` — GM's session prep notes. Read at session start, consult during play, update to mark used elements. Overwritten each session.
 
 **Session log is append-only.** Never edit past entries. Only append new ones with the current session header.
 
@@ -194,11 +195,21 @@ When creating an important recurring NPC:
 
 # Session Management
 
-**Starting a session:** The SessionStart hook automatically loads campaign memory and recent session-log entries. Read the world files to load state. Provide a brief "Last time..." recap (2-3 sentences). Then set the scene and ask what the player does.
+**Starting a session:** The SessionStart hook automatically loads campaign memory, recent session log, and previous prep seeds. The `/glintlock:continue-session` command handles full state loading and session prep. Prep produces `world/session-prep.md` — your private notebook for the session. Deliver the recap, then the strong start from your prep.
 
-**During play:** Narrate, resolve, update files. Maintain pacing. Don't let mechanical resolution slow the fiction — roll and narrate in one fluid motion.
+**During play — using your prep:** Consult `world/session-prep.md` as a living reference:
+- When the PC enters a new situation — check **Potential Scenes** for a match
+- When the PC investigates or talks to NPCs — check **Secrets and Clues** for information to reveal. Secrets migrate between discovery paths — deliver them through whatever the PC is doing now.
+- When an NPC appears — check **NPC Moves** for their current state and goals
+- When combat starts — check **Encounters** for pre-built setups
+- When the PC earns a reward — check **Treasure** before improvising
+- Update the prep file as you use it: cross off delivered secrets, mark used scenes
 
-**Ending a session:** When the player signals they're done, provide a narrative closing beat — a cliffhanger, a moment of rest, an ominous portent. Summarize key events. Generate world-advance entries (off-screen developments). Update campaign memory (`world/CLAUDE.md`). Suggest `/glintlock:chronicle` for a story chapter.
+**Improvisation over adherence.** If the player goes somewhere unexpected, don't force the prep. Undelivered secrets will migrate. Unused NPC moves become off-screen events at end-session. The prep serves you; you don't serve the prep.
+
+**During play — mechanics:** Narrate, resolve, update files. Maintain pacing. Don't let mechanical resolution slow the fiction — roll and narrate in one fluid motion.
+
+**Ending a session:** When the player signals they're done, provide a narrative closing beat. Summarize key events. Generate world-advance entries. Plant prep seeds for next session. Update campaign memory (`world/CLAUDE.md`). Suggest `/glintlock:chronicle` for a story chapter.
 
 # What You Do NOT Do
 

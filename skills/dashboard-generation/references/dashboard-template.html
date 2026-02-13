@@ -58,7 +58,8 @@
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
 
     /* Layout */
-    --header-height: 52px;
+    --sidebar-width: 220px;
+    --header-height: 48px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -71,8 +72,9 @@
     line-height: 1.5;
     height: 100vh;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: var(--header-height) 1fr;
   }
 
   /* Noise texture overlay */
@@ -88,13 +90,19 @@
     background-size: 256px 256px;
   }
 
+  /* ================= SCROLLBAR ================= */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
   /* ================= HEADER ================= */
   .header {
+    grid-column: 1 / -1;
+    grid-row: 1;
     height: var(--header-height);
-    min-height: var(--header-height);
     display: flex;
     align-items: center;
-    gap: 0;
     padding: 0 1.25rem;
     background: var(--surface-2);
     border-bottom: 1px solid var(--border);
@@ -103,152 +111,368 @@
 
   .header-brand {
     font-family: var(--font-display);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: var(--primary);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     white-space: nowrap;
-    margin-right: 1.5rem;
   }
 
-  /* Tab navigation */
-  .tab-nav {
+  .header-title {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.06em;
+  }
+
+  .header-meta {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  /* ================= SIDEBAR ================= */
+  .sidebar {
+    grid-column: 1;
+    grid-row: 2;
+    background: var(--surface-1);
+    border-right: 1px solid var(--border);
     display: flex;
-    align-items: stretch;
-    height: 100%;
-    gap: 0;
+    flex-direction: column;
+    overflow: hidden;
   }
 
-  .tab-btn {
+  /* Character mini-card */
+  .sidebar-minicard {
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mini-name {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mini-subtitle {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .mini-hp-track {
+    width: 100%;
+    height: 14px;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+  }
+
+  .mini-hp-fill {
+    height: 100%;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(90deg, #b84520, var(--primary), var(--primary-bright));
+    transition: width 0.4s ease;
+  }
+
+  .mini-hp-fill.low { background: linear-gradient(90deg, #8b1a1a, var(--danger)); }
+
+  .mini-hp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 500;
+    color: var(--text);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+  }
+
+  .mini-stats {
+    display: flex;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+  }
+
+  .mini-stats .val { color: var(--text); font-weight: 500; }
+  .mini-stats .gold { color: var(--warning); }
+
+  /* Navigation */
+  .sidebar-nav {
+    padding: 0.6rem 0;
+    flex: 1;
+  }
+
+  .nav-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.4rem 0.75rem 0.25rem;
+  }
+
+  .nav-item {
     display: flex;
     align-items: center;
-    padding: 0 0.85rem;
-    font-family: var(--font-body);
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
     font-size: 0.78rem;
     font-weight: 500;
     color: var(--text-muted);
-    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-body);
+    border-left: 2px solid transparent;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-item:hover {
+    color: var(--text-secondary);
+    background: var(--surface-2);
+  }
+
+  .nav-item.active {
+    color: var(--text);
+    background: var(--surface-2);
+    border-left-color: var(--primary);
+  }
+
+  .nav-icon {
+    font-size: 0.85rem;
+    width: 1.25rem;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  /* Sidebar footer */
+  .sidebar-footer {
+    padding: 0.65rem 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-location {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.35rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .footer-location .loc-icon { color: var(--text-dim); }
+
+  /* XP bar */
+  .xp-track {
+    width: 100%;
+    height: 6px;
+    background: var(--surface-3);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+  }
+
+  .xp-fill {
+    height: 100%;
+    background: var(--discord);
+    border-radius: 3px;
+  }
+
+  .xp-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: var(--text-dim);
+  }
+
+  .danger-badge {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 500;
+  }
+
+  .danger-safe    { color: var(--success); }
+  .danger-unsafe  { color: var(--warning); }
+  .danger-risky   { color: var(--primary); }
+  .danger-deadly  { color: var(--danger); }
+
+  /* ================= CONTENT AREA ================= */
+  .content {
+    grid-column: 2;
+    grid-row: 2;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .view {
+    display: none;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .view.active { display: grid; }
+
+  /* ================= SHARED COMPONENTS ================= */
+
+  /* Card */
+  .card {
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .card-header {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .card-header .chevron { color: var(--primary); }
+
+  .card-body {
+    padding: 0.65rem 0.75rem;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Pill badges */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .pill-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .pill-alive { background: var(--success-soft); color: var(--success); }
+  .pill-alive .pill-dot { background: var(--success); }
+  .pill-deceased { background: var(--danger-soft); color: var(--danger); }
+  .pill-deceased .pill-dot { background: var(--danger); }
+  .pill-friendly { background: var(--success-soft); color: var(--success); }
+  .pill-wary { background: var(--warning-soft); color: var(--warning); }
+  .pill-hostile { background: var(--danger-soft); color: var(--danger); }
+  .pill-neutral { background: rgba(122, 118, 128, 0.1); color: var(--text-muted); }
+
+  .pill-active { background: var(--primary-soft); color: var(--primary); }
+  .pill-developing { background: var(--discord-soft); color: var(--discord); }
+  .pill-completed { background: rgba(122, 118, 128, 0.1); color: var(--text-dim); }
+
+  /* Journal tag pills */
+  .tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.06rem 0.3rem;
+    border-radius: var(--radius-sm);
+    margin-right: 0.25rem;
+    vertical-align: middle;
+  }
+
+  .tag-event       { background: var(--primary-soft); color: var(--primary); }
+  .tag-discovery   { background: var(--success-soft); color: var(--success); }
+  .tag-thread      { background: var(--discord-soft); color: var(--discord); }
+  .tag-ruling      { background: var(--violet-soft); color: var(--violet); }
+  .tag-world-advance { background: var(--warning-soft); color: var(--warning); }
+
+  /* Sub-tabs within cards */
+  .sub-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .sub-tab {
+    padding: 0.35rem 0.65rem;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-dim);
     cursor: pointer;
     border: none;
     background: none;
     position: relative;
     transition: color 0.15s;
-    white-space: nowrap;
-    letter-spacing: 0.01em;
   }
 
-  .tab-btn:hover { color: var(--text); }
+  .sub-tab:hover { color: var(--text-muted); }
 
-  .tab-btn.active { color: var(--primary); }
+  .sub-tab.active {
+    color: var(--primary);
+  }
 
-  .tab-btn.active::after {
+  .sub-tab.active::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0.85rem;
-    right: 0.85rem;
+    bottom: -1px;
+    left: 0.65rem;
+    right: 0.65rem;
     height: 2px;
     background: var(--primary);
     border-radius: 2px 2px 0 0;
   }
 
-  .header-meta {
-    margin-left: auto;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    white-space: nowrap;
-  }
+  .sub-pane { display: none; }
+  .sub-pane.active { display: block; }
 
-  /* ================= MAIN ================= */
-  .main {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .panel {
-    display: none;
-    position: absolute;
-    inset: 0;
-    overflow-y: auto;
-    padding: 1.5rem;
-  }
-  .panel.active { display: block; }
-
-  /* ================= SCROLLBAR ================= */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--background); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
-
-  /* ================= SECTION HEADING ================= */
-  .section-heading {
-    font-family: var(--font-display);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.6rem;
-  }
-
-  .section-heading .chevron {
-    color: var(--primary);
-    margin-right: 0.3rem;
-  }
-
-  /* ================= CHARACTER PANEL ================= */
-
-  /* Hero banner */
-  .hero-banner {
-    background: var(--surface-2);
-    border-bottom: 1px solid var(--border);
-    padding: 1.25rem 1.5rem;
-    margin: -1.5rem -1.5rem 1.5rem -1.5rem;
-  }
-
-  .hero-name {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: 0.03em;
-    margin-bottom: 0.15rem;
-  }
-
-  .hero-subtitle {
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.6rem;
-  }
-
-  .hero-quick-stats {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .quick-stat {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-muted);
-  }
-
-  .quick-stat .qval {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .quick-stat.gold .qval { color: var(--warning); }
-
-  /* HP bar */
+  /* HP bar (reusable) */
   .hp-track {
     width: 100%;
-    height: 22px;
+    height: 20px;
     background: var(--surface-1);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
@@ -271,121 +495,196 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 500;
     color: var(--text);
     text-shadow: 0 1px 3px rgba(0,0,0,0.9);
   }
 
-  /* Three-column body */
-  .char-columns {
-    display: grid;
-    grid-template-columns: 140px 1fr 1fr;
-    gap: 1.25rem;
-    align-items: start;
+  /* Compact HP bar (NPCs) */
+  .hp-track-sm {
+    width: 100%;
+    height: 10px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
   }
 
-  /* Ability scores */
-  .ability-stack {
+  .hp-track-sm .hp-fill { border-radius: 3px; }
+
+  /* Section heading */
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-heading .chevron { color: var(--primary); margin-right: 0.3rem; }
+
+  /* No-content fallback */
+  .no-content {
+    text-align: center;
+    color: var(--text-dim);
+    font-style: italic;
+    font-family: var(--font-narrative);
+    font-size: 0.95rem;
+    padding: 3rem 0;
+  }
+
+  /* ================= VIEW 1: PLAYER ================= */
+  .view-player {
+    grid-template-columns: 180px 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  /* Hero banner spans top 2 columns */
+  .player-hero {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.55rem;
+  }
+
+  .hero-quick-stats {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .quick-stat {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  .quick-stat .qval { color: var(--text); font-weight: 500; }
+  .quick-stat.gold .qval { color: var(--warning); }
+
+  /* Ability column spans both rows */
+  .player-abilities {
+    grid-column: 1;
+    grid-row: 1 / 3;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    min-height: 0;
+    overflow-y: auto;
   }
 
   .ability-box {
     background: var(--surface-1);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 0.5rem 0.25rem 0.4rem;
+    padding: 0.45rem 0.25rem 0.35rem;
     text-align: center;
   }
 
   .ability-label {
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: 0.52rem;
     font-weight: 500;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.1rem;
   }
 
   .ability-score {
     font-family: var(--font-display);
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--text);
     line-height: 1;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.15rem;
   }
 
   .ability-mod {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 500;
     color: var(--text-muted);
     background: var(--surface-3);
-    padding: 0.05rem 0.35rem;
+    padding: 0.04rem 0.3rem;
     border-radius: var(--radius-sm);
   }
 
-  /* Talents section below abilities */
   .talents-section {
-    margin-top: 0.75rem;
-    padding-top: 0.6rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
     border-top: 1px solid var(--border);
   }
 
   .talents-label {
     font-family: var(--font-display);
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     font-weight: 600;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.2rem;
   }
 
   .talent-item {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-secondary);
-    padding: 0.1rem 0;
+    padding: 0.08rem 0;
   }
 
-  /* Card used in middle and right columns */
-  .char-card {
-    background: var(--surface-3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 0.85rem 1rem;
-    margin-bottom: 0.75rem;
+  /* Inventory and right column */
+  .player-mid {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 0;
+    overflow: hidden;
   }
 
-  .char-card-title {
-    font-family: var(--font-display);
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.5rem;
-  }
-
-  .char-card-title .chevron {
-    color: var(--primary);
-    margin-right: 0.25rem;
+  .player-right {
+    grid-column: 3;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 0;
+    overflow: hidden;
   }
 
   /* Inventory list */
-  .inv-list {
-    list-style: none;
-  }
+  .inv-list { list-style: none; }
 
   .inv-list li {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--text-secondary);
-    padding: 0.2rem 0;
+    padding: 0.18rem 0;
     border-bottom: 1px solid var(--border);
   }
 
@@ -393,98 +692,106 @@
 
   .inv-slot-count {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-dim);
-    margin-top: 0.4rem;
+    margin-top: 0.35rem;
   }
 
   .inv-worn-label {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-top: 0.6rem;
-    margin-bottom: 0.25rem;
-    padding-top: 0.4rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+    padding-top: 0.35rem;
     border-top: 1px solid var(--border);
   }
 
   /* Spell list */
   .spell-item {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--text-secondary);
-    padding: 0.2rem 0;
+    padding: 0.15rem 0;
   }
 
   .spell-item::before {
     content: '\2022';
     color: var(--primary);
-    margin-right: 0.4rem;
+    margin-right: 0.35rem;
   }
 
   /* Feature list */
   .feature-item {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--text-secondary);
-    padding: 0.2rem 0;
+    padding: 0.15rem 0;
   }
 
   .feature-item::before {
     content: '\2022';
     color: var(--text-dim);
-    margin-right: 0.4rem;
+    margin-right: 0.35rem;
   }
 
-  /* Location card in right column */
+  /* Location card */
   .loc-name {
     font-family: var(--font-display);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--text);
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.15rem;
   }
 
   .loc-meta {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-muted);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 
   .loc-desc {
     font-family: var(--font-narrative);
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-style: italic;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.55;
   }
 
-  /* ================= QUESTS PANEL ================= */
-  .quests-container {
-    max-width: 700px;
-    margin: 0 auto;
+  /* ================= VIEW 2: GM SCREEN ================= */
+  .view-gm {
+    grid-template-columns: 1fr 1fr 320px;
+    grid-template-rows: auto 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem;
   }
 
-  .quest-section-label {
-    font-family: var(--font-display);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
+  .gm-quests {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    min-height: 0;
   }
 
-  .quest-section-label:first-child { margin-top: 0; }
+  .gm-npcs {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    min-height: 0;
+  }
 
+  .gm-encounter {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    min-height: 0;
+  }
+
+  /* Quest cards */
   .quest-card {
-    background: var(--surface-3);
+    background: var(--surface-4);
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.5rem;
+    border-radius: var(--radius);
+    padding: 0.5rem 0.65rem;
+    margin-bottom: 0.4rem;
     border-left: 3px solid var(--primary);
   }
 
@@ -492,45 +799,44 @@
   .quest-card.completed { border-left-color: var(--text-dim); }
 
   .quest-name {
-    font-family: var(--font-body);
     font-weight: 600;
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     color: var(--text);
   }
 
   .quest-desc {
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     color: var(--text-secondary);
     font-style: italic;
-    margin-top: 0.15rem;
+    margin-top: 0.1rem;
   }
 
   .quest-progress {
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     color: var(--text-muted);
-    margin-top: 0.15rem;
+    margin-top: 0.1rem;
   }
 
-  /* ================= NPCs PANEL ================= */
+  /* NPC grid */
   .npc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
   }
 
   .npc-card {
-    background: var(--surface-3);
+    background: var(--surface-4);
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    padding: 0.55rem 0.65rem;
   }
 
   .npc-name {
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     font-weight: 600;
     color: var(--text);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
   }
 
   .npc-name.deceased {
@@ -540,82 +846,340 @@
 
   .npc-badges {
     display: flex;
-    gap: 0.35rem;
+    gap: 0.3rem;
     flex-wrap: wrap;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.25rem;
   }
-
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.1rem 0.45rem;
-    border-radius: var(--radius-pill);
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-  }
-
-  .pill-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-  }
-
-  .pill-alive { background: var(--success-soft); color: var(--success); }
-  .pill-alive .pill-dot { background: var(--success); }
-  .pill-deceased { background: var(--danger-soft); color: var(--danger); }
-  .pill-deceased .pill-dot { background: var(--danger); }
-
-  .pill-friendly { background: var(--success-soft); color: var(--success); }
-  .pill-wary { background: var(--warning-soft); color: var(--warning); }
-  .pill-hostile { background: var(--danger-soft); color: var(--danger); }
-  .pill-neutral { background: rgba(122, 118, 128, 0.1); color: var(--text-muted); }
 
   .npc-location {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     color: var(--text-muted);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.2rem;
   }
 
   .npc-desc {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .npc-combat {
+    margin-top: 0.3rem;
+    padding-top: 0.3rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .npc-combat .val { color: var(--text); }
+
+  /* Encounter panel sections */
+  .encounter-section {
+    margin-bottom: 0.6rem;
+  }
+
+  .encounter-label {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .encounter-text {
+    font-size: 0.72rem;
     color: var(--text-secondary);
     line-height: 1.45;
   }
 
-  /* ================= STORY PANEL ================= */
-  .story-reader {
-    max-width: 680px;
-    margin: 0 auto;
+  .dc-table {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
   }
 
-  .chapter-select {
-    margin-bottom: 1.5rem;
+  .dc-table dt {
+    display: inline;
+    color: var(--text-muted);
   }
 
-  .chapter-select select {
-    background: var(--surface-1);
-    border: 1px solid var(--border);
+  .dc-table dd {
+    display: inline;
     color: var(--text);
-    font-family: var(--font-narrative);
-    font-size: 0.95rem;
-    padding: 0.4rem 0.75rem;
-    border-radius: var(--radius);
-    cursor: pointer;
+    margin-left: 0.25rem;
+    margin-right: 0.75rem;
   }
 
-  .chapter-select select:focus {
+  .log-entry {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    padding: 0.12rem 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.4;
+  }
+
+  .log-entry:last-child { border-bottom: none; }
+
+  .thread-item {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    padding: 0.15rem 0;
+  }
+
+  .thread-item::before {
+    content: '\203A';
+    color: var(--discord);
+    margin-right: 0.35rem;
+    font-weight: 700;
+  }
+
+  .advance-item {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    padding: 0.15rem 0;
+  }
+
+  .advance-item::before {
+    content: '\2022';
+    color: var(--warning);
+    margin-right: 0.35rem;
+  }
+
+  /* ================= VIEW 3: CAMPAIGN ================= */
+  .view-campaign {
+    grid-template-columns: 1fr 320px;
+    grid-template-rows: auto 1fr 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .campaign-banner {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+  }
+
+  .campaign-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.15rem;
+  }
+
+  .campaign-subtitle {
+    font-family: var(--font-narrative);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .campaign-meta {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+  }
+
+  .campaign-quests {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 0;
+  }
+
+  .campaign-timeline {
+    grid-column: 1;
+    grid-row: 3;
+    min-height: 0;
+  }
+
+  .campaign-right-top {
+    grid-column: 2;
+    grid-row: 2;
+    min-height: 0;
+  }
+
+  .campaign-right-bottom {
+    grid-column: 2;
+    grid-row: 3;
+    min-height: 0;
+  }
+
+  /* Faction cards */
+  .faction-card {
+    background: var(--surface-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.5rem 0.65rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .faction-name {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+
+  .faction-goals {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  /* Session timeline */
+  .timeline-session {
+    margin-bottom: 0.65rem;
+  }
+
+  .timeline-label {
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.04em;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-entry {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    padding: 0.1rem 0 0.1rem 0.5rem;
+    border-left: 1px solid var(--border);
+    margin-left: 0.25rem;
+  }
+
+  /* World state summary */
+  .world-state-text {
+    font-family: var(--font-narrative);
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ================= VIEW 4: STORY & AUDIO ================= */
+  .view-media {
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 0;
+  }
+
+  .media-list {
+    grid-column: 1;
+    grid-row: 1;
+    background: var(--surface-1);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 0.5rem 0;
+  }
+
+  .chapter-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-body);
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .chapter-item:hover {
+    color: var(--text-secondary);
+    background: var(--surface-2);
+  }
+
+  .chapter-item.active {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+
+  .chapter-item .ch-num {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+
+  .chapter-item .ch-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .chapter-item .ch-audio {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    opacity: 0.5;
+  }
+
+  /* Audio player at bottom of list */
+  .media-player {
+    grid-column: 1;
+    grid-row: 2;
+    background: var(--surface-2);
+    border-right: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    padding: 0.6rem 0.75rem;
+  }
+
+  .player-title {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.35rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .media-player audio {
+    width: 100%;
+    height: 32px;
+    border-radius: var(--radius-sm);
     outline: none;
-    border-color: var(--primary);
+  }
+
+  audio::-webkit-media-controls-panel { background: var(--surface-1); }
+  audio::-webkit-media-controls-current-time-display,
+  audio::-webkit-media-controls-time-remaining-display {
+    color: var(--text-muted);
+    font-size: 0.65rem;
+  }
+
+  /* Reader pane */
+  .media-reader {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    overflow-y: auto;
+    padding: 2rem 3rem;
   }
 
   .chapter-prose {
+    max-width: 640px;
+    margin: 0 auto;
     font-family: var(--font-narrative);
-    font-size: 1.06rem;
+    font-size: 1.05rem;
     font-weight: 300;
     line-height: 1.75;
     color: var(--text-secondary);
@@ -655,174 +1219,162 @@
     text-indent: 0;
   }
 
-  /* ================= AUDIO PANEL ================= */
-  .audio-wrap {
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  .audio-card {
-    background: var(--surface-3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1rem 1.25rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .audio-card h3 {
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 0.6rem;
-    letter-spacing: 0.04em;
-  }
-
-  .audio-card audio {
-    width: 100%;
-    height: 36px;
-    border-radius: var(--radius-sm);
-    outline: none;
-  }
-
-  audio::-webkit-media-controls-panel { background: var(--surface-1); }
-  audio::-webkit-media-controls-current-time-display,
-  audio::-webkit-media-controls-time-remaining-display {
-    color: var(--text-muted);
-    font-size: 0.7rem;
-  }
-
-  /* ================= LOG PANEL ================= */
-  .log-container {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .session-group {
-    margin-bottom: 1.25rem;
-  }
-
-  .session-group-label {
-    font-family: var(--font-display);
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: 0.06em;
-    padding-bottom: 0.35rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 0.4rem;
-  }
-
-  .log-list {
-    list-style: none;
-  }
-
-  .log-list li {
-    font-size: 0.82rem;
-    color: var(--text-secondary);
-    padding: 0.25rem 0;
-    border-bottom: 1px solid var(--border);
-    line-height: 1.5;
-  }
-
-  .log-list li:last-child { border-bottom: none; }
-
-  /* Journal tag pills */
-  .tag {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.08rem 0.35rem;
-    border-radius: var(--radius-sm);
-    margin-right: 0.3rem;
-    vertical-align: middle;
-  }
-
-  .tag-event       { background: var(--primary-soft); color: var(--primary); }
-  .tag-discovery   { background: var(--success-soft); color: var(--success); }
-  .tag-thread      { background: var(--discord-soft); color: var(--discord); }
-  .tag-ruling      { background: var(--violet-soft); color: var(--violet); }
-  .tag-world-advance { background: var(--warning-soft); color: var(--warning); }
-
-  /* ================= SHARED ================= */
-  .no-content {
-    text-align: center;
-    color: var(--text-dim);
-    font-style: italic;
-    font-family: var(--font-narrative);
-    font-size: 1rem;
-    padding: 4rem 0;
-  }
-
-  .danger-badge {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 500;
-  }
-
-  .danger-safe    { color: var(--success); }
-  .danger-unsafe  { color: var(--warning); }
-  .danger-risky   { color: var(--primary); }
-  .danger-deadly  { color: var(--danger); }
-
   /* ================= RESPONSIVE ================= */
   @media (max-width: 900px) {
-    .char-columns {
-      grid-template-columns: 1fr 1fr;
+    body {
+      grid-template-columns: 1fr;
+      grid-template-rows: var(--header-height) auto 1fr;
     }
-    .ability-stack {
+
+    .sidebar {
+      grid-row: 2;
+      grid-column: 1;
+      flex-direction: row;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .sidebar-minicard { display: none; }
+    .sidebar-footer { display: none; }
+
+    .sidebar-nav {
+      display: flex;
+      padding: 0;
+      flex: none;
+    }
+
+    .nav-label { display: none; }
+
+    .nav-item {
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.45rem 0.75rem;
+      white-space: nowrap;
+    }
+
+    .nav-item.active { border-bottom-color: var(--primary); }
+
+    .content {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    .view-player {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .player-hero { grid-column: 1 / -1; grid-row: 1; }
+    .player-abilities {
+      grid-column: 1 / -1;
+      grid-row: 2;
       flex-direction: row;
       flex-wrap: wrap;
-      gap: 0.4rem;
     }
     .ability-box { flex: 1; min-width: 60px; }
-    .col-left { grid-column: 1 / -1; }
+    .talents-section { display: none; }
+    .player-mid { grid-column: 1; grid-row: 3; }
+    .player-right { grid-column: 2; grid-row: 3; }
+
+    .view-gm {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+    }
+
+    .gm-quests { grid-column: 1; grid-row: 1; }
+    .gm-npcs { grid-column: 1; grid-row: 2; }
+    .gm-encounter { grid-column: 1; grid-row: 3; }
+
+    .view-campaign {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto auto;
+    }
+
+    .campaign-banner { grid-column: 1; }
+    .campaign-quests { grid-column: 1; grid-row: 2; }
+    .campaign-right-top { grid-column: 1; grid-row: 3; }
+    .campaign-timeline { grid-column: 1; grid-row: 4; }
+    .campaign-right-bottom { grid-column: 1; grid-row: 5; }
+
+    .view-media {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .media-list {
+      grid-column: 1;
+      grid-row: 1;
+      max-height: 120px;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .media-reader { grid-column: 1; grid-row: 2; padding: 1.5rem 1rem; }
+    .media-player { grid-column: 1; grid-row: 3; border-right: none; }
   }
 
   @media (max-width: 600px) {
-    .char-columns {
-      grid-template-columns: 1fr;
-    }
-    .hero-quick-stats { flex-wrap: wrap; gap: 0.75rem; }
-    .tab-btn { padding: 0 0.5rem; font-size: 0.7rem; }
-    .header-brand { font-size: 0.75rem; margin-right: 0.75rem; }
+    .header-brand { font-size: 0.72rem; }
+    .header-title { font-size: 0.7rem; }
     .header-meta { display: none; }
-    .panel { padding: 1rem; }
-    .hero-banner { margin: -1rem -1rem 1rem -1rem; padding: 1rem; }
+
+    .view-player {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+    }
+
+    .player-hero { grid-column: 1; }
+    .player-abilities { grid-column: 1; grid-row: 2; }
+    .player-mid { grid-column: 1; grid-row: 3; }
+    .player-right { grid-column: 1; grid-row: 4; }
+
+    .media-reader { padding: 1rem; }
   }
 </style>
 </head>
 <body>
 
+<!-- ================= HEADER ================= -->
 <div class="header">
   <span class="header-brand">Glintlock</span>
-  <nav class="tab-nav">
-    <button class="tab-btn active" data-panel="character" onclick="switchPanel('character')">Character</button>
-    <button class="tab-btn" data-panel="quests" onclick="switchPanel('quests')">Quests</button>
-    <button class="tab-btn" data-panel="npcs" onclick="switchPanel('npcs')">NPCs</button>
-    <button class="tab-btn" data-panel="story" onclick="switchPanel('story')">Story</button>
-    <button class="tab-btn" data-panel="audio" onclick="switchPanel('audio')">Audio</button>
-    <button class="tab-btn" data-panel="log" onclick="switchPanel('log')">Log</button>
-  </nav>
+  <span class="header-title" id="header-title"></span>
   <span class="header-meta" id="header-meta"></span>
 </div>
 
-<div class="main">
-  <div class="panel active" id="panel-character"></div>
-  <div class="panel" id="panel-quests"></div>
-  <div class="panel" id="panel-npcs"></div>
-  <div class="panel" id="panel-story"></div>
-  <div class="panel" id="panel-audio"></div>
-  <div class="panel" id="panel-log"></div>
+<!-- ================= SIDEBAR ================= -->
+<div class="sidebar">
+  <div class="sidebar-minicard" id="sidebar-minicard"></div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Dashboards</div>
+    <button class="nav-item active" data-view="player" onclick="switchView('player')">
+      <span class="nav-icon">&#9876;</span> Character
+    </button>
+    <button class="nav-item" data-view="gm" onclick="switchView('gm')">
+      <span class="nav-icon">&#9881;</span> GM Screen
+    </button>
+    <button class="nav-item" data-view="campaign" onclick="switchView('campaign')">
+      <span class="nav-icon">&#9734;</span> Campaign
+    </button>
+    <button class="nav-item" data-view="media" onclick="switchView('media')">
+      <span class="nav-icon">&#9836;</span> Story & Audio
+    </button>
+  </div>
+  <div class="sidebar-footer" id="sidebar-footer"></div>
+</div>
+
+<!-- ================= CONTENT ================= -->
+<div class="content">
+  <div class="view view-player active" id="view-player"></div>
+  <div class="view view-gm" id="view-gm"></div>
+  <div class="view view-campaign" id="view-campaign"></div>
+  <div class="view view-media" id="view-media"></div>
 </div>
 
 <script>
 const DATA = DASHBOARD_DATA;
 
-/* --- Utility --- */
+/* ==================== Utilities ==================== */
 function mod(score) {
   const m = Math.floor((score - 10) / 2);
   return m >= 0 ? '+' + m : '' + m;
@@ -831,21 +1383,32 @@ function mod(score) {
 function esc(s) {
   if (s == null) return '';
   const d = document.createElement('div');
-  d.textContent = s;
+  d.textContent = String(s);
   return d.innerHTML;
 }
 
-/* --- Panel switching --- */
-function switchPanel(name) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  const target = document.getElementById('panel-' + name);
-  if (target) target.classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(n => n.classList.remove('active'));
-  const btn = document.querySelector('.tab-btn[data-panel="' + name + '"]');
-  if (btn) btn.classList.add('active');
+function hpBar(cur, max, cls) {
+  const pct = Math.max(0, Math.min(100, (cur / Math.max(max, 1)) * 100));
+  const low = pct <= 35;
+  const track = cls || 'hp-track';
+  return '<div class="' + track + '"><div class="hp-fill' + (low ? ' low' : '') + '" style="width:' + pct + '%"></div>' +
+    (cls ? '' : '<div class="hp-text">HP ' + cur + ' / ' + max + '</div>') + '</div>';
 }
 
-/* --- Markdown to HTML (for story prose) --- */
+function pillBadge(text, cls) {
+  return '<span class="pill ' + cls + '">' + (cls.indexOf('pill-alive') >= 0 || cls.indexOf('pill-deceased') >= 0 ? '<span class="pill-dot"></span>' : '') + esc(text) + '</span>';
+}
+
+function dispositionPill(d) {
+  const map = { friendly: 'pill-friendly', wary: 'pill-wary', hostile: 'pill-hostile', neutral: 'pill-neutral' };
+  return pillBadge(d, map[d] || 'pill-neutral');
+}
+
+function tagSpan(tag) {
+  const tc = { event: 'tag-event', discovery: 'tag-discovery', ruling: 'tag-ruling', thread: 'tag-thread', 'world-advance': 'tag-world-advance' };
+  return '<span class="tag ' + (tc[tag] || 'tag-event') + '">' + tag + '</span>';
+}
+
 function md2html(text) {
   if (!text) return '';
   let html = text.replace(/\n---\n/g, '<hr>');
@@ -862,49 +1425,137 @@ function md2html(text) {
   }).join('\n');
 }
 
-/* --- Render: Header meta --- */
+/* XP thresholds per level (cumulative) */
+function xpForLevel(lvl) {
+  const thresholds = [0, 0, 10, 20, 40, 80, 160, 320, 640, 1280, 2560];
+  return thresholds[Math.min(lvl, 10)] || 0;
+}
+
+/* Parse journal entries into session groups */
+function parseJournal(journal) {
+  const groups = [];
+  let current = { label: 'Journal', entries: [] };
+  (journal || []).forEach(e => {
+    const str = typeof e === 'string' ? e : '';
+    const m = str.match(/^##?\s*Session\s+(\d+)/);
+    if (m) {
+      if (current.entries.length) groups.push(current);
+      current = { label: 'Session ' + m[1], entries: [] };
+      return;
+    }
+    if (str.trim() && !str.match(/^#/)) current.entries.push(str);
+  });
+  if (current.entries.length) groups.push(current);
+  return groups;
+}
+
+/* ==================== View switching ==================== */
+const viewTitles = { player: 'Character Sheet', gm: 'GM Screen', campaign: 'Campaign Overview', media: 'Story & Audio' };
+
+function switchView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById('view-' + name);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const btn = document.querySelector('.nav-item[data-view="' + name + '"]');
+  if (btn) btn.classList.add('active');
+  document.getElementById('header-title').textContent = viewTitles[name] || '';
+}
+
+/* ==================== Sub-tab switching ==================== */
+function switchSubTab(groupId, tabName) {
+  const group = document.getElementById(groupId);
+  if (!group) return;
+  group.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+  group.querySelectorAll('.sub-pane').forEach(p => p.classList.remove('active'));
+  const tab = group.querySelector('.sub-tab[data-tab="' + tabName + '"]');
+  const pane = group.querySelector('.sub-pane[data-pane="' + tabName + '"]');
+  if (tab) tab.classList.add('active');
+  if (pane) pane.classList.add('active');
+}
+
+/* ==================== Render: Header ==================== */
 function renderHeader() {
   const meta = DATA.session_metadata || {};
   const parts = [];
   if (meta.sessions_played) parts.push(meta.sessions_played + ' sessions');
   if (meta.last_played) parts.push(meta.last_played);
   document.getElementById('header-meta').textContent = parts.join(' \u00b7 ');
+  document.getElementById('header-title').textContent = viewTitles[DATA.dashboard_type || 'player'] || 'Character Sheet';
 }
 
-/* --- Render: Character panel --- */
-function renderCharacter() {
+/* ==================== Render: Sidebar ==================== */
+function renderSidebar() {
   const c = DATA.character;
-  const el = document.getElementById('panel-character');
+  const mc = document.getElementById('sidebar-minicard');
+  if (!c) { mc.innerHTML = ''; return; }
+
+  const hpCur = c.hp ? c.hp.current : 0;
+  const hpMax = c.hp ? c.hp.max : 1;
+  const hpPct = Math.max(0, Math.min(100, (hpCur / Math.max(hpMax, 1)) * 100));
+
+  let h = '<div class="mini-name">' + esc(c.name) + '</div>';
+  h += '<div class="mini-subtitle">' + esc((c.ancestry || '') + ' ' + (c.class || '') + ' ' + (c.level || 1)) + '</div>';
+  h += '<div class="mini-hp-track"><div class="mini-hp-fill' + (hpPct <= 35 ? ' low' : '') + '" style="width:' + hpPct + '%"></div>';
+  h += '<div class="mini-hp-text">HP ' + hpCur + '/' + hpMax + '</div></div>';
+  h += '<div class="mini-stats">';
+  h += '<span>AC <span class="val">' + (c.ac || '?') + '</span></span>';
+  h += '<span class="gold">Gold <span class="val">' + (c.gold || 0) + '</span></span>';
+  h += '</div>';
+  mc.innerHTML = h;
+
+  /* Footer */
+  const foot = document.getElementById('sidebar-footer');
+  const loc = DATA.location;
+  let fh = '';
+  if (loc) {
+    const dcls = 'danger-' + (loc.danger_level || 'safe');
+    fh += '<div class="footer-location"><span class="loc-icon">&#9679;</span> ' + esc(loc.name);
+    fh += ' <span class="danger-badge ' + dcls + '">' + esc(loc.danger_level || 'safe') + '</span></div>';
+  }
+  /* XP bar */
+  const lvl = c.level || 1;
+  const xp = c.xp || 0;
+  const xpCur = xpForLevel(lvl);
+  const xpNext = xpForLevel(lvl + 1);
+  const xpRange = Math.max(xpNext - xpCur, 1);
+  const xpPct = Math.max(0, Math.min(100, ((xp - xpCur) / xpRange) * 100));
+  fh += '<div class="xp-track"><div class="xp-fill" style="width:' + xpPct + '%"></div></div>';
+  fh += '<div class="xp-label">XP ' + xp + ' / ' + xpNext + '</div>';
+  foot.innerHTML = fh;
+}
+
+/* ==================== Render: Player View ==================== */
+function renderPlayer() {
+  const c = DATA.character;
+  const el = document.getElementById('view-player');
   if (!c) { el.innerHTML = '<div class="no-content">No character data.</div>'; return; }
 
   const hpCur = c.hp ? c.hp.current : 0;
   const hpMax = c.hp ? c.hp.max : 1;
-  const hpPct = Math.max(0, Math.min(100, (hpCur / hpMax) * 100));
-  const hpLow = hpPct <= 35;
   const stats = c.stats || {};
-  const statNames = ['str','dex','con','int','wis','cha'];
-  const statLabels = {str:'STR',dex:'DEX',con:'CON',int:'INT',wis:'WIS',cha:'CHA'};
+  const statNames = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+  const statLabels = { str: 'STR', dex: 'DEX', con: 'CON', int: 'INT', wis: 'WIS', cha: 'CHA' };
 
   let html = '';
 
   /* Hero banner */
-  html += '<div class="hero-banner">';
+  html += '<div class="player-hero">';
   html += '<div class="hero-name">' + esc(c.name) + '</div>';
-  html += '<div class="hero-subtitle">' + esc((c.ancestry||'') + ' ' + (c.class||'') + ' ' + (c.level||1)) + (c.background ? ' \u00b7 ' + esc(c.background) : '') + '</div>';
+  html += '<div class="hero-subtitle">' + esc((c.ancestry || '') + ' ' + (c.class || '') + ' ' + (c.level || 1));
+  if (c.background) html += ' \u00b7 ' + esc(c.background);
+  html += '</div>';
   html += '<div class="hero-quick-stats">';
-  html += '<span class="quick-stat">AC <span class="qval">' + (c.ac||'?') + '</span></span>';
-  html += '<span class="quick-stat">XP <span class="qval">' + (c.xp||0) + '</span></span>';
-  html += '<span class="quick-stat gold">Gold <span class="qval">' + (c.gold||0) + ' gp</span></span>';
+  html += '<span class="quick-stat">AC <span class="qval">' + (c.ac || '?') + '</span></span>';
+  if (c.hit_die) html += '<span class="quick-stat">HD <span class="qval">' + esc(c.hit_die) + '</span></span>';
+  html += '<span class="quick-stat">XP <span class="qval">' + (c.xp || 0) + '</span></span>';
+  html += '<span class="quick-stat gold">Gold <span class="qval">' + (c.gold || 0) + ' gp</span></span>';
   html += '</div>';
-  html += '<div class="hp-track"><div class="hp-fill' + (hpLow ? ' low' : '') + '" style="width:' + hpPct + '%"></div>';
-  html += '<div class="hp-text">HP ' + hpCur + ' / ' + hpMax + '</div></div>';
+  html += hpBar(hpCur, hpMax);
   html += '</div>';
 
-  /* Three-column body */
-  html += '<div class="char-columns">';
-
-  /* Left column — abilities + talents */
-  html += '<div class="col-left"><div class="ability-stack">';
+  /* Ability column */
+  html += '<div class="player-abilities">';
   statNames.forEach(s => {
     const val = stats[s] || 10;
     html += '<div class="ability-box">';
@@ -913,9 +1564,7 @@ function renderCharacter() {
     html += '<span class="ability-mod">' + mod(val) + '</span>';
     html += '</div>';
   });
-  html += '</div>';
-
-  /* Talents */
+  /* Talents below abilities */
   const talents = c.talents || [];
   if (talents.length) {
     html += '<div class="talents-section"><div class="talents-label">Talents</div>';
@@ -925,213 +1574,452 @@ function renderCharacter() {
   html += '</div>';
 
   /* Middle column — inventory */
-  html += '<div class="col-mid">';
-  html += '<div class="char-card"><div class="char-card-title"><span class="chevron">&rsaquo;</span> Inventory</div>';
+  html += '<div class="player-mid">';
+  html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Inventory</div><div class="card-body">';
   if (c.inventory && c.inventory.length) {
     html += '<ul class="inv-list">';
     c.inventory.forEach(i => { html += '<li>' + esc(i) + '</li>'; });
     html += '</ul>';
-    html += '<div class="inv-slot-count">' + c.inventory.length + '/10 slots</div>';
+    const used = c.used_gear_slots || c.inventory.length;
+    const max = c.max_gear_slots || 10;
+    html += '<div class="inv-slot-count">' + used + '/' + max + ' slots</div>';
   } else {
-    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.82rem">Empty</div>';
+    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">Empty</div>';
   }
-
-  /* Worn items */
   const worn = c.worn || [];
   if (worn.length) {
     html += '<div class="inv-worn-label">Worn (no slot)</div>';
-    worn.forEach(w => { html += '<div class="spell-item" style="font-size:0.8rem">' + esc(w) + '</div>'; });
+    worn.forEach(w => { html += '<div class="spell-item" style="font-size:0.75rem">' + esc(w) + '</div>'; });
   }
   html += '</div></div>';
 
+  /* Languages & proficiencies card */
+  const langs = c.languages || [];
+  const wProf = c.weapon_proficiencies || [];
+  const aProf = c.armor_proficiencies || [];
+  if (langs.length || wProf.length || aProf.length) {
+    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Proficiencies</div><div class="card-body">';
+    if (langs.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:0.3rem"><span style="color:var(--text-muted)">Languages:</span> ' + esc(langs.join(', ')) + '</div>';
+    if (wProf.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:0.3rem"><span style="color:var(--text-muted)">Weapons:</span> ' + esc(wProf.join(', ')) + '</div>';
+    if (aProf.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary)"><span style="color:var(--text-muted)">Armor:</span> ' + esc(aProf.join(', ')) + '</div>';
+    html += '</div></div>';
+  }
+  html += '</div>';
+
   /* Right column — location, spells, features */
-  html += '<div class="col-right">';
+  html += '<div class="player-right">';
 
   /* Location */
   const loc = DATA.location;
   if (loc) {
-    html += '<div class="char-card"><div class="char-card-title"><span class="chevron">&rsaquo;</span> Location</div>';
+    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Location</div><div class="card-body">';
     html += '<div class="loc-name">' + esc(loc.name) + '</div>';
-    const dangerClass = 'danger-' + (loc.danger_level || 'safe');
-    html += '<div class="loc-meta"><span class="danger-badge ' + dangerClass + '">' + esc(loc.danger_level || 'safe') + '</span>';
+    const dcls = 'danger-' + (loc.danger_level || 'safe');
+    html += '<div class="loc-meta"><span class="danger-badge ' + dcls + '">' + esc(loc.danger_level || 'safe') + '</span>';
     if (loc.light) html += ' \u00b7 ' + esc(loc.light);
     html += '</div>';
     if (loc.description) html += '<div class="loc-desc">' + esc(loc.description) + '</div>';
-    html += '</div>';
+    html += '</div></div>';
   }
 
   /* Spells */
   const spells = c.spells || [];
   if (spells.length) {
-    html += '<div class="char-card"><div class="char-card-title"><span class="chevron">&rsaquo;</span> Spells (Tier 1)</div>';
+    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Spells</div><div class="card-body">';
     spells.forEach(s => { html += '<div class="spell-item">' + esc(s) + '</div>'; });
-    html += '</div>';
+    html += '</div></div>';
   }
 
   /* Features */
   const features = [].concat(c.class_features || [], c.ancestry_traits || []);
   if (features.length) {
-    html += '<div class="char-card"><div class="char-card-title"><span class="chevron">&rsaquo;</span> Features</div>';
+    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Features</div><div class="card-body">';
     features.forEach(f => { html += '<div class="feature-item">' + esc(f) + '</div>'; });
-    html += '</div>';
+    html += '</div></div>';
   }
 
-  html += '</div>'; /* end col-right */
-  html += '</div>'; /* end char-columns */
+  html += '</div>';
 
   el.innerHTML = html;
 }
 
-/* --- Render: Quests panel --- */
-function renderQuests() {
-  const q = DATA.quests;
-  const el = document.getElementById('panel-quests');
-  if (!q) { el.innerHTML = '<div class="no-content">No quest data.</div>'; return; }
+/* ==================== Render: GM View ==================== */
+function renderGM() {
+  const el = document.getElementById('view-gm');
+  let html = '';
 
-  function questCards(arr, cls) {
-    if (!arr || !arr.length) return '<div style="color:var(--text-dim);font-style:italic;font-size:0.82rem;padding:0.25rem 0">None</div>';
-    return arr.map(i => {
+  /* Quests/Threads tabbed card */
+  html += '<div class="gm-quests"><div class="card" id="gm-qt-card">';
+  html += '<div class="sub-tabs">';
+  html += '<button class="sub-tab active" data-tab="quests" onclick="switchSubTab(\'gm-qt-card\',\'quests\')">Active Quests</button>';
+  html += '<button class="sub-tab" data-tab="threads" onclick="switchSubTab(\'gm-qt-card\',\'threads\')">Threads</button>';
+  html += '</div>';
+  html += '<div class="card-body">';
+
+  /* Quests pane */
+  html += '<div class="sub-pane active" data-pane="quests">';
+  const q = DATA.quests;
+  if (q) {
+    (q.active || []).forEach(i => {
       const name = typeof i === 'string' ? i : (i.name || i);
       const desc = typeof i === 'object' ? i.desc : null;
-      const progress = typeof i === 'object' ? i.progress : null;
-      let h = '<div class="quest-card ' + cls + '">';
-      h += '<div class="quest-name">' + esc(name) + '</div>';
-      if (desc) h += '<div class="quest-desc">' + esc(desc) + '</div>';
-      if (progress) h += '<div class="quest-progress">' + esc(progress) + '</div>';
-      h += '</div>';
-      return h;
-    }).join('');
-  }
-
-  let html = '<div class="quests-container">';
-  html += '<div class="quest-section-label"><span class="chevron" style="color:var(--primary)">&rsaquo;</span> Active</div>';
-  html += questCards(q.active, '');
-  if (q.developing && q.developing.length) {
-    html += '<div class="quest-section-label"><span class="chevron" style="color:var(--discord)">&rsaquo;</span> Developing</div>';
-    html += questCards(q.developing, 'developing');
-  }
-  if (q.completed && q.completed.length) {
-    html += '<div class="quest-section-label"><span class="chevron" style="color:var(--text-dim)">&rsaquo;</span> Completed</div>';
-    html += questCards(q.completed, 'completed');
+      html += '<div class="quest-card"><div class="quest-name">' + esc(name) + '</div>';
+      if (desc) html += '<div class="quest-desc">' + esc(desc) + '</div>';
+      html += '</div>';
+    });
+    (q.developing || []).forEach(i => {
+      const name = typeof i === 'string' ? i : (i.name || i);
+      const desc = typeof i === 'object' ? i.desc : null;
+      html += '<div class="quest-card developing"><div class="quest-name">' + esc(name) + '</div>';
+      if (desc) html += '<div class="quest-desc">' + esc(desc) + '</div>';
+      html += '</div>';
+    });
+    if (!(q.active || []).length && !(q.developing || []).length) {
+      html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No active quests</div>';
+    }
+  } else {
+    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No quest data</div>';
   }
   html += '</div>';
-  el.innerHTML = html;
-}
 
-/* --- Render: NPCs panel --- */
-function renderNpcs() {
+  /* Threads pane */
+  html += '<div class="sub-pane" data-pane="threads">';
+  const threads = DATA.open_threads || [];
+  if (threads.length) {
+    threads.forEach(t => {
+      const text = typeof t === 'string' ? t : (t.text || t.name || '');
+      html += '<div class="thread-item">' + esc(text) + '</div>';
+    });
+  } else {
+    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No open threads</div>';
+  }
+  html += '</div>';
+
+  html += '</div></div></div>';
+
+  /* NPC grid */
+  html += '<div class="gm-npcs"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> NPC Quick Reference</div>';
+  html += '<div class="card-body">';
   const npcs = DATA.npcs || [];
-  const el = document.getElementById('panel-npcs');
-  if (!npcs.length) { el.innerHTML = '<div class="no-content">No known NPCs.</div>'; return; }
-
-  let html = '<div class="npc-grid">';
-  npcs.forEach(n => {
-    const dead = (n.status||'alive') === 'deceased';
-    html += '<div class="npc-card">';
-    html += '<div class="npc-name' + (dead ? ' deceased' : '') + '">' + esc(n.name) + '</div>';
-    html += '<div class="npc-badges">';
-    /* Status pill */
-    const sCls = dead ? 'pill-deceased' : 'pill-alive';
-    html += '<span class="pill ' + sCls + '"><span class="pill-dot"></span>' + (dead ? 'deceased' : 'alive') + '</span>';
-    /* Disposition pill */
-    if (n.disposition) {
-      const dMap = {friendly:'pill-friendly',wary:'pill-wary',hostile:'pill-hostile',neutral:'pill-neutral'};
-      html += '<span class="pill ' + (dMap[n.disposition]||'pill-neutral') + '">' + esc(n.disposition) + '</span>';
-    }
+  if (npcs.length) {
+    html += '<div class="npc-grid">';
+    npcs.forEach(n => {
+      const dead = (n.status || 'alive') === 'deceased';
+      html += '<div class="npc-card">';
+      html += '<div class="npc-name' + (dead ? ' deceased' : '') + '">' + esc(n.name) + '</div>';
+      html += '<div class="npc-badges">';
+      html += pillBadge(dead ? 'deceased' : 'alive', dead ? 'pill-deceased' : 'pill-alive');
+      if (n.disposition) html += dispositionPill(n.disposition);
+      html += '</div>';
+      if (n.location) html += '<div class="npc-location">' + esc(n.location) + '</div>';
+      if (n.description) html += '<div class="npc-desc">' + esc(n.description) + '</div>';
+      /* Combat stats if available */
+      if (n.hp || n.ac || n.attacks) {
+        html += '<div class="npc-combat">';
+        if (n.ac) html += '<span>AC <span class="val">' + n.ac + '</span></span>';
+        if (n.hp) html += '<span>HP <span class="val">' + (typeof n.hp === 'object' ? n.hp.current + '/' + n.hp.max : n.hp) + '</span></span>';
+        if (n.morale) html += '<span>ML <span class="val">' + n.morale + '</span></span>';
+        if (n.attacks && n.attacks.length) html += '<span>' + esc(n.attacks.join(', ')) + '</span>';
+        html += '</div>';
+      }
+      html += '</div>';
+    });
     html += '</div>';
-    if (n.location) html += '<div class="npc-location">' + esc(n.location) + '</div>';
-    if (n.description) html += '<div class="npc-desc">' + esc(n.description) + '</div>';
-    html += '</div>';
-  });
-  html += '</div>';
-  el.innerHTML = html;
-}
-
-/* --- Render: Story panel --- */
-function renderStory() {
-  const el = document.getElementById('panel-story');
-  const chapters = DATA.chapters || [];
-  if (!chapters.length) {
-    el.innerHTML = '<div class="story-reader"><div class="no-content">No chronicles written yet. Use /glintlock:chronicle to generate a chapter.</div></div>';
-    return;
+  } else {
+    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No known NPCs</div>';
   }
-  let html = '<div class="story-reader"><div class="chapter-select"><select id="chapter-select" onchange="showChapter(this.value)">';
-  chapters.forEach((ch, i) => {
-    html += '<option value="' + i + '">Chapter ' + ch.number + ': ' + esc(ch.title) + '</option>';
-  });
-  html += '</select></div><div id="chapter-content"></div></div>';
-  el.innerHTML = html;
-  showChapter(0);
-}
+  html += '</div></div></div>';
 
-function showChapter(idx) {
-  const ch = DATA.chapters[idx];
-  if (!ch) return;
-  document.getElementById('chapter-content').innerHTML = '<div class="chapter-prose">' + md2html(ch.content) + '</div>';
-}
+  /* Encounter / reference panel */
+  html += '<div class="gm-encounter"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Session Tools</div>';
+  html += '<div class="card-body">';
 
-/* --- Render: Audio panel --- */
-function renderAudio() {
-  const el = document.getElementById('panel-audio');
-  const audiobooks = DATA.audiobooks || [];
-  if (!audiobooks.length) {
-    el.innerHTML = '<div class="audio-wrap"><div class="no-content">No audiobooks generated yet. Use /glintlock:audiobook to generate one.</div></div>';
-    return;
-  }
-  el.innerHTML = '<div class="audio-wrap">' + audiobooks.map(ab =>
-    '<div class="audio-card"><h3>Chapter ' + ab.chapter + ': ' + esc(ab.title) + '</h3>' +
-    '<audio controls preload="metadata"><source src="' + esc(ab.file) + '" type="audio/mpeg">Your browser does not support the audio element.</audio></div>'
-  ).join('') + '</div>';
-}
+  /* Session info */
+  const meta = DATA.session_metadata || {};
+  html += '<div class="encounter-section">';
+  html += '<div class="encounter-label">Session</div>';
+  html += '<div class="encounter-text">';
+  if (meta.sessions_played) html += 'Session ' + meta.sessions_played;
+  if (meta.last_played) html += ' \u00b7 ' + esc(meta.last_played);
+  html += '</div></div>';
 
-/* --- Render: Log panel --- */
-function renderLog() {
+  /* Recent log entries */
   const journal = DATA.journal || [];
-  const el = document.getElementById('panel-log');
-  if (!journal.length) { el.innerHTML = '<div class="no-content">No journal entries.</div>'; return; }
-
-  const tc = { event:'tag-event', discovery:'tag-discovery', ruling:'tag-ruling', thread:'tag-thread', 'world-advance':'tag-world-advance' };
-
-  /* Group by session headers */
-  const groups = [];
-  let current = { label: 'Journal', entries: [] };
-  journal.forEach(e => {
-    const str = typeof e === 'string' ? e : '';
-    const sessionMatch = str.match(/^##?\s*Session\s+(\d+)/);
-    if (sessionMatch) {
-      if (current.entries.length) groups.push(current);
-      current = { label: 'Session ' + sessionMatch[1], entries: [] };
-      return;
-    }
-    if (str.trim() && !str.match(/^#/)) current.entries.push(str);
-  });
-  if (current.entries.length) groups.push(current);
-
-  let html = '<div class="log-container">';
-  /* Reverse — newest session first */
-  groups.reverse().forEach(g => {
-    html += '<div class="session-group"><div class="session-group-label">' + esc(g.label) + '</div>';
-    html += '<ul class="log-list">';
-    g.entries.forEach(e => {
+  const recentEntries = journal.filter(e => typeof e === 'string' && e.trim() && !e.match(/^##?\s/) && !e.match(/^#/)).slice(-5);
+  if (recentEntries.length) {
+    html += '<div class="encounter-section">';
+    html += '<div class="encounter-label">Recent Events</div>';
+    recentEntries.forEach(e => {
       const m = e.match(/\[(\w[\w-]*)\]/);
       const tag = m ? m[1] : null;
       const text = e.replace(/\[[\w-]+\]\s*/, '').replace(/^-\s*/, '');
-      html += '<li>' + (tag ? '<span class="tag ' + (tc[tag]||'tag-event') + '">' + tag + '</span>' : '') + esc(text) + '</li>';
+      html += '<div class="log-entry">' + (tag ? tagSpan(tag) : '') + esc(text) + '</div>';
     });
-    html += '</ul></div>';
-  });
+    html += '</div>';
+  }
+
+  /* Session prep */
+  const prep = DATA.session_prep;
+  if (prep) {
+    html += '<div class="encounter-section">';
+    html += '<div class="encounter-label">Session Prep</div>';
+    if (prep.strong_start) html += '<div class="encounter-text" style="margin-bottom:0.3rem"><strong style="color:var(--text-muted)">Start:</strong> ' + esc(prep.strong_start) + '</div>';
+    if (prep.secrets && prep.secrets.length) {
+      html += '<div class="encounter-text" style="margin-bottom:0.3rem"><strong style="color:var(--text-muted)">Secrets:</strong> ' + esc(prep.secrets.slice(0, 3).join('; ')) + '</div>';
+    }
+    if (prep.npcs_to_use && prep.npcs_to_use.length) {
+      html += '<div class="encounter-text"><strong style="color:var(--text-muted)">NPCs:</strong> ' + esc(prep.npcs_to_use.join(', ')) + '</div>';
+    }
+    html += '</div>';
+  }
+
+  /* Quick reference */
+  html += '<div class="encounter-section">';
+  html += '<div class="encounter-label">Quick Reference</div>';
+  html += '<div class="dc-table"><dl>';
+  html += '<dt>Easy</dt><dd>9</dd><dt>Normal</dt><dd>12</dd><dt>Hard</dt><dd>15</dd><dt>Extreme</dt><dd>18</dd>';
+  html += '</dl></div>';
+  html += '<div class="encounter-text" style="margin-top:0.3rem;font-size:0.65rem;color:var(--text-dim)">Encounter: unsafe = 1/3 chance per turn<br>Death: 1d4+CON rounds</div>';
   html += '</div>';
+
+  /* World advances */
+  const advances = DATA.world_advances || [];
+  if (advances.length) {
+    html += '<div class="encounter-section">';
+    html += '<div class="encounter-label">World Advances</div>';
+    advances.forEach(a => {
+      const text = typeof a === 'string' ? a : (a.text || '');
+      html += '<div class="advance-item">' + esc(text.replace(/\[world-advance\]\s*/i, '').replace(/^-\s*/, '')) + '</div>';
+    });
+    html += '</div>';
+  }
+
+  html += '</div></div></div>';
+
   el.innerHTML = html;
 }
 
-/* --- Init --- */
+/* ==================== Render: Campaign View ==================== */
+function renderCampaign() {
+  const el = document.getElementById('view-campaign');
+  let html = '';
+
+  /* Banner */
+  const ctx = DATA.campaign_context || {};
+  const mem = DATA.campaign_memory || {};
+  const meta = DATA.session_metadata || {};
+
+  html += '<div class="campaign-banner">';
+  html += '<div class="campaign-title">' + esc(ctx.name || ctx.setting || 'Campaign') + '</div>';
+  if (ctx.tone || ctx.premise) html += '<div class="campaign-subtitle">"' + esc(ctx.tone || ctx.premise) + '"</div>';
+  const bannerParts = [];
+  if (meta.sessions_played) bannerParts.push(meta.sessions_played + ' sessions');
+  if (meta.first_played) bannerParts.push('Started ' + meta.first_played);
+  else if (meta.last_played) bannerParts.push('Last played ' + meta.last_played);
+  if (bannerParts.length) html += '<div class="campaign-meta">' + esc(bannerParts.join(' \u00b7 ')) + '</div>';
+  html += '</div>';
+
+  /* Quest tracker */
+  html += '<div class="campaign-quests"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Quest Progress</div>';
+  html += '<div class="card-body">';
+  const q = DATA.quests;
+  if (q) {
+    if ((q.active || []).length) {
+      html += '<div class="section-heading" style="margin-top:0"><span class="chevron">&rsaquo;</span> Active (' + q.active.length + ')</div>';
+      (q.active || []).forEach(i => {
+        const name = typeof i === 'string' ? i : (i.name || i);
+        const desc = typeof i === 'object' ? i.desc : null;
+        const progress = typeof i === 'object' ? i.progress : null;
+        html += '<div class="quest-card"><div class="quest-name">' + esc(name) + '</div>';
+        if (desc) html += '<div class="quest-desc">' + esc(desc) + '</div>';
+        if (progress) html += '<div class="quest-progress">' + esc(progress) + '</div>';
+        html += '</div>';
+      });
+    }
+    if ((q.developing || []).length) {
+      html += '<div class="section-heading" style="margin-top:0.5rem"><span class="chevron" style="color:var(--discord)">&rsaquo;</span> Developing (' + q.developing.length + ')</div>';
+      (q.developing || []).forEach(i => {
+        const name = typeof i === 'string' ? i : (i.name || i);
+        html += '<div class="quest-card developing"><div class="quest-name">' + esc(name) + '</div></div>';
+      });
+    }
+    if ((q.completed || []).length) {
+      html += '<div class="section-heading" style="margin-top:0.5rem"><span class="chevron" style="color:var(--text-dim)">&rsaquo;</span> Completed (' + q.completed.length + ')</div>';
+      (q.completed || []).forEach(i => {
+        const name = typeof i === 'string' ? i : (i.name || i);
+        html += '<div class="quest-card completed"><div class="quest-name" style="color:var(--text-muted)">' + esc(name) + '</div></div>';
+      });
+    }
+    if (!(q.active || []).length && !(q.developing || []).length && !(q.completed || []).length) {
+      html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No quests yet</div>';
+    }
+  }
+  html += '</div></div></div>';
+
+  /* Session timeline */
+  html += '<div class="campaign-timeline"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Session Timeline</div>';
+  html += '<div class="card-body">';
+  const groups = parseJournal(DATA.journal);
+  if (groups.length) {
+    groups.slice().reverse().forEach(g => {
+      html += '<div class="timeline-session">';
+      html += '<div class="timeline-label">' + esc(g.label) + '</div>';
+      g.entries.slice(0, 8).forEach(e => {
+        const text = e.replace(/\[[\w-]+\]\s*/, '').replace(/^-\s*/, '');
+        html += '<div class="timeline-entry">' + esc(text) + '</div>';
+      });
+      if (g.entries.length > 8) {
+        html += '<div class="timeline-entry" style="color:var(--text-dim)">+ ' + (g.entries.length - 8) + ' more...</div>';
+      }
+      html += '</div>';
+    });
+  } else {
+    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No session history</div>';
+  }
+  html += '</div></div></div>';
+
+  /* Factions + world state (right top) */
+  html += '<div class="campaign-right-top"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Factions</div>';
+  html += '<div class="card-body">';
+  const factions = DATA.factions || [];
+  if (factions.length) {
+    factions.forEach(f => {
+      html += '<div class="faction-card">';
+      html += '<div class="faction-name">' + esc(f.name) + '</div>';
+      html += '<div class="npc-badges">';
+      if (f.disposition) html += dispositionPill(f.disposition);
+      if (f.members) html += '<span class="pill pill-neutral">' + f.members + ' members</span>';
+      html += '</div>';
+      if (f.goals) html += '<div class="faction-goals">' + esc(f.goals) + '</div>';
+      html += '</div>';
+    });
+  } else {
+    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No factions known</div>';
+  }
+  html += '</div></div></div>';
+
+  /* Active threads + world state (right bottom) */
+  html += '<div class="campaign-right-bottom"><div class="card" id="camp-world-card">';
+  html += '<div class="sub-tabs">';
+  html += '<button class="sub-tab active" data-tab="worldstate" onclick="switchSubTab(\'camp-world-card\',\'worldstate\')">World State</button>';
+  html += '<button class="sub-tab" data-tab="campthreads" onclick="switchSubTab(\'camp-world-card\',\'campthreads\')">Threads</button>';
+  html += '</div>';
+  html += '<div class="card-body">';
+
+  /* World state pane */
+  html += '<div class="sub-pane active" data-pane="worldstate">';
+  if (mem.world_state) {
+    html += '<div class="world-state-text">' + esc(mem.world_state) + '</div>';
+  } else {
+    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No world state recorded</div>';
+  }
+  html += '</div>';
+
+  /* Threads pane */
+  html += '<div class="sub-pane" data-pane="campthreads">';
+  const campThreads = (mem.active_threads || DATA.open_threads || []);
+  if (campThreads.length) {
+    campThreads.forEach(t => {
+      const text = typeof t === 'string' ? t : (t.text || t.name || '');
+      html += '<div class="thread-item">' + esc(text) + '</div>';
+    });
+  } else {
+    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No threads</div>';
+  }
+  html += '</div>';
+
+  html += '</div></div></div>';
+
+  el.innerHTML = html;
+}
+
+/* ==================== Render: Media View ==================== */
+let currentChapter = 0;
+
+function renderMedia() {
+  const el = document.getElementById('view-media');
+  const chapters = DATA.chapters || [];
+  const audiobooks = DATA.audiobooks || [];
+
+  if (!chapters.length && !audiobooks.length) {
+    el.innerHTML = '<div class="media-list"></div><div class="media-reader"><div class="no-content">No chronicles written yet. Use /glintlock:chronicle to generate a chapter.</div></div><div class="media-player"></div>';
+    return;
+  }
+
+  /* Build audio lookup */
+  const audioMap = {};
+  audiobooks.forEach(ab => { audioMap[ab.chapter] = ab; });
+
+  /* Chapter list */
+  let html = '<div class="media-list">';
+  chapters.forEach((ch, i) => {
+    const hasAudio = !!audioMap[ch.number];
+    html += '<button class="chapter-item' + (i === 0 ? ' active' : '') + '" data-idx="' + i + '" onclick="selectChapter(' + i + ')">';
+    html += '<span class="ch-num">Ch ' + ch.number + '</span>';
+    html += '<span class="ch-title">' + esc(ch.title) + '</span>';
+    if (hasAudio) html += '<span class="ch-audio">&#9835;</span>';
+    html += '</button>';
+  });
+  html += '</div>';
+
+  /* Audio player */
+  html += '<div class="media-player" id="media-player-wrap">';
+  html += '<div class="player-title" id="player-title">No audio selected</div>';
+  html += '<audio id="audio-player" controls preload="metadata" style="display:none"></audio>';
+  html += '</div>';
+
+  /* Reader */
+  html += '<div class="media-reader"><div id="chapter-content" class="chapter-prose"></div></div>';
+
+  el.innerHTML = html;
+
+  if (chapters.length) selectChapter(0);
+}
+
+function selectChapter(idx) {
+  const chapters = DATA.chapters || [];
+  const ch = chapters[idx];
+  if (!ch) return;
+  currentChapter = idx;
+
+  /* Update active state */
+  document.querySelectorAll('.chapter-item').forEach(ci => ci.classList.remove('active'));
+  const btn = document.querySelector('.chapter-item[data-idx="' + idx + '"]');
+  if (btn) btn.classList.add('active');
+
+  /* Update reader */
+  document.getElementById('chapter-content').innerHTML = md2html(ch.content);
+
+  /* Update audio player */
+  const audiobooks = DATA.audiobooks || [];
+  const audioMap = {};
+  audiobooks.forEach(ab => { audioMap[ab.chapter] = ab; });
+  const audio = audioMap[ch.number];
+  const player = document.getElementById('audio-player');
+  const title = document.getElementById('player-title');
+
+  if (audio) {
+    title.textContent = 'Ch ' + ch.number + ': ' + ch.title;
+    player.src = audio.file;
+    player.style.display = 'block';
+  } else {
+    title.textContent = 'No audio for this chapter';
+    player.style.display = 'none';
+    player.src = '';
+  }
+}
+
+/* ==================== Init ==================== */
 renderHeader();
-renderCharacter();
-renderQuests();
-renderNpcs();
-renderStory();
-renderAudio();
-renderLog();
+renderSidebar();
+renderPlayer();
+renderGM();
+renderCampaign();
+renderMedia();
+
+/* Set initial view from DATA */
+const initView = DATA.dashboard_type || 'player';
+if (initView !== 'player') switchView(initView);
 </script>
 </body>
 </html>

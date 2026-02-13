@@ -54,6 +54,7 @@ Game state lives in `world/` inside the **user's project directory** (not inside
 - **Factions:** `world/factions/{name}.md` — members, goals, disposition
 - **Quests:** `world/quests.md` — Active / Developing / Completed sections
 - **Session Log:** `world/session-log.md` — append-only tagged entries
+- **Session Prep:** `world/session-prep.md` — GM's private prep notes (Lazy GM framework), regenerated each session
 - **Campaign Context:** `world/campaign-context.md` — premise, setting, tone
 
 See `skills/state-management/SKILL.md` for file templates and conventions.
@@ -95,6 +96,7 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 | `dashboard-generation` | HTML dashboard template |
 | `story-generation` | Chronicle/prose generation guidelines |
 | `audiobook-generation` | Audiobook pipeline: voice assignment, SFX/music cues, rendering, mixing |
+| `session-prep` | Lazy GM prep framework: strong starts, scenes, secrets, NPCs, encounters, treasure |
 
 ### Commands
 
