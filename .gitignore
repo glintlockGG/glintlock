@@ -6,6 +6,7 @@ glintlock-plugin.zip
 
 # World state (lives in user's project directory, not in the plugin repo)
 world/
+world-*/
 
 # Playwright MCP cache
 .playwright-mcp/
