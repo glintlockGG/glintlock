@@ -59,7 +59,7 @@ You talk. Claude runs the game. Describe what your character does in natural lan
 ### Gameplay
 
 - **Real dice** — All rolls use cryptographic randomness (`crypto.randomInt`) via the `roll_dice` tool. Standard NdS+M notation with advantage and disadvantage.
-- **24+ oracle tables** — Curated random tables for NPC names (5 ancestries: human, eldren, dwerrow, goblin, beastkin), 6 terrain encounter tables, treasure, traps, rumors, hazards, creature behavior, backgrounds, gear, adventure names, and magic item names. The GM rolls on these instead of inventing content, keeping results surprising for both player and AI.
+- **20+ oracle tables** — Curated random tables for NPC names (5 ancestries: human, eldren, dwerrow, goblin, beastkin), 6 terrain encounter tables, treasure, traps, rumors, hazards, creature behavior, backgrounds, gear, adventure names, and magic item names. The GM rolls on these instead of inventing content, keeping results surprising for both player and AI.
 - **Full [SYSTEM] rules** — 6 classes (Warden, Scout, Invoker, Surgeon, Rogue, Seer), 5 ancestries, ~50 monster stat blocks, spells for 4 casting classes, d20 roll-over resolution with Difficulty = 20 − Stat, countdown dice for resource pressure, myth escalation tracks, BitD-style progress clocks, and milestone advancement. All encoded as skills that load on demand.
 - **Persistent world state** — Characters, NPCs, locations, items, factions, quests, and a session log are stored as human-readable markdown files with YAML frontmatter. No database. Files are version-controllable and editable by hand.
 - **GM learning** — The plugin tracks play style preferences, rulings precedents, narrative patterns, and active threads across sessions in a campaign memory file (`world/CLAUDE.md`). It remembers that you prefer exploration over combat, or that swimming in armor gives disadvantage, without being told twice.
@@ -118,6 +118,7 @@ Markdown files at the repository root, auto-discovered by Claude Code. These def
 
 ```
 agents/gm.md              — GM identity and behavioral rules
+agents/audiobook-producer.md — Background audiobook generation agent
 commands/                  — 10 slash commands
 skills/                    — 11 skills (rules, adventure design, templates, generation pipelines)
 hooks/hooks.json           — SessionStart hook (loads campaign context)
@@ -127,12 +128,12 @@ hooks/hooks.json           — SessionStart hook (loads campaign context)
 
 ### MCP Server
 
-A lightweight Node.js/TypeScript process (`engine/`) spawned by Claude Code over stdio. Provides 9 tools:
+A lightweight Node.js/TypeScript process (`engine/`) spawned by Claude Code over stdio. Provides 10 tools:
 
 | Tool | What it does |
 |------|-------------|
 | `roll_dice` | Parse NdS+M expressions, cryptographic RNG, advantage/disadvantage |
-| `roll_oracle` | Roll on 24+ curated [SYSTEM] random tables with subtype and range matching |
+| `roll_oracle` | Roll on 20+ curated [SYSTEM] random tables with subtype and range matching |
 | `tts_narrate` | ElevenLabs v3 text-to-speech with per-character voice settings and multilingual support |
 | `generate_sfx` | AI sound effect generation with background playback |
 | `play_music` | AI music generation with looping playback, single-track management |
@@ -140,6 +141,7 @@ A lightweight Node.js/TypeScript process (`engine/`) spawned by Claude Code over
 | `get_session_metadata` | Track session count and campaign dates |
 | `render_audiobook` | Parse a story chapter into a structured audio manifest (scenes → segments → chunks) |
 | `mix_audiobook` | Mix narration + music + SFX into a final MP3 via ffmpeg |
+| `track_time` | Manage countdown dice for resource pressure (cd12→cd10→cd8→cd6→cd4→exhausted) |
 
 ### Skills
 

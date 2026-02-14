@@ -27,7 +27,7 @@ There are no tests yet. The MCP server is tested by installing the plugin in Cla
 
 1. **Plugin shell** — Auto-discovered at plugin root. Agent identity (`agents/gm.md`), slash commands (`commands/`), game rules and templates (`skills/`), hooks (`hooks/`), and MCP config (`.mcp.json`). Manifest at `.claude-plugin/plugin.json`.
 
-2. **MCP server** (`engine/`) — Lightweight. Node.js/TypeScript process spawned by Claude Code over stdio. Exposes 9 tools via `@modelcontextprotocol/sdk`: `roll_dice`, `roll_oracle`, `tts_narrate`, `generate_sfx`, `play_music`, `list_voices`, `get_session_metadata`, `render_audiobook`, `mix_audiobook`.
+2. **MCP server** (`engine/`) — Lightweight. Node.js/TypeScript process spawned by Claude Code over stdio. Exposes 10 tools via `@modelcontextprotocol/sdk`: `roll_dice`, `roll_oracle`, `tts_narrate`, `generate_sfx`, `play_music`, `list_voices`, `get_session_metadata`, `render_audiobook`, `mix_audiobook`, `track_time`.
 
 ### Data Flow
 
@@ -68,7 +68,7 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 
 | File | Implements |
 |------|-----------|
-| `engine/src/index.ts` | MCP server entry, stdio transport, 9 tool registrations |
+| `engine/src/index.ts` | MCP server entry, stdio transport, 10 tool registrations |
 | `engine/src/tools/dice.ts` | `roll_dice` — NdS+M parser, `crypto.randomInt` RNG, advantage/disadvantage |
 | `engine/src/tools/oracle.ts` | `roll_oracle` — loads oracle-tables.json, handles subtypes + range matching + multi-column rolls |
 | `engine/src/tools/tts.ts` | `tts_narrate` — ElevenLabs TTS with voice settings (stability, similarity, style) |
@@ -79,6 +79,7 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 | `engine/src/tools/audiobook.ts` | `render_audiobook` — parses chapter markdown into audio manifest (segments, chunks, voice assignments) |
 | `engine/src/tools/audiobook-mixer.ts` | `mix_audiobook` — ffmpeg-based mixing: speech spine + music bed + SFX → final MP3 |
 | `engine/src/tools/audio-utils.ts` | Shared utilities: `getAudioDurationMs` (ffprobe), `generateSilence` (ffmpeg) |
+| `engine/src/tools/timer.ts` | `track_time` — countdown dice manager (add/tick/remove/reset/status), persists to world/countdown.json |
 
 ### Oracle Tables
 
