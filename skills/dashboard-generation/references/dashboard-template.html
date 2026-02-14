@@ -286,27 +286,100 @@
 
   .footer-location .loc-icon { color: var(--text-dim); }
 
-  /* XP bar */
-  .xp-track {
-    width: 100%;
-    height: 6px;
-    background: var(--surface-3);
-    border-radius: 3px;
-    overflow: hidden;
-    margin-bottom: 0.25rem;
-  }
-
-  .xp-fill {
-    height: 100%;
-    background: var(--discord);
-    border-radius: 3px;
-  }
-
-  .xp-label {
+  /* Level indicator (replaces XP bar) */
+  .level-label {
     font-family: var(--font-mono);
     font-size: 0.55rem;
     color: var(--text-dim);
   }
+
+  /* Omen track (myth omen bars) */
+  .omen-track {
+    width: 100%;
+    height: 8px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .omen-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  .omen-fill.low    { background: var(--success); }
+  .omen-fill.mid    { background: var(--warning); }
+  .omen-fill.high   { background: var(--primary); }
+  .omen-fill.crit   { background: var(--danger); }
+
+  .myth-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .myth-name {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.15rem;
+  }
+
+  .myth-omen-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    margin-top: 0.1rem;
+  }
+
+  /* Progress clock (segmented circles) */
+  .clock-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .clock-svg {
+    flex-shrink: 0;
+  }
+
+  .clock-label {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+  }
+
+  .clock-meta {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: var(--text-dim);
+  }
+
+  /* Countdown dice */
+  .cd-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.15rem 0;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+  }
+
+  .cd-die {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--radius-sm);
+    background: var(--surface-4);
+    border: 1px solid var(--border);
+  }
+
+  .cd-die.cd-ok       { color: var(--success); border-color: var(--success); }
+  .cd-die.cd-warn     { color: var(--warning); border-color: var(--warning); }
+  .cd-die.cd-danger   { color: var(--danger); border-color: var(--danger); }
+  .cd-die.cd-dead     { color: var(--text-dim); border-color: var(--text-dim); text-decoration: line-through; }
 
   .danger-badge {
     font-family: var(--font-mono);
@@ -1375,9 +1448,8 @@
 const DATA = DASHBOARD_DATA;
 
 /* ==================== Utilities ==================== */
-function mod(score) {
-  const m = Math.floor((score - 10) / 2);
-  return m >= 0 ? '+' + m : '' + m;
+function difficulty(stat, trained) {
+  return trained ? Math.max(1, 20 - stat * 2) : Math.max(1, 20 - stat);
 }
 
 function esc(s) {
@@ -1425,10 +1497,46 @@ function md2html(text) {
   }).join('\n');
 }
 
-/* XP thresholds per level (cumulative) */
-function xpForLevel(lvl) {
-  const thresholds = [0, 0, 10, 20, 40, 80, 160, 320, 640, 1280, 2560];
-  return thresholds[Math.min(lvl, 10)] || 0;
+/* Omen level to CSS class */
+function omenClass(level) {
+  if (level <= 1) return 'low';
+  if (level <= 3) return 'mid';
+  if (level <= 5) return 'high';
+  return 'crit';
+}
+
+/* Countdown die CSS class */
+function cdClass(die) {
+  if (die === 0) return 'cd-dead';
+  if (die <= 4) return 'cd-danger';
+  if (die <= 6) return 'cd-warn';
+  return 'cd-ok';
+}
+
+/* Draw a progress clock SVG */
+function clockSvg(filled, total, size) {
+  size = size || 32;
+  const r = size / 2 - 2;
+  const cx = size / 2;
+  const cy = size / 2;
+  let svg = '<svg class="clock-svg" width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">';
+  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="var(--surface-1)" stroke="var(--border)" stroke-width="1.5"/>';
+  for (let i = 0; i < total; i++) {
+    const startAngle = (i / total) * 2 * Math.PI - Math.PI / 2;
+    const endAngle = ((i + 1) / total) * 2 * Math.PI - Math.PI / 2;
+    const x1 = cx + r * Math.cos(startAngle);
+    const y1 = cy + r * Math.sin(startAngle);
+    const x2 = cx + r * Math.cos(endAngle);
+    const y2 = cy + r * Math.sin(endAngle);
+    const largeArc = (endAngle - startAngle > Math.PI) ? 1 : 0;
+    if (i < filled) {
+      svg += '<path d="M' + cx + ',' + cy + ' L' + x1 + ',' + y1 + ' A' + r + ',' + r + ' 0 ' + largeArc + ',1 ' + x2 + ',' + y2 + ' Z" fill="var(--primary)" opacity="0.85"/>';
+    }
+    /* Segment line */
+    svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x1 + '" y2="' + y1 + '" stroke="var(--border)" stroke-width="1"/>';
+  }
+  svg += '</svg>';
+  return svg;
 }
 
 /* Parse journal entries into session groups */
@@ -1499,7 +1607,7 @@ function renderSidebar() {
   h += '<div class="mini-hp-track"><div class="mini-hp-fill' + (hpPct <= 35 ? ' low' : '') + '" style="width:' + hpPct + '%"></div>';
   h += '<div class="mini-hp-text">HP ' + hpCur + '/' + hpMax + '</div></div>';
   h += '<div class="mini-stats">';
-  h += '<span>AC <span class="val">' + (c.ac || '?') + '</span></span>';
+  h += '<span>Armor <span class="val">' + (c.armor || 0) + '</span></span>';
   h += '<span class="gold">Gold <span class="val">' + (c.gold || 0) + '</span></span>';
   h += '</div>';
   mc.innerHTML = h;
@@ -1513,15 +1621,9 @@ function renderSidebar() {
     fh += '<div class="footer-location"><span class="loc-icon">&#9679;</span> ' + esc(loc.name);
     fh += ' <span class="danger-badge ' + dcls + '">' + esc(loc.danger_level || 'safe') + '</span></div>';
   }
-  /* XP bar */
+  /* Level indicator (milestone advancement) */
   const lvl = c.level || 1;
-  const xp = c.xp || 0;
-  const xpCur = xpForLevel(lvl);
-  const xpNext = xpForLevel(lvl + 1);
-  const xpRange = Math.max(xpNext - xpCur, 1);
-  const xpPct = Math.max(0, Math.min(100, ((xp - xpCur) / xpRange) * 100));
-  fh += '<div class="xp-track"><div class="xp-fill" style="width:' + xpPct + '%"></div></div>';
-  fh += '<div class="xp-label">XP ' + xp + ' / ' + xpNext + '</div>';
+  fh += '<div class="level-label">Level ' + lvl + ' / 10</div>';
   foot.innerHTML = fh;
 }
 
@@ -1534,8 +1636,9 @@ function renderPlayer() {
   const hpCur = c.hp ? c.hp.current : 0;
   const hpMax = c.hp ? c.hp.max : 1;
   const stats = c.stats || {};
-  const statNames = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-  const statLabels = { str: 'STR', dex: 'DEX', con: 'CON', int: 'INT', wis: 'WIS', cha: 'CHA' };
+  const statNames = ['vigor', 'reflex', 'wits', 'resolve', 'presence', 'lore'];
+  const statLabels = { vigor: 'VIG', reflex: 'REF', wits: 'WIT', resolve: 'RES', presence: 'PRE', lore: 'LOR' };
+  const training = c.training || [];
 
   let html = '';
 
@@ -1546,9 +1649,9 @@ function renderPlayer() {
   if (c.background) html += ' \u00b7 ' + esc(c.background);
   html += '</div>';
   html += '<div class="hero-quick-stats">';
-  html += '<span class="quick-stat">AC <span class="qval">' + (c.ac || '?') + '</span></span>';
-  if (c.hit_die) html += '<span class="quick-stat">HD <span class="qval">' + esc(c.hit_die) + '</span></span>';
-  html += '<span class="quick-stat">XP <span class="qval">' + (c.xp || 0) + '</span></span>';
+  html += '<span class="quick-stat">Armor <span class="qval">' + (c.armor || 0) + '</span></span>';
+  if (c.hp_die) html += '<span class="quick-stat">HP Die <span class="qval">' + esc(c.hp_die) + '</span></span>';
+  html += '<span class="quick-stat">Lvl <span class="qval">' + (c.level || 1) + '</span></span>';
   html += '<span class="quick-stat gold">Gold <span class="qval">' + (c.gold || 0) + ' gp</span></span>';
   html += '</div>';
   html += hpBar(hpCur, hpMax);
@@ -1557,11 +1660,12 @@ function renderPlayer() {
   /* Ability column */
   html += '<div class="player-abilities">';
   statNames.forEach(s => {
-    const val = stats[s] || 10;
+    const val = stats[s] || 5;
+    const diff = difficulty(val, false);
     html += '<div class="ability-box">';
     html += '<div class="ability-label">' + statLabels[s] + '</div>';
     html += '<div class="ability-score">' + val + '</div>';
-    html += '<span class="ability-mod">' + mod(val) + '</span>';
+    html += '<span class="ability-mod">DC ' + diff + '</span>';
     html += '</div>';
   });
   /* Talents below abilities */
@@ -1593,15 +1697,24 @@ function renderPlayer() {
   }
   html += '</div></div>';
 
-  /* Languages & proficiencies card */
+  /* Training & languages card */
   const langs = c.languages || [];
-  const wProf = c.weapon_proficiencies || [];
-  const aProf = c.armor_proficiencies || [];
-  if (langs.length || wProf.length || aProf.length) {
-    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Proficiencies</div><div class="card-body">';
-    if (langs.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:0.3rem"><span style="color:var(--text-muted)">Languages:</span> ' + esc(langs.join(', ')) + '</div>';
-    if (wProf.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:0.3rem"><span style="color:var(--text-muted)">Weapons:</span> ' + esc(wProf.join(', ')) + '</div>';
-    if (aProf.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary)"><span style="color:var(--text-muted)">Armor:</span> ' + esc(aProf.join(', ')) + '</div>';
+  if (training.length || langs.length) {
+    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Training</div><div class="card-body">';
+    if (training.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:0.3rem">' + esc(training.join(', ')) + '</div>';
+    if (langs.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary)"><span style="color:var(--text-muted)">Languages:</span> ' + esc(langs.join(', ')) + '</div>';
+    html += '</div></div>';
+  }
+  /* Countdown dice card */
+  const cdice = DATA.countdown_dice || [];
+  if (cdice.length) {
+    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Countdown Dice</div><div class="card-body">';
+    cdice.forEach(function(cd) {
+      const dieLabel = cd.current_die === 0 ? 'OUT' : 'cd' + cd.current_die;
+      html += '<div class="cd-item"><span class="cd-die ' + cdClass(cd.current_die) + '">' + dieLabel + '</span> ' + esc(cd.name);
+      if (cd.category) html += ' <span style="color:var(--text-dim);font-size:0.6rem">(' + esc(cd.category) + ')</span>';
+      html += '</div>';
+    });
     html += '</div></div>';
   }
   html += '</div>';
@@ -1714,12 +1827,13 @@ function renderGM() {
       if (n.location) html += '<div class="npc-location">' + esc(n.location) + '</div>';
       if (n.description) html += '<div class="npc-desc">' + esc(n.description) + '</div>';
       /* Combat stats if available */
-      if (n.hp || n.ac || n.attacks) {
+      if (n.hp || n.armor || n.attack_die) {
         html += '<div class="npc-combat">';
-        if (n.ac) html += '<span>AC <span class="val">' + n.ac + '</span></span>';
         if (n.hp) html += '<span>HP <span class="val">' + (typeof n.hp === 'object' ? n.hp.current + '/' + n.hp.max : n.hp) + '</span></span>';
+        if (n.armor) html += '<span>Armor <span class="val">' + n.armor + '</span></span>';
+        if (n.attack_die) html += '<span>Atk <span class="val">' + esc(n.attack_die) + '</span></span>';
+        if (n.zone) html += '<span>Zone <span class="val">' + esc(n.zone) + '</span></span>';
         if (n.morale) html += '<span>ML <span class="val">' + n.morale + '</span></span>';
-        if (n.attacks && n.attacks.length) html += '<span>' + esc(n.attacks.join(', ')) + '</span>';
         html += '</div>';
       }
       html += '</div>';
@@ -1776,10 +1890,7 @@ function renderGM() {
   /* Quick reference */
   html += '<div class="encounter-section">';
   html += '<div class="encounter-label">Quick Reference</div>';
-  html += '<div class="dc-table"><dl>';
-  html += '<dt>Easy</dt><dd>9</dd><dt>Normal</dt><dd>12</dd><dt>Hard</dt><dd>15</dd><dt>Extreme</dt><dd>18</dd>';
-  html += '</dl></div>';
-  html += '<div class="encounter-text" style="margin-top:0.3rem;font-size:0.65rem;color:var(--text-dim)">Encounter: unsafe = 1/3 chance per turn<br>Death: 1d4+CON rounds</div>';
+  html += '<div class="encounter-text" style="font-size:0.65rem;color:var(--text-dim)">Difficulty = 20 \u2212 Stat (untrained)<br>Difficulty = 20 \u2212 Stat\u00d72 (trained)<br>Critical: beat DC by 5+<br>Death Clock: 4 segments, 1/turn</div>';
   html += '</div>';
 
   /* World advances */
@@ -1790,6 +1901,38 @@ function renderGM() {
     advances.forEach(a => {
       const text = typeof a === 'string' ? a : (a.text || '');
       html += '<div class="advance-item">' + esc(text.replace(/\[world-advance\]\s*/i, '').replace(/^-\s*/, '')) + '</div>';
+    });
+    html += '</div>';
+  }
+
+  /* Myth omen tracks */
+  const myths = DATA.myths || [];
+  if (myths.length) {
+    html += '<div class="encounter-section">';
+    html += '<div class="encounter-label">Myth Omens</div>';
+    myths.forEach(function(m) {
+      const pct = Math.max(0, Math.min(100, (m.omen_level / 6) * 100));
+      html += '<div class="myth-item">';
+      html += '<div class="myth-name">' + esc(m.name) + '</div>';
+      html += '<div class="omen-track"><div class="omen-fill ' + omenClass(m.omen_level) + '" style="width:' + pct + '%"></div></div>';
+      html += '<div class="myth-omen-label">Omen ' + m.omen_level + '/6' + (m.current_omen ? ' \u2014 ' + esc(m.current_omen) : '') + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  /* Progress clocks */
+  const clocks = DATA.clocks || [];
+  if (clocks.length) {
+    html += '<div class="encounter-section">';
+    html += '<div class="encounter-label">Progress Clocks</div>';
+    clocks.forEach(function(cl) {
+      html += '<div class="clock-row">';
+      html += clockSvg(cl.segments_filled, cl.total_segments);
+      html += '<div><div class="clock-label">' + esc(cl.name) + '</div>';
+      html += '<div class="clock-meta">' + cl.segments_filled + '/' + cl.total_segments;
+      if (cl.trigger) html += ' \u2014 ' + esc(cl.trigger);
+      html += '</div></div></div>';
     });
     html += '</div>';
   }

@@ -1,131 +1,213 @@
 ---
 name: spellbook
-description: "Spell lists, spellcasting rules, arcane backlash, scrolls, wands, focus spells, and talent tables for all four classes. This skill should be used when casting spells, learning spells, resolving magical effects, rolling backlash, checking spells known, or rolling talents on level up."
+description: "Spell lists, casting rules, countdown dice durations, backlash, scrolls, wands, and talent tables for all spellcasting classes (Invoker, Seer, Surgeon, Warden). This skill should be used when casting spells, preparing remedies, resolving magical effects, rolling backlash, checking spells known, or rolling talents on level up."
 ---
 
 # Spellcasting
 
-**To cast:** Roll d20 + INT mod (Arcanist) or d20 + WIS mod (Warden) ≥ 10 + spell tier.
+## Casting a Spell
 
-| Spell Tier | DC |
-|---|---|
-| 1 | 11 |
-| 2 | 12 |
-| 3 | 13 |
-| 4 | 14 |
-| 5 | 15 |
+Each spellcasting class uses its own stat and trained skill for spell checks.
 
-**Success:** Spell takes effect.
-**Failure:** Spell does not take effect. Can't cast that spell again until rest.
-**Critical success (nat 20):** Double one numerical effect. Persists on focus spells until next focus check.
-**Critical failure (nat 1):** Spell fails. Arcanist: lose spell until rest + roll arcane backlash table. Warden: patron revokes spell, requires tithe + rest.
+| Class | Stat | Trained Skill | Method |
+|-------|------|---------------|--------|
+| Invoker | Lore | Arcana | Arcane formulae and gestures |
+| Seer | Resolve | Commune | Spirit communion and prayer |
+| Surgeon | Lore | Medicine | Alchemical preparations and procedures |
+| Warden | Resolve | Commune | Minor blessings and wards |
 
-## Focus Spells
+**Spell check:** Roll d20 >= Difficulty, where Difficulty = 20 - (Stat x 2) because casters are always trained in their casting skill.
 
-Can't cast other focus spells while focusing. End focus at any time.
-- Each turn: make spellcasting check to maintain.
-- **Success:** Spell continues until start of next turn.
-- **Failure:** Spell ends. You do NOT lose the ability to cast it.
-- **Critical failure on focus check:** Treated as standard critical failure.
-- **Damage/distraction while focusing:** Immediate spellcasting check to maintain.
+**Example:** An Invoker with Lore 6 casts at Difficulty 20 - (6 x 2) = 8.
 
-## Tithe (Wardens)
+### Three Outcomes
 
-On critical failure, patron revokes spell. Must complete tithe + rest to regain.
-- Tier 1: 5 gp sacrifice, Tier 2: 20 gp, Tier 3: 40 gp, Tier 4: 90 gp, Tier 5: 150 gp
-- Inadequate or subversive tithe makes the spell loss permanent.
+- **Critical (beat Difficulty by 5+ or Natural 20):** Enhanced effect -- double one numerical effect (damage, healing, targets, etc.) or extend the duration countdown die by one step.
+- **Pass:** Spell takes effect as described.
+- **Fail:** Spell does not take effect. The spell slot is spent -- can't cast that spell again until rest.
 
-## Scrolls and Wands
+### Natural 20 / Natural 1
 
-Spellcasters can use scrolls/wands if the spell is on their spell list (even if unknown).
-DC: 10 + spell tier. Failing doesn't affect known spells.
+- **Natural 20:** Always a critical. Enhanced effect as above.
+- **Natural 1:** Always a failure. Invoker/Seer: roll on the Backlash table. Surgeon: preparation explodes or goes inert, wasted. Warden: blessing fizzles, patron expresses displeasure (no backlash table, but spell lost until rest).
 
-- **Scroll:** Writing disappears after attempt (success or fail). Critical failure: arcane backlash.
-- **Wand:** Stops working until rest on fail. Critical failure: permanently breaks + arcane backlash.
+## Spell Tiers
 
-## Arcane Backlash Table (Tier 1-2)
+Spells are organized into three tiers based on power. Characters gain access to higher tiers as they level.
 
-| d12 | Effect |
-|---|---|
-| 1 | Roll twice and combine both effects |
-| 2 | Explosion! Take 1d8 damage |
-| 3 | Refraction! Target yourself with the spell |
-| 4 | Target a random ally with the spell |
-| 5 | Can't cast this spell again for a week |
-| 6 | One random piece of gear disappears forever |
-| 7 | Lose ability to cast a random spell each turn until DC 12 CON check. Regain after rest |
-| 8 | Lose ability to cast a random spell until rest |
-| 9 | Suppress all light within near for 10 rounds (including sunlight/magical) |
-| 10 | Scream uncontrollably in Primordial for 3 rounds |
-| 11 | Glow bright purple for 10 rounds (enemies have advantage on attacks vs you) |
-| 12 | Disadvantage on casting spells of same tier for 10 rounds |
+| Tier | Level Required | Description |
+|------|---------------|-------------|
+| Tier 1 | 1+ | Fundamental spells and cantrips |
+| Tier 2 | 3+ | Potent magic with serious consequences |
+| Tier 3 | 5+ | Reality-bending power, dangerous to wield |
+
+## Countdown Dice for Spell Durations
+
+Spell durations use countdown dice instead of fixed round counts. When a spell has a duration like "cd6 turns," roll the countdown die at the start of each of your turns. On a **1**, the die steps down (cd8 -> cd6 -> cd4 -> exhausted). When exhausted, the spell ends.
+
+- **Instant:** One-time effect, no duration tracking.
+- **cd4 turns:** Brief -- likely lasts 1-3 turns.
+- **cd6 turns:** Short -- typically 2-5 turns.
+- **cd8 turns:** Moderate -- often 3-7 turns.
+- **Sustained:** Caster must maintain concentration. Each turn, make a spell check to sustain. Fail = spell ends (but spell is NOT lost). Taking damage while sustaining forces an immediate spell check.
+- **Critical enhancement:** On a critical cast, step the duration die up one size (cd6 becomes cd8, etc.).
 
 ## Spells Known
 
-### Warden Spells Known
+### Invoker Spells Known
 
-| Level | T1 | T2 | T3 | T4 | T5 |
-|---|---|---|---|---|---|
-| 1 | 2 | — | — | — | — |
-| 2 | 3 | — | — | — | — |
-| 3 | 3 | 1 | — | — | — |
-| 4 | 3 | 2 | — | — | — |
-| 5 | 3 | 2 | 1 | — | — |
+| Level | Tier 1 | Tier 2 | Tier 3 |
+|-------|--------|--------|--------|
+| 1 | 3 | -- | -- |
+| 2 | 4 | -- | -- |
+| 3 | 4 | 1 | -- |
+| 4 | 4 | 2 | -- |
+| 5 | 4 | 2 | 1 |
 
-### Arcanist Spells Known
+### Seer Spells Known
 
-| Level | T1 | T2 | T3 | T4 | T5 |
-|---|---|---|---|---|---|
-| 1 | 3 | — | — | — | — |
-| 2 | 4 | — | — | — | — |
-| 3 | 4 | 1 | — | — | — |
-| 4 | 4 | 2 | — | — | — |
-| 5 | 4 | 2 | 1 | — | — |
+| Level | Tier 1 | Tier 2 | Tier 3 |
+|-------|--------|--------|--------|
+| 1 | 2 | -- | -- |
+| 2 | 3 | -- | -- |
+| 3 | 3 | 1 | -- |
+| 4 | 3 | 2 | -- |
+| 5 | 3 | 2 | 1 |
+
+### Surgeon Preparations Known
+
+Surgeons don't "cast" spells -- they prepare remedies during a rest. Preparations known are always available; the limit is ingredients and time.
+
+| Level | Tier 1 | Tier 2 | Tier 3 |
+|-------|--------|--------|--------|
+| 1 | 3 | -- | -- |
+| 2 | 4 | -- | -- |
+| 3 | 4 | 1 | -- |
+| 4 | 4 | 2 | -- |
+| 5 | 4 | 2 | 1 |
+
+**Preparation rules:** During a long rest, a Surgeon may prepare a number of remedies equal to their Lore stat. Each preparation consumes one use of the Surgeon's kit (cd6 supply die). Using a preparation in the field is an action (no check needed -- the check was made during preparation). A failed preparation check during rest wastes the ingredients.
+
+### Warden Blessings Known
+
+Wardens are not primary casters. They gain a limited number of minor blessings.
+
+| Level | Tier 1 | Tier 2 |
+|-------|--------|--------|
+| 1 | 2 | -- |
+| 2 | 2 | -- |
+| 3 | 3 | 1 |
+| 4 | 3 | 1 |
+| 5 | 3 | 2 |
+
+Wardens never gain Tier 3 spells. Their blessings are cast using Resolve (trained via Commune).
+
+## Backlash Table (d12)
+
+Roll when a spellcaster rolls a Natural 1 on a spell check (Invokers and Seers only).
+
+| d12 | Effect |
+|-----|--------|
+| 1 | **Cascading Failure.** Roll twice more and apply both effects. |
+| 2 | **Detonation.** Magical energy explodes outward. Take 1d8 damage. All creatures within close range take 1d4 damage. |
+| 3 | **Refraction.** The spell targets you instead. If it can't target you, it targets your nearest ally. |
+| 4 | **Wild Aim.** The spell targets a random ally within near range. If none, it targets a random creature. |
+| 5 | **Severed Thread.** Lose this spell until you complete a long rest AND spend an exploration turn relearning it. |
+| 6 | **Unraveling.** One random piece of gear on your person disintegrates permanently. |
+| 7 | **Arcane Sickness.** Disadvantage on all spell checks until you pass a Vigor check (Difficulty 12) at the start of your turn. Resets after rest. |
+| 8 | **Mind Fog.** Lose a random prepared spell until your next rest. |
+| 9 | **Darkness Falls.** All light within near range is suppressed for cd8 turns, including sunlight and magical sources. |
+| 10 | **Involuntary Utterance.** You scream in an unknown tongue for cd6 turns. You cannot whisper or stay silent. Triggers encounter checks. |
+| 11 | **Marked.** You glow with visible arcane energy for cd8 turns. Enemies have advantage on attacks against you. |
+| 12 | **Resonance Drain.** Disadvantage on all spell checks of the same tier for cd8 turns. |
+
+## Scrolls and Wands
+
+Spellcasters can use scrolls and wands if the spell appears on their class spell list, even if they don't currently know it.
+
+**Scroll:** Single-use. Make a spell check as normal. Success or failure, the scroll is consumed. On a Natural 1, trigger the Backlash table.
+
+**Wand:** Reusable. Make a spell check as normal. On failure, the wand stops working until your next rest. On a Natural 1, the wand shatters permanently and triggers the Backlash table.
+
+**Surgeon's Kit Items:** Surgeons may find prepared remedies as loot. These can be used by anyone without a check -- they are already prepared. A Surgeon can identify unknown preparations with a Lore check (trained via Medicine).
 
 ## Talent Tables
 
-### Sellsword Talents (2d6)
+Roll 2d6 when gaining a class talent (levels 3, 5, 7, 9).
+
+### Invoker Talents (2d6)
+
 | Roll | Effect |
-|---|---|
-| 2 | Blade Mastery with one additional weapon type |
-| 3-6 | +1 to melee and ranged attacks |
-| 7-9 | +2 to STR, DEX, or CON stat |
-| 10-11 | +1 AC from one chosen armor type |
-| 12 | Choose a talent or +2 points to distribute |
+|------|--------|
+| 2 | **Artifice.** Craft one random magic item (GM determines). |
+| 3-4 | +2 to Lore stat (max 10) |
+| 5-7 | +1 to all Invoker spell checks |
+| 8-9 | Advantage on checks to cast one specific known spell (choose) |
+| 10-11 | Learn one additional Invoker spell of any tier you can cast |
+| 12 | **Player's Choice.** Choose any talent from this table, or +2 to any stat. |
+
+### Seer Talents (2d6)
+
+| Roll | Effect |
+|------|--------|
+| 2 | **Prophet's Eye.** Once per session, ask the GM a question and receive a truthful two-word answer. |
+| 3-4 | +2 to Resolve stat (max 10) |
+| 5-7 | +1 to all Seer spell checks |
+| 8-9 | Advantage on checks to cast one specific known spell (choose) |
+| 10-11 | Learn one additional Seer spell of any tier you can cast |
+| 12 | **Player's Choice.** Choose any talent from this table, or +2 to any stat. |
+
+### Surgeon Talents (2d6)
+
+| Roll | Effect |
+|------|--------|
+| 2 | **Master Chirurgeon.** Field Surgery restores 1d6+Lore HP instead of 1d6. |
+| 3-4 | +2 to Lore stat (max 10) |
+| 5-7 | +1 to all Surgeon preparation checks |
+| 8-9 | Surgeon's Kit supply die steps up one size permanently (cd6 -> cd8, etc.) |
+| 10-11 | Learn one additional Surgeon preparation of any tier you can prepare |
+| 12 | **Player's Choice.** Choose any talent from this table, or +2 to any stat. |
 
 ### Warden Talents (2d6)
-| Roll | Effect |
-|---|---|
-| 2 | Advantage on casting one known spell |
-| 3-6 | +1 to melee or ranged attacks |
-| 7-9 | +1 to Warden spellcasting checks |
-| 10-11 | +2 to STR or WIS stat |
-| 12 | Choose a talent or +2 points to distribute |
 
-### Shade Talents (2d6)
 | Roll | Effect |
-|---|---|
-| 2 | Advantage on initiative rolls (no duplicate) |
-| 3-5 | Ambush Strike deals +1 dice of damage |
-| 6-9 | +2 to STR, DEX, or CHA stat |
-| 10-11 | +1 to melee and ranged attacks |
-| 12 | Choose a talent or +2 points to distribute |
+|------|--------|
+| 2 | **Unyielding Bastion.** Shield Wall now grants +2 Armor to nearby allies instead of +1. |
+| 3-4 | +1 to melee or ranged attack checks |
+| 5-7 | +2 to Vigor or Resolve stat (max 10) |
+| 8-9 | +1 to all Warden blessing checks |
+| 10-11 | Learn one additional Warden blessing of any tier you can cast |
+| 12 | **Player's Choice.** Choose any talent from this table, or +2 to any stat. |
 
-### Arcanist Talents (2d6)
+### Scout Talents (2d6)
+
 | Roll | Effect |
-|---|---|
-| 2 | Make one random magic item |
-| 3-7 | +2 to INT stat or +1 to Arcanist spellcasting checks |
-| 8-9 | Advantage on casting one known spell |
-| 10-11 | Learn one additional Arcanist spell of any tier you know |
-| 12 | Choose a talent or +2 points to distribute |
+|------|--------|
+| 2 | **Ghost Walk.** Advantage on all Stealth checks. Enemies need to beat your Stealth result to detect you. |
+| 3-4 | +1 to ranged attack checks |
+| 5-7 | +2 to Reflex or Wits stat (max 10) |
+| 8-9 | Ambush damage increases by +1 die size (d6 -> d8, etc.) |
+| 10-11 | Gain one additional trained skill from the Scout list |
+| 12 | **Player's Choice.** Choose any talent from this table, or +2 to any stat. |
+
+### Rogue Talents (2d6)
+
+| Roll | Effect |
+|------|--------|
+| 2 | **Slippery Mind.** Advantage on Resolve checks against charm, fear, and compulsion. |
+| 3-4 | +1 to melee attack checks |
+| 5-7 | +2 to Reflex or Presence stat (max 10) |
+| 8-9 | Exploit Weakness damage increases by +1d6 |
+| 10-11 | Gain one additional trained skill from the Rogue list |
+| 12 | **Player's Choice.** Choose any talent from this table, or +2 to any stat. |
 
 ## Spell Descriptions
 
-Read `references/spell-list.md` for the full Warden and Arcanist spell descriptions (Tier 1-2).
+Read `references/spell-list.md` for the full spell descriptions across all casting classes and tiers.
 
 When a spell is cast, look up its entry in the reference file for range, duration, and effect details.
 
 ## Related Skills
-- **core-rules** — Spellcasting rules overlap, check DCs, natural 1/20 effects
-- **bestiary** — Monster saves and resistances against spells
+- **core-rules** -- Resolution mechanics, stats, countdown dice, Natural 1/20 effects
+- **bestiary** -- Monster resistances and vulnerabilities against spells
+- **treasure** -- Scrolls, wands, and magical items found as loot

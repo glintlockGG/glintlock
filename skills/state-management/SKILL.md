@@ -9,9 +9,9 @@ All game state lives in `world/` as human-readable markdown files with YAML fron
 
 ## File Conventions
 
-- **Filenames:** lowercase-kebab-case (e.g. `kael.md`, `merchant-vela.md`, `obsidian-keep-level-1.md`)
+- **Filenames:** lowercase-kebab-case (e.g. `kael.md`, `corvin-half-tooth.md`, `wardens-hall.md`)
 - **Directories:** `world/characters/`, `world/npcs/`, `world/locations/`, `world/items/`, `world/factions/`
-- **Global files:** `world/quests.md`, `world/session-log.md`, `world/campaign-context.md`
+- **Global files:** `world/quests.md`, `world/session-log.md`, `world/campaign-context.md`, `world/myths.md`, `world/clocks.md`
 - **Create:** Use the Write tool with the appropriate template (see `references/templates.md`)
 - **Read:** Use the Read tool to load a file before narrating or making decisions
 - **Update:** Read the file first, modify the relevant sections, Write the full updated file back
@@ -20,11 +20,13 @@ All game state lives in `world/` as human-readable markdown files with YAML fron
 ## Entity Templates
 
 Read `references/templates.md` for the full templates for all entity types:
-- **Player Character** — stats, inventory, spells, notes
-- **NPC** — description, combat stats (if relevant), voice settings
+- **Player Character** — stats (1-10), training, armor (DR), countdown dice, inventory, spells, notes
+- **NPC** — description, combat stats (armor, attack_die, zone, priority, weakness), voice settings
 - **Location** — danger level, light, connections, contents
 - **Item** — properties, owner, history
 - **Faction** — members, goals, disposition
+- **Myths** (`world/myths.md`) — five myths with omen levels 0-6
+- **Progress Clocks** (`world/clocks.md`) — segmented progress clocks
 - **Campaign Memory** (`world/CLAUDE.md`) — compact markdown tables, updated each session
 
 ## Quest Board (`world/quests.md`)
@@ -33,14 +35,14 @@ Read `references/templates.md` for the full templates for all entity types:
 # Quest Board
 
 ## Active
-- **The Missing Caravans** — Merchant Guild hired you to find out why supply caravans vanish on the Thornwood road. Reward: 50 gp. *Lead: goblin tracks at the keep entrance.*
-- **The Brass Key** — Found a locked door on the east wall of the keep. Grukk carried a brass key.
+- **Secure the Road** — Commander Vess needs the southern road cleared for supply caravans. Reward: 30 gp + garrison standing. *Lead: goblin raiding party reported near the Thornwood edge.*
+- **Strange Sounds** — Something scrapes beneath the Undercroft at night. Investigate.
 
 ## Developing
-- **Vela's Debt** — Merchant Vela owes money to the thieves' guild. She hasn't asked for help yet, but it could become a problem.
+- **The Shepherd's Fog** — Fog from the Fenway is rolling closer to Thornwall each morning. No one's talking about it yet.
 
 ## Completed
-- **Rat Cellar** — Cleared rats from Vela's cellar. Earned a 10% discount.
+- **Arrival** — Reached Thornwall safely. Met Commander Vess and Corvin Half-Tooth.
 ```
 
 ## Session Log (`world/session-log.md`)
@@ -50,15 +52,15 @@ Append entries chronologically. Use tags in brackets for categorization.
 ```markdown
 # Session Log
 
-## Session 1 — 2026-02-11
+## Session 1 — 2026-02-14
 
-- [event] Kael arrived in Millhaven and took the caravan investigation job from the Merchant Guild
-- [discovery] Found goblin tracks at the Obsidian Keep entrance
-- [event] Defeated 3 goblins in the first chamber — took 4 damage (8→4 HP)
-- [ruling] Ruled that searching rubble is DC 12 INT, takes 1 exploration turn
-- [thread] Locked door on east wall — need the brass key from Grukk
-- [world-advance] The thieves' guild has noticed the PC poking around the keep
-- [world-advance] A merchant caravan is 2 days overdue — tensions rising in town
+- [event] Kael arrived in Thornwall and reported to Commander Vess at the Warden's Hall
+- [discovery] Bounty board has three postings — road patrol, strange sounds, missing shepherd
+- [event] Met Corvin Half-Tooth at the Mended Flask — traded a coin for a rumor about the Wolds
+- [ruling] Ruled that listening for sounds under the Undercroft is Wits (Awareness), Difficulty 12
+- [thread] Strange scraping sounds beneath the Undercroft at night
+- [world-advance] The Hollow King's omen advances to 1 — cold winds from the Wolds
+- [world-advance] Winter Approaches clock ticks 1 — first frost on the walls
 ```
 
 ## Campaign Context (`world/campaign-context.md`)
@@ -68,9 +70,9 @@ Written once during `/glintlock:new-session`. Updated only if the campaign premi
 ```markdown
 # Campaign Context
 
-**Setting:** The frontier town of Millhaven, on the edge of the Thornwood.
-**Premise:** Caravans have been disappearing on the trade road. The Merchant Guild is desperate for answers. Something stirs in the ruins of the Obsidian Keep.
-**Tone:** Grim frontier survival. Resources are scarce, allies are few, and the darkness is hungry.
+**Setting:** The Pale Reach — a dark frontier at the edge of civilization. Home base: Thornwall.
+**Premise:** Five myths stir in the surrounding lands. Thornwall is the last waystation, undermanned and undersupplied, fighting to survive until spring.
+**Tone:** Grim frontier survival, mythic horror. Resources are scarce, allies are few, and the land itself remembers.
 **Language:** eng
 **Starting Date:** Day 1 of the Harvest Moon.
 ```
@@ -84,5 +86,5 @@ Written once during `/glintlock:new-session`. Updated only if the campaign premi
 5. **Dead NPCs stay.** Set `status: deceased` in frontmatter. Add a note about how they died. Don't delete the file.
 
 ## Related Skills
-- **core-rules** — Character creation rules, stat modifiers, gear slots
+- **core-rules** — Character creation rules, stats (1-10), gear slots, countdown dice
 - **dashboard-generation** — Reads entity file formats for visual display

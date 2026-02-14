@@ -1,29 +1,26 @@
-interface LightSource {
-    type: string;
-    rounds_remaining: number;
-}
 export interface TrackTimeParams {
-    action: "status" | "advance" | "light" | "set_danger" | "reset";
-    rounds?: number;
-    light_type?: string;
-    light_rounds?: number;
-    danger_level?: "safe" | "unsafe" | "risky" | "deadly";
+    action: "status" | "add" | "tick" | "remove" | "reset";
+    name?: string;
+    starting_die?: number;
+    category?: string;
     note?: string;
 }
 export interface TrackTimeResult {
     action: string;
-    rounds_elapsed: number;
-    time_elapsed: string;
-    danger_level: string;
-    light_sources: LightSource[];
-    has_light: boolean;
-    encounter_checks?: Array<{
-        round: number;
-        due: boolean;
+    countdown_dice: Array<{
+        name: string;
+        current_die: string;
+        category: string;
     }>;
-    expired_lights?: string[];
+    tick_result?: {
+        name: string;
+        rolled: number;
+        die_size: number;
+        stepped_down: boolean;
+        new_die: string;
+        exhausted: boolean;
+    };
     warnings: string[];
 }
 export declare function trackTime(params: TrackTimeParams): TrackTimeResult;
-export {};
 //# sourceMappingURL=timer.d.ts.map

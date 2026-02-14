@@ -7,45 +7,46 @@
 type: pc
 name: Kael
 ancestry: Human
-class: Sellsword
+class: Warden
 level: 1
-alignment: Neutral
-title: ""
-background: Urchin
-xp: 0
+background: Deserter
 hp: { current: 8, max: 8 }
-ac: 14
-stats: { str: 16, dex: 12, con: 14, int: 8, wis: 10, cha: 11 }
-hit_die: d8
-talents: ["Blade Mastery (+1 to melee damage)"]
-languages: ["Common", "Ironspeak"]
-class_features: ["Pack Mule (+2 gear slots)", "Blade Mastery (+1 melee/ranged damage)"]
-ancestry_traits: ["Ambitious (advantage on one roll per session)"]
-weapon_proficiencies: ["All weapons"]
-armor_proficiencies: ["All armor", "Shields"]
-current_location: obsidian-keep-entrance
+armor: 3
+stats: { vigor: 7, reflex: 5, wits: 4, resolve: 6, presence: 3, lore: 4 }
+hp_die: d10
+training: ["Athletics", "Endurance", "Fortitude", "Athletics"]
+languages: ["Common", "Dwerrow"]
+class_features: ["Shield Wall (+1 Armor to close allies, auto-pass Vigor/Resolve 1/rest)"]
+ancestry_traits: ["Adaptable (1 extra trained skill, 1 reroll/session)"]
+beast_aspect: ""
+background_hook: "Deserted from the Thornwall garrison six months ago. Commander Vess remembers."
+current_location: thornwall
+countdown_dice: { torches: "cd8", rations: "cd8" }
 ---
 # Kael
 
 ## Description
-A weathered sellsword with a scar across his left cheek and calloused hands that speak of years gripping a blade.
+A broad-shouldered man with cropped hair and a pale scar across his throat. His boots are military-issue — the only thing he kept.
 
 ## Inventory
-- Bastard sword (1 slot)
-- Leather armor (1 slot)
-- Torch ×3 (1 slot)
-- Rope, 60ft (1 slot)
+- Longsword (1 slot)
+- Shield (1 slot)
+- Chainmail (2 slots)
+- Torch ×2 (1 slot)
 - Rations ×3 (1 slot)
+- Rope, 60ft (1 slot)
+- Military-issue boots
+- Forged papers
 
-**Gold:** 12 gp | **Silver:** 5 sp | **Copper:** 0 cp
-**Gear Slots:** 5/10
+**Gold:** 8 gp | **Silver:** 0 sp | **Copper:** 0 cp
+**Gear Slots:** 7/12
 
 ## Spells
-*(None — Sellsword)*
+*(None — Warden)*
 
 ## Notes
-- Hired by the merchant guild to investigate disappearances near the ruins
-- Distrusts magic users after an incident in his past
+- Arrived in Thornwall seeking a fresh start
+- Background hook: deserted his post, Commander Vess may recognize him
 ```
 
 ## NPC Template
@@ -53,25 +54,24 @@ A weathered sellsword with a scar across his left cheek and calloused hands that
 ```markdown
 ---
 type: npc
-name: Merchant Vela
+name: Corvin Half-Tooth
 status: alive
-location: market-square
-disposition: friendly
+location: mended-flask
+disposition: neutral
 voice_id: ""
 voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0 }
 ---
-# Merchant Vela
+# Corvin Half-Tooth
 
 ## Description
-A sharp-eyed halfling woman who runs a provisions stall. Missing her left ring finger. Speaks quickly, laughs easily.
+A wiry man with a missing front tooth and a knowing grin. Runs the Mended Flask tavern. Speaks in half-finished sentences, always implying he knows more than he says.
 
 ## Combat Stats
-*(Non-combatant — flees if threatened)*
+*(Non-combatant — runs if threatened)*
 
 ## Notes
-- Offered the party a 10% discount after they cleared rats from her cellar
-- Knows rumors about the old keep — will share if asked
-- Owes a debt to the thieves' guild
+- Hears everything that happens in Thornwall
+- Will trade information for coin or favors
 ```
 
 For combat-relevant NPCs, include full stats in the frontmatter:
@@ -81,26 +81,28 @@ For combat-relevant NPCs, include full stats in the frontmatter:
 type: npc
 name: Grukk
 status: alive
-location: obsidian-keep-level-1
+location: thornwood-edge
 disposition: hostile
 voice_id: ""
 voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0 }
-hp: { current: 9, max: 9 }
-ac: 11
-stats: { str: 14, dex: 10, con: 12, int: 6, wis: 8, cha: 6 }
-attacks: ["Rusty axe +2 (1d6+1)"]
-movement: close
-morale: 7
+hp: { current: 5, max: 5 }
+armor: 0
+attack_die: d4
+attack_description: "crude spear"
+zone: melee
+priority: nearest
+weakness: fire
+morale: 12
 is_undead: false
 ---
 # Grukk
 
 ## Description
-A scarred goblin boss with a crown made of bent copper coins. Barks orders at his underlings.
+A scarred goblin raider with a necklace of finger bones. Chatters to himself constantly.
 
 ## Notes
-- Commands 4 goblins in the first chamber
-- Carries a brass key to the locked door on the east wall
+- Part of a raiding party from the Thornwood
+- Carries a crude map scratched on bark
 ```
 
 ## Location Template
@@ -108,24 +110,24 @@ A scarred goblin boss with a crown made of bent copper coins. Barks orders at hi
 ```markdown
 ---
 type: location
-name: Obsidian Keep — Entrance
-danger_level: unsafe
-light: dark
-connections: ["market-road", "obsidian-keep-level-1"]
+name: Thornwall — Warden's Hall
+danger_level: safe
+light: bright
+connections: ["mended-flask", "the-stacks", "root-cellar", "main-gate"]
 ---
-# Obsidian Keep — Entrance
+# Thornwall — Warden's Hall
 
 ## Description
-A crumbling stone archway leads into darkness. The air smells of damp earth and old iron. Claw marks score the walls at waist height. A toppled statue of a knight lies across the threshold, its head missing.
+A squat stone building at the center of Thornwall, its walls thick enough to withstand a siege. A fire burns in a wide hearth. Maps and reports cover a long table. The air smells of woodsmoke and old ink.
 
 ## Contents
-- Toppled statue (searchable — DC 12 INT to find a silver ring worth 5 sp in the rubble)
-- Torch sconces (empty)
-- Faded mural on east wall depicting a battle
+- Commander Alara Vess's desk (locked — Tinker check Difficulty 10 to pick)
+- Regional map on the wall (shows known hex locations)
+- Bounty board with three postings
 
 ## Notes
-- Goblin tracks lead deeper inside (DC 9 WIS to notice)
-- Wind occasionally gusts from within — suggests openings deeper in
+- Commander Vess is here during daylight hours
+- The bounty board is the main quest source
 ```
 
 ## Item Template
@@ -144,12 +146,12 @@ A pale blue stone set in tarnished silver on a fine chain. Glows faintly in tota
 
 ## Properties
 - Provides 5ft dim light in total darkness
-- Once per day: reroll a failed WIS check
-- Cursed: cannot be voluntarily removed (DC 15 INT check or Remove Curse spell)
+- Once per day: reroll a failed Resolve check
+- Cursed: cannot be voluntarily removed (Lore check Difficulty 8 or Remove Curse)
 
 ## History
-- Found in the ossuary beneath the Obsidian Keep
-- Previously belonged to the keep's chaplain
+- Found in the barrow beneath the Wolds
+- Previously belonged to a forgotten priest
 ```
 
 ## Faction Template
@@ -157,28 +159,73 @@ A pale blue stone set in tarnished silver on a fine chain. Glows faintly in tota
 ```markdown
 ---
 type: faction
-name: The Merchant Guild
-disposition_to_pc: friendly
+name: Thornwall Garrison
+disposition_to_pc: neutral
 ---
-# The Merchant Guild
+# Thornwall Garrison
 
 ## Description
-A coalition of traders and shopkeepers in Millhaven. They control the market square and maintain the town's only warehouse.
+The beleaguered defenders of Thornwall. Undermanned, undersupplied, and losing hope. They hold the walls and patrol the nearest roads.
 
 ## Members
-- **Alderman Foss** — Guild leader, pompous but fair
-- **Merchant Vela** — Provisions dealer, guild member in good standing
-- **Darrow the Smith** — Arms dealer, reluctant member
+- **Commander Alara Vess** — Garrison commander, pragmatic and exhausted
+- **Sergeant Brenn** — Veteran wall guard, loyal to Vess
+- **The Watch** — 12 remaining soldiers, some barely trained
 
 ## Goals
-- Reopen the trade road through the Thornwood
-- Investigate disappearances affecting their supply caravans
-- Keep the thieves' guild from gaining more influence
+- Maintain the perimeter against increasing threats
+- Secure the caravan route to restore supply lines
+- Investigate the disturbances coming from the Wolds
 
 ## Notes
-- Hired the PC to investigate the ruins
-- Will pay 50 gp for proof of what's causing the disappearances
+- Morale is fragile — tracked by the Garrison Morale progress clock
+- Will hire the PC for scouting and investigation work
 ```
+
+## Myths Template (`world/myths.md`)
+
+Campaigns have 3-6 myths. The Pale Reach starter has 5. Custom campaigns define their own during session zero.
+
+```markdown
+# Campaign Myths
+
+## {Myth Name}
+- **Location:** {region or terrain}
+- **Omen Level:** 0/6
+- **Current Omen:** Dormant. {initial atmospheric detail}
+- **Advances when:** {trigger conditions}
+- **At level 6:** {catastrophic manifestation}
+```
+
+### Pale Reach Default Myths
+
+For the Pale Reach starter sandbox, use these five myths:
+
+- **The Hollow King** — The Wolds (barrow complex). Advances when the dead are disturbed, graves are looted. At 6: undead army marches on Thornwall.
+- **The Green Maw** — Thornwood (deep forest). Advances when trees are felled, forest entered carelessly. At 6: forest expands aggressively, swallowing roads.
+- **The Pale Shepherd** — The Fenway (marshlands). Advances when people die near marshes, bodies left unburied. At 6: death-procession heads for Thornwall.
+- **The Iron Seam** — Ashfall Crags (abandoned mine). Advances when the mine is disturbed, metal taken. At 6: living metal erupts, tools corrode.
+- **The Antler Court** — Greenmere Valley (overgrown ruins). Advances when bargains are broken, fey insulted. At 6: fey claim the valley, mortals hunted for sport.
+
+## Progress Clocks Template (`world/clocks.md`)
+
+```markdown
+# Progress Clocks
+
+## {Clock Name}
+- **Segments:** 0/{4|6|8}
+- **Trigger:** {what ticks this clock}
+- **Completes:** {consequence when filled}
+```
+
+### Pale Reach Default Clocks
+
+For the Pale Reach starter sandbox, use these starting clocks:
+
+- **Winter Approaches** (0/8) — Ticks at end of each session. Completes: deep winter, starvation risk.
+- **Garrison Morale** (0/6) — Ticks when Thornwall suffers losses or bad news. Completes: garrison breaks, desertion.
+- **Caravan Route** (0/4) — Ticks when PC secures road segments. Completes: trade restored (positive).
+- **The Undercroft** (0/6) — Ticks when something stirs beneath Thornwall. Completes: dungeon opens below the keep.
 
 ## Campaign Memory (`world/CLAUDE.md`)
 
@@ -188,7 +235,7 @@ A curated hot cache of the most important campaign state, loaded at the start of
 # Campaign Memory
 
 ## Character
-{Name}, {Ancestry} {Class}, Level {N}. {current}/{max} HP. Currently in {location}.
+{Name}, {Ancestry} {Class}, Level {N}. {current}/{max} HP. Armor {N}. Currently in {location}.
 → Full sheet: world/characters/{name}.md
 
 ## Play Style
@@ -221,12 +268,21 @@ A curated hot cache of the most important campaign state, loaded at the start of
 |--------|--------|
 | {thread name} | {current status} |
 
+## Myth Status
+| Myth | Omen | Notes |
+|------|------|-------|
+| {Myth 1} | 0/6 | {status} |
+| {Myth 2} | 0/6 | {status} |
+| {Myth 3} | 0/6 | {status} |
+
 ## World State
 {1-3 sentence summary of where the campaign stands}
 
 → Quests: world/quests.md
 → NPCs: world/npcs/
 → Locations: world/locations/
+→ Myths: world/myths.md
+→ Clocks: world/clocks.md
 → Session history: world/session-log.md
 ```
 
@@ -236,3 +292,4 @@ A curated hot cache of the most important campaign state, loaded at the start of
 - Tables are additive — add new rows for new observations, remove rows only when they're wrong or outdated
 - The World State paragraph should be rewritten each session to reflect the current state
 - Active Threads should be kept current — remove resolved threads, add new ones, update status
+- Myth Status should always reflect current omen levels

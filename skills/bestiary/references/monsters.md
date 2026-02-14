@@ -1,216 +1,369 @@
 # Monster Stat Blocks (Alphabetical)
 
-## Aboleth (LV 8)
-AC 16, HP 39, ATK 2 tentacle (near) +5 (1d8 + curse) or 1 tail +5 (3d6), MV near (swim), S +4, D -1, C +3, I +4, W +2, Ch +2, AL C
-- **Curse.** DC 15 CON or turn into a deep one over 2d10 days.
-- **Enslave.** Instead of attacks, one creature far: DC 15 WIS or aboleth controls for 1d4 rounds.
-- **Telepathic.** Read thoughts of all creatures within far.
+---
 
-## Acolyte (LV 1)
-AC 12, HP 4, ATK 1 mace +1 (1d6) or 1 spell +2, MV near, S +1, D -1, C +0, I -1, W +2, Ch +0, AL L
-- **Healing Touch (WIS Spell).** DC 11. Heal one creature within close for 1d4 HP.
+## Antler Knight
+HP 8, Armor 2, Attack d8 (thorn lance)
+Zone: Near | Priority: Leader | Weakness: iron
+- **Fey Armor:** Immune to charm and sleep effects. Iron weapons ignore Armor.
+- **Wild Hunt Charge:** Moves double Near in a straight line and attacks. On hit, target is knocked prone.
+- **Behavior:** Rides into melee, targets whoever appears to be in command. Retreats to regroup if outmatched, returns with reinforcements.
 
-## Animated Armor (LV 2)
-AC 15, HP 11, ATK 1 longsword +3 (1d8), MV near, S +3, D -1, C +2, I -1, W +1, Ch +0, AL C
-- **Statue.** When standing still, looks exactly like a suit of armor.
+## Bandit
+HP 4, Armor 1, Attack d6 (shortsword)
+Zone: Near | Priority: Weakest | Weakness: morale (cowardly)
+- **Ambush:** Deals double damage when attacking from hiding or while undetected.
+- **Behavior:** Attacks in groups of 3-6. Flees immediately if leader drops or outnumbered.
 
-## Bandit (LV 1)
-AC 13 (leather + shield), HP 4, ATK 1 club +1 (1d4) or 1 shortbow (far) +0 (1d4), MV near, S +1, D +0, C +0, I -1, W +0, Ch -1, AL C
-- **Ambush.** Extra die of damage when undetected.
+## Barrow Wight
+HP 6, Armor 1, Attack d8 (rusted blade)
+Zone: Melee | Priority: Nearest | Weakness: radiant/fire
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Grave Cold:** On hit, target's next attack has disadvantage (numbing cold seeps into limbs).
+- **Behavior:** Guards its burial chamber. Pursues intruders relentlessly within the barrow but will not leave it.
 
-## Bat, Giant (LV 2)
-AC 12, HP 9, ATK 1 bite +2 (1d6), MV near (fly), S -1, D +2, C +0, I -3, W +1, Ch -3, AL N
+## Basilisk
+HP 10, Armor 2, Attack d8 (bite)
+Zone: Near | Priority: Nearest | Weakness: mirrors (its own gaze)
+- **Petrifying Gaze:** At the start of each round, all creatures in Near who can see the basilisk must make a check or begin turning to stone (fail twice = petrified). Averting eyes gives disadvantage on attacks against it.
+- **Behavior:** Slow, territorial. Ambushes prey near its lair. Does not pursue far from its den.
 
-## Bear, Brown (LV 5)
-AC 13, HP 25, ATK 2 claw +4 (1d8), MV near (climb), S +4, D +1, C +3, I -2, W +1, Ch -2, AL N
-- **Crush.** Extra die of damage if both claws hit same target.
+## Bat, Giant
+HP 3, Armor 0, Attack d4 (bite)
+Zone: Melee | Priority: Random | Weakness: bright light
+- **Echolocation:** Ignores darkness and invisibility. Bright light (sunlight, flare) causes disadvantage.
+- **Behavior:** Swoops in packs of 4-8. Scatters if 2+ killed.
 
-## Bloodwing (LV 1)
-AC 12, HP 4, ATK 1 beak +2 (1d4 + blood drain), MV near (fly), S -2, D +2, C +0, I -2, W +0, Ch -2, AL N
-- **Blood Drain.** Attach to target, auto-hit next round. DC 9 STR to remove.
+## Bear
+HP 8, Armor 1, Attack d8 (claws)
+Zone: Melee | Priority: Nearest | Weakness: fire
+- **Maul:** If both attacks in a round hit the same target, deals an extra d8 damage (crushing embrace).
+- **Behavior:** Territorial, not predatory. Charges if cornered or cubs threatened. Flees from fire.
 
-## Boar (LV 3)
-AC 12, HP 14, ATK 2 tusk +3 (1d6), MV near, S +3, D +0, C +1, I -2, W +1, Ch -2, AL N
-- **Gore.** Extra die of damage if both tusks hit same target.
+## Beetle, Giant
+HP 4, Armor 2, Attack d4 (mandibles)
+Zone: Melee | Priority: Nearest | Weakness: flip it (prone = helpless)
+- **Armored Shell:** Armor 2 applies to all physical damage. Flipped onto its back, the beetle is helpless for 1 round.
+- **Behavior:** Mindless scavenger. Attacks whatever is closest. Ignores morale.
 
-## Bogwitch (LV 6)
-AC 14, HP 28, ATK 2 claw +4 (1d8) or 1 drink pain, MV near, S +3, D +2, C +1, I +1, W +2, Ch +3, AL C
-- **Drink Pain.** Near, DC 12 CHA, 2d4 damage to creature, regain that many HP.
-- **Shapechange.** Instantly change to look like any humanoid.
+## Bone Shepherd
+HP 14, Armor 2, Attack d8 (staff of bone)
+Zone: Near | Priority: Spellcaster | Weakness: radiant/fire
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Raise Dead:** Once per encounter, animates 1d4 skeletons from nearby remains (HP 2 each, Armor 0, Attack d4).
+- **Command Undead:** All undead in Near deal +1 damage while the Bone Shepherd lives.
+- **Behavior:** Mini-boss. Stays behind its minions. Raises reinforcements and targets spellcasters. Destroying it causes all raised skeletons to collapse.
 
-## Brinehound (LV 1)
-AC 12 (leather), HP 5, ATK 1 spear (close/near) +2 (1d6+1), MV near, S +2, D +1, C +1, I -2, W +1, Ch -1, AL C
-- **Brutal.** +1 damage with melee weapons (included).
+## Centipede, Giant
+HP 2, Armor 0, Attack d4 (bite)
+Zone: Melee | Priority: Nearest | Weakness: fire
+- **Venom:** On hit, target must make a check or take d6 additional poison damage. On critical failure, the limb goes numb (disadvantage on related checks for 1 hour).
+- **Behavior:** Ambush predator. Drops from ceilings. Flees if reduced below half HP.
 
-## Cavern Stalker (LV 4)
-AC 12, HP 18, ATK 1 bite +3 (1d6) and 1 tentacles +3 (1d8 + toxin), MV near (climb), S +2, D +2, C +0, I -3, W +1, Ch -3, AL N
-- **Toxin.** DC 12 CON or paralyzed 1d4 rounds.
+## Court Herald
+HP 12, Armor 1, Attack d10 (moonsilver blade)
+Zone: Near | Priority: Leader | Weakness: iron
+- **Fey Glamour:** Can appear as any humanoid. True form revealed by iron touch or when reduced below half HP.
+- **Proclamation:** Once per encounter, speaks a binding command. One target in Near must make a check or obey a single-sentence instruction (cannot be directly self-harmful).
+- **Moonfire:** Ranged attack (Far), d6 cold radiance damage. Illuminates the target, removing hiding/invisibility.
+- **Behavior:** Mini-boss. Arrives with 2-3 Thorn Sprites as attendants. Fights with cruel elegance. Retreats through fey crossings if outmatched, swearing vengeance.
 
-## Crocodile (LV 4)
-AC 14, HP 20, ATK 2 bite +3 (1d8), MV near (swim), S +3, D +1, C +2, I -2, W +1, Ch -2, AL N
+## Cultist
+HP 5, Armor 1, Attack d6 (ritual dagger)
+Zone: Near | Priority: Spellcaster | Weakness: disrupting their ritual
+- **Fearless:** Immune to morale checks while their leader lives.
+- **Dark Prayer:** Once per encounter, one cultist can invoke a curse. Target in Near makes a check or takes d4 damage and disadvantage on their next roll.
+- **Behavior:** Fights in groups of 3-6. Protects their ritual site. If the ritual object is destroyed, they break and flee.
 
-## Cultist (LV 2)
-AC 14 (chainmail + shield), HP 9, ATK 1 longsword +1 (1d8) or 1 spell +2, MV near, S +1, D -1, C +0, I -1, W +2, Ch +0, AL C
-- **Fearless.** Immune to morale checks.
-- **Deathtouch (WIS Spell).** DC 12. 2d4 damage to one creature within close.
+## Dragon, Young
+HP 25, Armor 3, Attack d12 (bite) or d10 (claws, x2)
+Zone: Near | Priority: Weakest | Weakness: belly (Armor 0 if flanked/underneath)
+- **Breath Weapon:** Once every 3 rounds, cone of fire/acid/frost (choose at creation). All creatures in Near must defend or take 2d8 damage.
+- **Flight:** Can fly. Prefers strafing attacks from above.
+- **Fearsome Presence:** When the dragon appears, all creatures must make a check or be frightened for 1 round (disadvantage on attacks).
+- **Behavior:** Boss. Intelligent and arrogant. Opens with breath weapon, then focuses weakest targets. Retreats to lair at half HP to ambush from a better position.
 
-## Dragon, Swamp (LV 12)
-AC 16, HP 58, ATK 3 rend +8 (2d10) or 1 smog breath, MV double near (burrow, swim), S +5, D +3, C +4, I +4, W +3, Ch +3, AL C
-- **Smog Breath.** Near-sized cube from dragon. DC 15 CON or 2d10 damage and blinded 1 round.
+## Fog Wraith
+HP 5, Armor 0, Attack d6 (freezing touch)
+Zone: Melee | Priority: Random | Weakness: sunlight/wind (disperses fog form)
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Incorporeal:** Physical attacks deal half damage. Magic and silver deal full damage.
+- **Fog Form:** Can become a patch of fog, moving freely through cracks and barriers. Cannot attack while in fog form.
+- **Behavior:** Drifts through foggy areas. Solidifies behind isolated targets. Flees into fog if outnumbered or exposed to strong light.
 
-## Dryad (LV 4)
-AC 13, HP 19, ATK 1 staff -1 (1d4) or 1 charm, MV near, S -1, D +2, C +1, I +1, W +3, Ch +4, AL N
-- **Charm.** Near, one creature, DC 14 CHA or friendship for 1d8 days.
-- **Meld.** Step inside bonded tree.
+## Gargoyle
+HP 8, Armor 2, Attack d6 (claws)
+Zone: Melee | Priority: Nearest | Weakness: bludgeoning (deals double)
+- **Stone Form:** When motionless, indistinguishable from a stone statue. Always surprises if undetected.
+- **Flight:** Can fly. Prefers to swoop from above.
+- **Behavior:** Patient ambush predator. Waits motionless for hours. Attacks in pairs. Retreats to a perch if badly injured, resuming stone form to heal (regains 1 HP per hour in stone form).
 
-## Dung Beetle, Giant (LV 2)
-AC 13, HP 10, ATK 1 horn +1 (1d4 + knock), MV near, S +1, D -1, C +1, I -3, W -1, Ch -3, AL N
-- **Knock.** DC 9 STR or pushed close distance and fall down.
+## Gelatinous Cube
+HP 10, Armor 0, Attack d6 (engulf)
+Zone: Melee | Priority: Nearest | Weakness: fire/lightning
+- **Mindless.** Immune to morale. Fights until destroyed.
+- **Transparent:** Nearly invisible in dungeon corridors. Hard to spot until adjacent.
+- **Engulf:** On hit, target is absorbed into the cube. Engulfed creatures take d6 acid damage each round and must make a check to escape. Allies can cut them free.
+- **Behavior:** Fills a corridor and moves slowly toward organic matter. Dissolves everything it touches.
 
-## Fairy (LV 1)
-AC 13, HP 4, ATK 1 needle +3 (1 + poison), MV near (fly), S -2, D +3, C +0, I +1, W +0, Ch +1, AL N
-- **Poison.** DC 12 CON or deep sleep 1d4 hours.
+## Ghoul
+HP 6, Armor 0, Attack d6 (claws and bite)
+Zone: Melee | Priority: Weakest | Weakness: radiant/fire
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Paralysis:** On hit, target must make a check or be paralyzed for 1d4 rounds.
+- **Behavior:** Hunts in packs of 2-4 in crypts and graveyards. Targets the weakest or most wounded. Drags paralyzed victims away to feed.
 
-## Gelatinous Cube (LV 5)
-AC 11, HP 24, ATK 1 touch +4 (1d8 + toxin + engulf), MV near, S +3, D +1, C +2, I -4, W +1, Ch -4, AL N
-- **Engulf.** DC 12 STR or trapped. Touch auto-hits engulfed each round. DC 12 STR to escape. Fail if paralyzed.
-- **Rubbery.** Half damage from stabbing weapons.
-- **Toxin.** DC 15 CON or paralyzed 1d4 rounds.
+## Goblin
+HP 2, Armor 0, Attack d4 (crude weapon)
+Zone: Near | Priority: Weakest | Weakness: morale (cowardly)
+- **Keen Senses:** Cannot be surprised.
+- **Skulk:** Advantage on checks to hide in dim light or darkness.
+- **Behavior:** Attacks in mobs of 4-8. Flees at first sign of real resistance. Uses traps and ambushes. Never fights fair.
 
-## Ghost (LV 6)
-AC 13, HP 27, ATK 2 death touch +5 (1d8 + life drain) or 1 possess, MV near (fly), S -2, D +3, C +0, I +0, W +0, Ch +4, AL C
-- **Greater Undead.** Immune to morale. Only damaged by silver or magical sources.
-- **Incorporeal.** Instead of attacks, become corporeal or incorporeal.
-- **Life Drain.** 1d4 CON damage. Death at 0 CON.
-- **Possess.** Must be corporeal. Close, contested CHA check. Win = inhabit target's body 2d4 rounds.
+## Goblin Boss
+HP 6, Armor 1, Attack d6 (jagged blade)
+Zone: Near | Priority: Leader | Weakness: killing it breaks goblin morale
+- **Bully:** While the boss lives, goblins in Near are immune to morale checks.
+- **Meat Shield:** When the boss would be hit, it can shove an adjacent goblin into the attack instead.
+- **Behavior:** Stays behind bodyguards. Shouts commands. If bodyguards fall, attempts to flee or bargain.
 
-## Gnome, Deep (LV 3)
-AC 14 (leather + shield), HP 14, ATK 1 pick +3 (1d6) or 1 dart (near) +2 (1d4), MV near, S +2, D +1, C +1, I +1, W +1, Ch +1, AL L
-- **Stone Meld.** 2/day, underground. Invisible 3 rounds.
+## Hobgoblin
+HP 5, Armor 2, Attack d8 (longsword)
+Zone: Near | Priority: Nearest | Weakness: breaking formation (flanking)
+- **Phalanx:** While adjacent to an allied hobgoblin, gains +1 Armor (included in stat). Separated hobgoblins have Armor 1.
+- **Disciplined:** Advantage on morale checks.
+- **Behavior:** Fights in organized squads of 3-5. Holds shield walls. Retreats in good order if overwhelmed, never routs.
 
-## Goblin (LV 1)
-AC 11, HP 5, ATK 1 club +0 (1d4) or 1 shortbow (far) +1 (1d4), MV near, S +0, D +1, C +1, I -1, W -1, Ch -2, AL C
-- **Keen Senses.** Can't be surprised.
+## Hollow Knight
+HP 7, Armor 2, Attack d8 (notched greatsword)
+Zone: Melee | Priority: Nearest | Weakness: radiant/fire
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Relentless:** When reduced to 0 HP, makes one final attack before collapsing.
+- **Hollow Resilience:** Immune to poison, fear, and charm.
+- **Behavior:** Silent sentinel of the Hollow King's barrows. Patrols in pairs. Fights with mechanical precision until destroyed.
 
-## Golem, Stone (LV 8)
-AC 18, HP 40, ATK 1 slow and 3 slam +6 (1d10), MV near, S +4, D -1, C +4, I -2, W +0, Ch -2, AL N
-- **Golem.** Immune to fire, cold, electricity, non-magical damage.
-- **Slow.** Far, one target. DC 15 CON or speed halved 1d4 rounds.
+## Iron Husk
+HP 7, Armor 3, Attack d6 (grinding fists)
+Zone: Melee | Priority: Nearest | Weakness: lightning (short-circuits, stunned 1 round)
+- **Construct.** Immune to morale, poison, fear, charm. Does not breathe, eat, or sleep.
+- **Magnetic Pull:** Creatures wearing metal armor in Near are pulled one zone closer at the start of each round (check to resist).
+- **Behavior:** Animated suit of corroded metal. Lumbers toward the nearest living creature. Slow but relentless. Found near old mine workings.
 
-## Hobgoblin (LV 2)
-AC 15 (chainmail + shield), HP 10, ATK 1 longsword +3 (1d8) or 1 longbow (far) +0 (1d8), MV near, S +3, D +0, C +1, I +2, W +1, Ch +1, AL C
-- **Phalanx.** +1 attacks and AC near allied hobgoblin.
+## Kobold
+HP 1, Armor 0, Attack d4 (spear)
+Zone: Near | Priority: Random | Weakness: morale (cowardly)
+- **Trap Makers:** Kobold lairs are riddled with traps. Roll for traps in every room.
+- **Dodge:** Once per encounter, an attack that would hit a kobold misses instead (skitters out of the way).
+- **Behavior:** Fights in swarms of 6-10. Relies entirely on traps, numbers, and ambushes. Routs instantly if half are killed.
 
-## Knight (LV 3)
-AC 17 (plate mail + shield), HP 14, ATK 2 bastard sword +3 (1d8), MV near, S +3, D +0, C +1, I +0, W +0, Ch +1, AL L
-- **Oath.** 3/day, advantage on a roll in service of knight's order.
+## Lizardfolk
+HP 5, Armor 1, Attack d6 (bone club or javelin)
+Zone: Near | Priority: Nearest | Weakness: cold (sluggish, disadvantage)
+- **Aquatic:** Swims as fast as it moves on land. Can hold breath for 30 minutes.
+- **Tail Sweep:** Once per encounter, all creatures in Melee must make a check or be knocked prone.
+- **Behavior:** Territorial and pragmatic. Fights to defend hunting grounds. Retreats into water if losing. May negotiate if offered food or trade goods.
 
-## Kobold (LV 0)
-AC 13 (leather), HP 1, ATK 1 spear (close/near) +0 (1d6), MV near, S -2, D +2, C +0, I -1, W +0, Ch -1, AL C
-- **Dodge.** 1/day, attack that would hit misses instead.
+## Lost Pilgrim
+HP 4, Armor 0, Attack d6 (grasping hands)
+Zone: Melee | Priority: Random | Weakness: naming them (speaking their true name banishes them)
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Fog-Born:** Appears only in fog or mist. Cannot exist in clear air. Sunlight or strong wind destroys it.
+- **Lament:** All creatures in Near hear weeping. Check each round or be drawn one zone closer (compelled to investigate).
+- **Behavior:** Wanders misty paths. Grabs the living and drags them into the fog. Appears as a cloaked, weeping figure. Finding its name in a grave marker or journal allows banishment.
 
-## Leech, Giant (LV 2)
-AC 9, HP 10, ATK 1 bite +1 (1d4 + attach), MV near (swim), S +1, D -1, C +1, I -3, W -1, Ch -3, AL N
-- **Attach.** Bite auto-hits next round. DC 12 STR to tear off.
+## Maw Tendril
+HP 14, Armor 1, Attack d8 (crushing vine) or d6 (thorn spray, Near, all targets)
+Zone: Near | Priority: Nearest | Weakness: fire (deals double, prevents regeneration for 1 round)
+- **Mindless.** Immune to morale, fear, charm.
+- **Regeneration:** Regains 2 HP at the start of each round unless burned by fire.
+- **Root Network:** Cannot be surprised in its grove. Senses all vibrations in Near through root system.
+- **Grasping Vines:** On hit with crushing vine, target is grappled. Check to escape. Grappled targets take d4 automatic damage each round.
+- **Behavior:** Mini-boss. The Green Maw's physical manifestation in a corrupted grove. Immobile but controls all vegetation in Near. Sends Thornlings to herd prey closer.
 
-## Minotaur (LV 7)
-AC 14 (chainmail), HP 34, ATK 2 greataxe +6 (1d10) and 1 horns +6 (1d12), MV near, S +4, D +1, C +3, I +1, W +2, Ch +1, AL C
-- **Charge.** Instead of attacks, move double near in straight line + 1 horn attack at ×2 damage.
+## Minotaur
+HP 12, Armor 1, Attack d10 (greataxe)
+Zone: Melee | Priority: Nearest | Weakness: ranged attacks (cannot retaliate from Far)
+- **Charge:** If the minotaur moves at least Near distance in a straight line before attacking, the attack deals double damage.
+- **Labyrinth Sense:** Never lost in enclosed spaces. Perfect memory for paths and rooms.
+- **Behavior:** Territorial. Guards a lair or maze. Charges the nearest intruder. Fights to the death in its territory.
 
-## Moose (LV 4)
-AC 11, HP 19, ATK 2 antler +3 (1d6), MV double near, S +3, D +0, C +1, I -2, W +0, Ch -2, AL N
+## Ogre
+HP 12, Armor 1, Attack d10 (massive club)
+Zone: Melee | Priority: Nearest | Weakness: slow (easily outmaneuvered)
+- **Sweeping Blow:** Attack can target two adjacent creatures in Melee.
+- **Thick-Skulled:** Advantage on checks to resist charm and illusion.
+- **Behavior:** Dim but aggressive. Charges straight in. Can be tricked or lured with food. Usually solitary or in pairs.
 
-## Ochre Jelly (LV 4)
-AC 9, HP 20, ATK 2 tentacle +3 (1d6), MV near (climb), S +2, D -1, C +2, I -4, W -3, Ch -4, AL N
-- **Split.** If cut/chopped, split into two (divide HP). Can split up to four times.
+## Orc
+HP 4, Armor 1, Attack d6 (axe)
+Zone: Melee | Priority: Nearest | Weakness: discipline (breaks formation easily)
+- **Rage:** Once per encounter, gains +1 damage for 3 rounds but cannot retreat.
+- **Behavior:** Aggressive raiders. Fights in warbands of 4-8. Charges recklessly. Morale breaks if the warchief falls.
 
-## Ogre (LV 6)
-AC 9, HP 30, ATK 2 greatclub +6 (2d6), MV near, S +4, D -1, C +3, I -2, W -2, Ch -2, AL C
+## Orc Warchief
+HP 10, Armor 2, Attack d10 (great-weapon)
+Zone: Melee | Priority: Leader | Weakness: single combat (honor-bound to accept duels)
+- **War Cry:** Once per encounter, all orcs in Near gain +1 damage for the rest of the fight.
+- **Defiant:** Immune to morale while any orcs remain standing.
+- **Behavior:** Boss. Leads from the front. Challenges the strongest-looking enemy to single combat. If defeated in a duel, remaining orcs flee.
 
-## Orc (LV 1)
-AC 15 (chainmail + shield), HP 4, ATK 1 greataxe +2 (1d8), MV near, S +2, D +0, C +0, I -1, W +0, Ch -1, AL C
-- **Rage.** 1/day, immune to morale, +1d4 damage (3 rounds).
+## Ore Crawler
+HP 3, Armor 2, Attack d4 (metallic mandibles)
+Zone: Melee | Priority: Nearest | Weakness: lightning (deals double)
+- **Construct.** Immune to morale, poison, fear, charm. Does not breathe, eat, or sleep.
+- **Metal Eater:** Attacks against creatures wearing metal armor deal +1 damage. Can chew through metal bars and locks given time.
+- **Behavior:** Insectoid construct found in mines and tunnels near the Iron Seam. Swarms in groups of 4-6. Drawn to metal objects.
 
-## Peasant (LV 1)
-AC 10, HP 4, ATK 1 club +0 (1d4), MV near, S +0, D +0, C +0, I +0, W +0, Ch +0, AL L
+## Owlbear
+HP 10, Armor 1, Attack d8 (beak and claws)
+Zone: Melee | Priority: Nearest | Weakness: fire
+- **Screech:** Once per encounter, all creatures in Near must make a check or be frightened for 1 round (disadvantage on attacks).
+- **Maul:** If the attack hits, the owlbear grabs the target. Grabbed targets take d6 automatic damage each round. Check to escape.
+- **Behavior:** Fiercely territorial. Attacks anything that enters its hunting ground. Will not retreat from its nest. Solitary.
 
-## Rat, Giant (LV 1)
-AC 11, HP 5, ATK 1 bite +1 (1d4 + disease), MV near, S -2, D +1, C +1, I -2, W +1, Ch -2, AL N
-- **Disease.** DC 12 CON or 1d4 CON damage (can't heal while ill). Check once/day, ends on success. Die at 0 CON.
+## Rat, Giant
+HP 2, Armor 0, Attack d4 (bite)
+Zone: Melee | Priority: Weakest | Weakness: fire/bright light
+- **Disease:** On hit, target must make a check or contract filth fever (d4 damage per day until cured or passes a check on consecutive days).
+- **Behavior:** Attacks in packs of 4-8 in sewers and cellars. Flees from fire and bright light. Targets wounded or isolated creatures.
 
-## Reaver (LV 6)
-AC 17 (plate mail + shield), HP 28, ATK 3 bastard sword +4 (1d8+2), MV near, S +3, D +0, C +1, I +0, W +0, Ch +2, AL C
-- **Bloodlust.** +2 melee damage (included).
+## Rat Swarm
+HP 5, Armor 0, Attack d6 (bites, automatic — no defense roll)
+Zone: Melee | Priority: Nearest | Weakness: fire/area attacks
+- **Mindless.** Immune to morale.
+- **Swarm:** Cannot be targeted by single-target attacks. Only area effects (fire, explosions, spells) deal full damage. Occupies a zone and automatically deals damage to everything in it.
+- **Disease:** Anyone damaged must make a check or contract filth fever.
+- **Behavior:** Fills a corridor or room. Flows toward warmth and flesh. Disperses if more than half HP lost to area damage.
 
-## Rockfang (LV 4)
-AC 14, HP 19, ATK 1 beak +3 (1d8) and 1 tentacle +3 (1d6 + grab), MV near (climb), S +3, D +2, C +1, I -3, W +1, Ch -3, AL N
-- **Camouflage.** Hard to see in cave terrain or rocks.
-- **Grab.** Target immobilized. DC 15 STR to break free.
+## Root Horror
+HP 6, Armor 1, Attack d6 (thorned limbs)
+Zone: Melee | Priority: Nearest | Weakness: fire (deals double)
+- **Mindless.** Immune to morale, fear, charm.
+- **Entangle:** On hit, target is entangled by roots. Check to break free. Entangled targets cannot move.
+- **Camouflage:** In forest or overgrown areas, appears as a tangle of roots until it attacks. Always surprises if undetected.
+- **Behavior:** Animated mass of roots and thorns. Ambushes travelers on forest paths. Drags prey to the nearest corrupted tree.
 
-## Rust Monster (LV 4)
-AC 13, HP 19, ATK 2 claw +3 (1d6), MV near (climb), S +2, D +3, C +1, I -3, W +1, Ch -3, AL N
-- **Corrosive.** Metal touching it destroyed on d6 roll of 1-3.
+## Seam Guardian
+HP 16, Armor 3, Attack d10 (iron maul)
+Zone: Melee | Priority: Nearest | Weakness: lightning (stunned 1 round, Armor reduced to 0 for that round)
+- **Construct.** Immune to morale, poison, fear, charm. Does not breathe, eat, or sleep.
+- **Iron Shell:** Armor 3. Ranged attacks that are not magical bounce off harmlessly.
+- **Ground Slam:** Once per encounter, slams the ground. All creatures in Near must make a check or be knocked prone and take d6 damage.
+- **Magnetic Shield:** Metal weapons that miss the Guardian stick to its body. Check to wrench them free.
+- **Behavior:** Mini-boss. Ancient construct guarding sealed mine shafts and ore veins of the Iron Seam. Activates when intruders approach its charge. Fights with mechanical patience. Does not pursue beyond its guarded area.
 
-## Scarab, Swarm (LV 3)
-AC 13, HP 14, ATK 2 bite +3 (1d6), MV near (fly), S -1, D +3, C +1, I -3, W +0, Ch -3, AL N
+## Shepherd's Herald
+HP 12, Armor 0, Attack d10 (spectral scythe)
+Zone: Near | Priority: Weakest | Weakness: radiant (deals double, reveals true form)
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Incorporeal:** Physical attacks deal half damage. Magic and silver deal full damage.
+- **Death Knell:** Once per encounter, tolls an invisible bell. All creatures in Near must make a check or take d8 necrotic damage. Those reduced to 0 HP by this rise as Lost Pilgrims in 1d4 rounds.
+- **Fog Cloak:** While in fog, the Herald is invisible. Attacking from fog counts as undetected (advantage).
+- **Behavior:** Mini-boss. The Pale Shepherd's lieutenant. Appears in deep fog, preceded by the sound of a tolling bell. Targets the weakest first, seeking to build an army of Lost Pilgrims.
 
-## Shroudwing (LV 1)
-AC 13, HP 4, ATK 1 bite +3 (1d4) or 1 darkness, MV near (fly), S -2, D +3, C +0, I -3, W +0, Ch -3, AL N
-- **Darkness.** Extinguish all light sources in near.
+## Skeleton
+HP 3, Armor 1, Attack d6 (rusty weapon)
+Zone: Near | Priority: Nearest | Weakness: bludgeoning (deals double)
+- **Undead.** Immune to morale, poison, fear, charm. Does not breathe, eat, or sleep.
+- **Brittle:** Bludgeoning attacks deal double damage and can shatter bones.
+- **Behavior:** Mindless undead. Follows simple commands from a necromancer. Without orders, attacks the nearest living creature. Fights until destroyed.
 
-## Skeleton (LV 2)
-AC 13 (chainmail), HP 11, ATK 1 shortsword +1 (1d6) or 1 shortbow (far) +0 (1d4), MV near, S +1, D +0, C +2, I -2, W +0, Ch -1, AL C
-- **Undead.** Immune to morale checks.
+## Skeleton Warrior
+HP 6, Armor 2, Attack d8 (ancient blade)
+Zone: Near | Priority: Nearest | Weakness: bludgeoning (deals double)
+- **Undead.** Immune to morale, poison, fear, charm. Does not breathe, eat, or sleep.
+- **Shield Wall:** While adjacent to another skeleton warrior, gains +1 Armor (included in stat). Alone, Armor is 1.
+- **Behavior:** The remains of trained soldiers. Fights in disciplined formations. Holds chokepoints and doorways. More dangerous than common skeletons.
 
-## Snake, Giant (LV 5)
-AC 12, HP 23, ATK 2 bite +4 (1d6) and 1 constrict (near), MV near (climb), S +3, D +2, C +1, I -2, W +0, Ch -2, AL N
-- **Constrict.** Contested STR to hold target immobile 1 round.
+## Snake, Venomous
+HP 2, Armor 0, Attack d4 (fangs)
+Zone: Melee | Priority: Nearest | Weakness: cold (sluggish, disadvantage)
+- **Venom:** On hit, target must make a check. Failure: d8 poison damage over 1 minute. Critical failure: paralyzed for 1d4 rounds.
+- **Lightning Strike:** Attacks with advantage against targets who are unaware of the snake.
+- **Behavior:** Coils in dark, warm places. Strikes when disturbed or stepped on. Flees after biting.
 
-## Soldier (LV 2)
-AC 15 (chainmail + shield), HP 10, ATK 1 longsword +2 (1d8) or 1 crossbow (far) +1 (1d6), MV near, S +1, D +0, C +1, I +0, W +0, Ch +0, AL L
+## Specter
+HP 7, Armor 0, Attack d8 (life drain touch)
+Zone: Melee | Priority: Spellcaster | Weakness: radiant (deals double)
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Incorporeal:** Physical attacks deal half damage. Magic and silver deal full damage.
+- **Life Drain:** On hit, target loses 1 point from a random stat (temporary, recovers after a long rest). If any stat reaches 0, the target dies and rises as a specter at midnight.
+- **Behavior:** Haunts the place of its death. Jealous of the living. Targets spellcasters, drawn to magical energy.
 
-## Spider, Giant (LV 3)
-AC 13, HP 13, ATK 1 bite +3 (1d4 + poison), MV near (climb), S +2, D +3, C +0, I -2, W +1, Ch -2, AL N
-- **Poison.** DC 12 CON or paralyzed 1d4 hours.
+## Spider, Giant
+HP 5, Armor 0, Attack d6 (bite)
+Zone: Near | Priority: Weakest | Weakness: fire
+- **Venom:** On hit, target must make a check or be paralyzed for 1d4 rounds.
+- **Web:** Can shoot webs at Near range. Target must make a check or be restrained. Check to break free.
+- **Wall Crawler:** Moves freely on walls and ceilings.
+- **Behavior:** Ambush predator. Webs doorways and corridors. Paralyzes prey and wraps them for later. Flees if nest is threatened and it is alone.
 
-## Spider, Swarm (LV 2)
-AC 13, HP 9, ATK 2 bite +3 (1d4 + poison), MV near (climb), S -1, D +3, C +0, I -3, W +1, Ch -3, AL N
-- **Poison.** DC 12 CON or paralyzed 1d4 rounds.
+## Thorn Sprite
+HP 2, Armor 0, Attack d4 (thorn dart, Near range)
+Zone: Far | Priority: Spellcaster | Weakness: iron (instant kill)
+- **Fey.** Iron weapons deal double damage and bypass all defenses.
+- **Flicker:** Can teleport to any point in Near once per round. Cannot be pinned down in melee.
+- **Glamour:** Can become invisible while motionless. Revealed by iron dust or attacking.
+- **Behavior:** Malicious trickster. Harasses from range, teleporting away when pursued. Found in groups of 3-5 near fey crossings or serving Antler Court members.
 
-## Troll (LV 5)
-AC 12, HP 24, ATK 2 claw +4 (1d6) and 1 bite +4 (1d10), MV near, S +3, D +2, C +2, I -1, W +0, Ch -1, AL C
-- **Regenerate.** Regain 2d6 HP on its turn unless wounds cauterized with fire or acid.
+## Thornling
+HP 3, Armor 1, Attack d4 (thorned lash)
+Zone: Melee | Priority: Nearest | Weakness: fire (deals double)
+- **Mindless.** Immune to morale, fear, charm.
+- **Rooted:** Cannot be pushed or knocked prone. Moves slowly but can burst through soil to reposition.
+- **Thorn Burst:** When destroyed, explodes in a shower of thorns. All creatures in Melee take d4 damage.
+- **Behavior:** Small, vaguely humanoid plant creature. Lurks in underbrush. Emerges in groups of 3-6 near corrupted groves. Serves the Green Maw.
 
-## Tunnel Hulk (LV 6)
-AC 14, HP 28, ATK 2 claw +5 (1d8) and 1 mandible +5 (1d10), MV near (burrow), S +4, D +1, C +1, I -3, W +1, Ch -3, AL N
-- **Bewilder.** Creatures within near that see its eyes: DC 12 CHA at start of turn or dazed (no action).
+## Troll
+HP 12, Armor 1, Attack d8 (claws and bite)
+Zone: Melee | Priority: Nearest | Weakness: fire/acid (prevents regeneration)
+- **Regeneration:** Regains 2 HP at the start of each round unless damaged by fire or acid since its last turn.
+- **Dismember:** A troll reduced to 0 HP without fire or acid damage reassembles in 1d4 rounds.
+- **Behavior:** Voracious predator. Charges the nearest creature and does not stop attacking until everything is dead or it is burned. Fears fire but fights through the fear.
 
-## Unicorn (LV 4)
-AC 12, HP 20, ATK 1 hooves +3 (1d6), MV double near, S +3, D +2, C +2, I +1, W +2, Ch +3, AL L
-- **Healing Horn.** Touch heals 2d6 HP or ends one curse/disease.
+## Warg
+HP 6, Armor 0, Attack d8 (savage bite)
+Zone: Melee | Priority: Weakest | Weakness: fire
+- **Trip:** On hit, target must make a check or be knocked prone.
+- **Pack Hunter:** Deals +1 damage while an ally is in Melee with the same target.
+- **Behavior:** Intelligent, evil wolves. Hunts in packs of 3-5. Coordinates attacks to surround and trip targets. Sometimes serves as mounts for goblins or orcs.
 
-## Wasp, Giant (LV 2)
-AC 13, HP 9, ATK 1 sting +3 (1d6 + venom), MV near (fly), S +1, D +3, C +0, I -3, W +0, Ch -3, AL N
-- **Venom.** DC 9 CON or go to 0 HP.
+## Werewolf
+HP 8, Armor 1, Attack d8 (claws and bite)
+Zone: Melee | Priority: Nearest | Weakness: silver (deals double, bypasses regeneration)
+- **Regeneration:** Regains 1 HP at the start of each round unless damaged by silver since its last turn.
+- **Impervious:** Non-magical, non-silver weapons deal half damage.
+- **Lycanthropy:** A creature reduced to 0 HP by a werewolf's bite (but not killed) contracts lycanthropy. Transforms at the next full moon unless cured.
+- **Behavior:** Hunts alone or in pairs. In human form, appears normal. Transforms under stress or at will during the full moon. Targets isolated prey.
 
-## Webspinner (LV 3)
-AC 12, HP 14, ATK 2 bite +2 (1d6) or 1 poison web (near) +2, MV near (climb), S +0, D +2, C +1, I +0, W +0, Ch -1, AL C
-- **Poison Web.** Target stuck + 1d4 damage/round. DC 12 DEX on turn to escape.
+## Wight
+HP 8, Armor 1, Attack d8 (cursed blade)
+Zone: Melee | Priority: Leader | Weakness: radiant/fire
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Life Drain:** On hit, target must make a check or lose 1 point from a random stat (temporary, recovers after a long rest). If any stat reaches 0, the target dies.
+- **Command Dead:** Can control up to 4 skeletons or zombies within Near.
+- **Behavior:** Intelligent undead. Commands lesser undead from the back. Leads raids on the living from barrows and tombs. Retreats if its minions are destroyed.
 
-## Werewolf (LV 4)
-AC 12, HP 20, ATK 2 rend +3 (1d6), MV double near, S +3, D +2, C +2, I +0, W +1, Ch +0, AL C
-- **Impervious.** Only damaged by silver or magic.
-- **Lycanthropy.** 12+ damage from same werewolf = contract lycanthropy.
+## Wolf
+HP 3, Armor 0, Attack d6 (bite)
+Zone: Melee | Priority: Weakest | Weakness: fire
+- **Pack Hunter:** Deals +1 damage while an ally is in Melee with the same target.
+- **Trip:** On hit, target must make a check or be knocked prone.
+- **Behavior:** Hunts in packs of 4-6. Circles prey, taking turns darting in. Flees if half the pack is killed. Will not attack large groups near a fire.
 
-## Wight (LV 3)
-AC 14 (chainmail), HP 15, ATK 1 bastard sword +3 (1d10) and 1 life drain +3, MV near, S +3, D +1, C +2, I +1, W +0, Ch +3, AL C
-- **Greater Undead.** Immune to morale. Only damaged by silver or magical sources.
-- **Life Drain.** 1d4 CON damage. Death at 0 CON.
+## Wraith
+HP 10, Armor 0, Attack d10 (withering touch)
+Zone: Melee | Priority: Spellcaster | Weakness: radiant (deals double, forces corporeal form)
+- **Undead.** Immune to morale. Does not breathe, eat, or sleep.
+- **Incorporeal:** Physical attacks deal half damage. Magic and silver deal full damage.
+- **Life Drain:** On hit, target loses 1 point from two random stats (temporary, recovers after a long rest). Targets killed by a wraith rise as specters at midnight.
+- **Shadow Step:** Can teleport between shadows within Near once per round.
+- **Behavior:** Hates all living things. Drawn to powerful souls (spellcasters, leaders). Avoids daylight. Commands specters and ghosts in its territory.
 
-## Will-o'-Wisp (LV 2)
-AC 13, HP 10, ATK 1 life drain +3, MV near (fly), S -3, D +3, C +1, I -1, W -1, Ch -2, AL C
-- **Life Drain.** 1d4 CON damage. Death at 0 CON.
-
-## Wolf (LV 2)
-AC 12, HP 10, ATK 1 bite +2 (1d6), MV double near, S +2, D +2, C +1, I -2, W +1, Ch +0, AL N
-- **Pack Hunter.** +1 damage while ally is close.
+## Zombie
+HP 4, Armor 0, Attack d6 (slam)
+Zone: Melee | Priority: Nearest | Weakness: bludgeoning (deals double), fire
+- **Undead.** Immune to morale, poison, fear, charm. Does not breathe, eat, or sleep.
+- **Relentless:** The first time a zombie is reduced to 0 HP, it makes a check. On success, it stays at 1 HP instead.
+- **Slow:** Always acts last in initiative order. Cannot pursue creatures that move at full speed.
+- **Behavior:** Mindless. Shambles toward the nearest living creature. Appears in groups of 3-8. Dangerous in tight spaces where their slowness matters less.

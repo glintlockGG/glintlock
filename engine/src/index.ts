@@ -41,16 +41,18 @@ server.tool(
 // --- roll_oracle ---
 server.tool(
   "roll_oracle",
-  "Roll on a random oracle table from the Torchlit rules. Returns a real random result from curated content. Use instead of inventing NPCs, encounters, treasure, etc.",
+  "Roll on a random oracle table from the [SYSTEM] rules. Returns a real random result from curated content. Use instead of inventing NPCs, encounters, treasure, etc.",
   {
     table: z.enum([
-      "npc_name", "random_encounter_ruins", "something_happens", "rumors",
+      "npc_name", "something_happens", "rumors",
       "treasure_0_3", "creature_activity", "creature_reaction", "starting_distance",
       "trap", "hazard_movement", "hazard_damage", "hazard_weaken",
-      "adventure_name", "magic_item_name", "brinehound_npc", "webspinner_npc",
+      "adventure_name", "magic_item_name",
       "background", "random_gear",
+      "encounter_thornwood", "encounter_wolds", "encounter_ashfall",
+      "encounter_fenway", "encounter_greenmere", "encounter_bleach",
     ]).describe("Which oracle table to roll on"),
-    subtype: z.string().optional().describe("Subtype filter. For npc_name: ancestry ('ironborn','faekin','gremlin','duskfolk','brute','human'). For creature_reaction: CHA modifier as string (e.g. '+2', '-1')."),
+    subtype: z.string().optional().describe("Subtype filter. For npc_name: ancestry ('human','eldren','dwerrow','goblin','beastkin'). For creature_reaction: PRE modifier as string (e.g. '+2', '-1')."),
   },
   async (params) => {
     try {
@@ -229,14 +231,13 @@ server.tool(
 // --- track_time ---
 server.tool(
   "track_time",
-  "Track in-game time, light sources, and random encounter cadence. Crawling rounds are ~10 minutes each. Torches burn 6 rounds (1 hour). Tracks danger level for encounter check timing. Call 'advance' after each significant action or exploration.",
+  "Manage countdown dice for resource pressure. Countdown dice step down (cd12→cd10→cd8→cd6→cd4→exhausted) when rolled and showing a 1. Use to track torches, rations, ammunition, spell components, morale, and custom resources.",
   {
-    action: z.enum(["status", "advance", "light", "set_danger", "reset"]).describe("'status' to check current state, 'advance' to move forward N rounds, 'light' to add a light source, 'set_danger' to change danger level, 'reset' to start fresh."),
-    rounds: z.number().optional().describe("Number of crawling rounds to advance (default 1). Each round is ~10 minutes."),
-    light_type: z.string().optional().describe("Type of light source: 'torch' (6 rounds), 'lantern' (6 rounds), 'light_spell' (6 rounds), 'glowstone' (48 rounds). Default 'torch'."),
-    light_rounds: z.number().optional().describe("Override duration in rounds for custom light sources."),
-    danger_level: z.enum(["safe", "unsafe", "risky", "deadly"]).optional().describe("Set the current danger level. Affects encounter check frequency: unsafe=every 3 rounds, risky=every 2, deadly=every 1."),
-    note: z.string().optional().describe("Optional note to log at this time mark."),
+    action: z.enum(["status", "add", "tick", "remove", "reset"]).describe("'status' to list all countdown dice. 'add' to create a new die. 'tick' to roll a die (on 1, it steps down). 'remove' to delete a die. 'reset' to clear all dice."),
+    name: z.string().optional().describe("Name of the countdown die (e.g. 'torches', 'rations', 'arrows'). Required for add/tick/remove."),
+    starting_die: z.number().optional().describe("Starting die size for 'add' action: 4, 6, 8, 10, or 12. Default 8. Use quantity table: 1→cd4, 2→cd6, 3→cd8, 4-5→cd10, 6+→cd12."),
+    category: z.string().optional().describe("Category for 'add' action: 'light', 'supply', 'ammo', 'spell', 'morale', 'custom'. Default 'custom'."),
+    note: z.string().optional().describe("Optional note to log."),
   },
   async (params) => {
     try {

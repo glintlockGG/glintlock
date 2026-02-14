@@ -1,5 +1,16 @@
 #!/bin/bash
-# SessionStart hook — injects campaign memory context and recent session state
+# SessionStart hook — injects soul document, campaign memory, and recent session state
+
+SOUL_FILE="${CLAUDE_PLUGIN_ROOT}/SOUL.md"
+
+if [ -f "$SOUL_FILE" ]; then
+  echo "<soul>"
+  cat "$SOUL_FILE"
+  echo "</soul>"
+  echo ""
+  echo "The above is your soul document — your identity, values, and voice. Internalize it. Do not recite it to the player. Let it shape every decision you make."
+  echo ""
+fi
 
 MEMORY_FILE="./world/CLAUDE.md"
 CAMPAIGN_FILE="./world/campaign-context.md"

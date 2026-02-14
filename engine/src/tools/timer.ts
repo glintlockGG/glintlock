@@ -1,193 +1,186 @@
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { dirname } from "path";
+import { randomInt } from "crypto";
 
-interface LightSource {
-  type: string; // "torch", "lantern", "light_spell", "glowstone", etc.
-  rounds_remaining: number;
+interface CountdownDie {
+  name: string;
+  current_die: number; // 0 = exhausted, 4/6/8/10/12 = active
+  category: string; // "light", "supply", "ammo", "spell", "morale", "custom"
 }
 
-interface TimerState {
-  active: boolean;
-  rounds_elapsed: number;
-  danger_level: "safe" | "unsafe" | "risky" | "deadly";
-  light_sources: LightSource[];
-  rounds_since_encounter_check: number;
+interface CountdownState {
+  countdown_dice: CountdownDie[];
   notes: string[];
 }
 
 const WORLD_DIR = process.env.GLINTLOCK_WORLD_DIR || "./world";
-const TIMER_PATH = `${WORLD_DIR}/timer.json`;
+const STATE_PATH = `${WORLD_DIR}/countdown.json`;
 
-// Encounter check cadence (in crawling rounds)
-const ENCOUNTER_CADENCE: Record<string, number> = {
-  safe: 36,    // every 3 hours (18 rounds) — rarely relevant
-  unsafe: 3,
-  risky: 2,
-  deadly: 1,
-};
+// Valid die sizes in step-down order
+const DIE_CHAIN = [12, 10, 8, 6, 4, 0];
 
-// Default durations for light sources (in crawling rounds, 1 round = 10 min)
-const LIGHT_DURATIONS: Record<string, number> = {
-  torch: 6,        // 1 hour
-  lantern: 6,      // 1 hour (1 flask of oil)
-  light_spell: 6,  // 1 hour
-  glowstone: 48,   // 8 hours
-};
+function stepDown(current: number): number {
+  const idx = DIE_CHAIN.indexOf(current);
+  if (idx < 0 || idx >= DIE_CHAIN.length - 1) return 0;
+  return DIE_CHAIN[idx + 1];
+}
 
-function loadState(): TimerState {
+function loadState(): CountdownState {
   try {
-    const data = readFileSync(TIMER_PATH, "utf-8");
+    const data = readFileSync(STATE_PATH, "utf-8");
     return JSON.parse(data);
   } catch {
     return {
-      active: false,
-      rounds_elapsed: 0,
-      danger_level: "unsafe",
-      light_sources: [],
-      rounds_since_encounter_check: 0,
+      countdown_dice: [],
       notes: [],
     };
   }
 }
 
-function saveState(state: TimerState): void {
-  mkdirSync(dirname(TIMER_PATH), { recursive: true });
-  writeFileSync(TIMER_PATH, JSON.stringify(state, null, 2));
+function saveState(state: CountdownState): void {
+  mkdirSync(dirname(STATE_PATH), { recursive: true });
+  writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
 }
 
-function formatTime(rounds: number): string {
-  const totalMinutes = rounds * 10;
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  if (hours === 0) return `${minutes}min`;
-  if (minutes === 0) return `${hours}h`;
-  return `${hours}h ${minutes}min`;
+function dieName(size: number): string {
+  if (size === 0) return "exhausted";
+  return `cd${size}`;
 }
 
 export interface TrackTimeParams {
-  action: "status" | "advance" | "light" | "set_danger" | "reset";
-  rounds?: number;
-  light_type?: string;
-  light_rounds?: number;
-  danger_level?: "safe" | "unsafe" | "risky" | "deadly";
+  action: "status" | "add" | "tick" | "remove" | "reset";
+  name?: string;
+  starting_die?: number;
+  category?: string;
   note?: string;
 }
 
 export interface TrackTimeResult {
   action: string;
-  rounds_elapsed: number;
-  time_elapsed: string;
-  danger_level: string;
-  light_sources: LightSource[];
-  has_light: boolean;
-  encounter_checks?: Array<{ round: number; due: boolean }>;
-  expired_lights?: string[];
+  countdown_dice: Array<{
+    name: string;
+    current_die: string;
+    category: string;
+  }>;
+  tick_result?: {
+    name: string;
+    rolled: number;
+    die_size: number;
+    stepped_down: boolean;
+    new_die: string;
+    exhausted: boolean;
+  };
   warnings: string[];
 }
 
 export function trackTime(params: TrackTimeParams): TrackTimeResult {
-  let state = loadState();
+  const state = loadState();
   const warnings: string[] = [];
-  const expiredLights: string[] = [];
-  let encounterChecks: Array<{ round: number; due: boolean }> = [];
+  let tickResult: TrackTimeResult["tick_result"];
 
   switch (params.action) {
-    case "reset":
-      state = {
-        active: true,
-        rounds_elapsed: 0,
-        danger_level: params.danger_level || "unsafe",
-        light_sources: [],
-        rounds_since_encounter_check: 0,
-        notes: [],
+    case "add": {
+      if (!params.name) throw new Error("Name is required for 'add' action");
+      const startingDie = params.starting_die || 8;
+      if (!DIE_CHAIN.includes(startingDie) || startingDie === 0) {
+        throw new Error(`Invalid starting die: ${startingDie}. Must be 4, 6, 8, 10, or 12.`);
+      }
+      // Check for duplicate
+      const existing = state.countdown_dice.find(d => d.name === params.name);
+      if (existing) {
+        throw new Error(`Countdown die '${params.name}' already exists (currently ${dieName(existing.current_die)}). Remove it first or use a different name.`);
+      }
+      state.countdown_dice.push({
+        name: params.name,
+        current_die: startingDie,
+        category: params.category || "custom",
+      });
+      break;
+    }
+
+    case "tick": {
+      if (!params.name) throw new Error("Name is required for 'tick' action");
+      const die = state.countdown_dice.find(d => d.name === params.name);
+      if (!die) throw new Error(`No countdown die named '${params.name}' found.`);
+      if (die.current_die === 0) {
+        warnings.push(`'${params.name}' is already exhausted.`);
+        tickResult = {
+          name: die.name,
+          rolled: 0,
+          die_size: 0,
+          stepped_down: false,
+          new_die: "exhausted",
+          exhausted: true,
+        };
+        break;
+      }
+
+      const rolled = randomInt(1, die.current_die + 1);
+      const steppedDown = rolled === 1;
+      if (steppedDown) {
+        die.current_die = stepDown(die.current_die);
+      }
+      const exhausted = die.current_die === 0;
+
+      tickResult = {
+        name: die.name,
+        rolled,
+        die_size: steppedDown ? DIE_CHAIN[DIE_CHAIN.indexOf(die.current_die) - 1] || die.current_die : die.current_die,
+        stepped_down: steppedDown,
+        new_die: dieName(die.current_die),
+        exhausted,
       };
-      break;
 
-    case "set_danger":
-      state.active = true;
-      state.danger_level = params.danger_level || state.danger_level;
-      state.rounds_since_encounter_check = 0; // reset cadence on zone change
-      break;
-
-    case "light":
-      state.active = true;
-      const lightType = params.light_type || "torch";
-      const duration = params.light_rounds || LIGHT_DURATIONS[lightType] || 6;
-      state.light_sources.push({ type: lightType, rounds_remaining: duration });
-      break;
-
-    case "advance": {
-      state.active = true;
-      const rounds = params.rounds || 1;
-      const cadence = ENCOUNTER_CADENCE[state.danger_level] || 3;
-
-      for (let i = 0; i < rounds; i++) {
-        state.rounds_elapsed++;
-        state.rounds_since_encounter_check++;
-
-        // Tick down light sources
-        for (const light of state.light_sources) {
-          light.rounds_remaining--;
-        }
-
-        // Check for expired lights
-        const expired = state.light_sources.filter(l => l.rounds_remaining <= 0);
-        for (const e of expired) {
-          expiredLights.push(e.type);
-        }
-        state.light_sources = state.light_sources.filter(l => l.rounds_remaining > 0);
-
-        // Check encounter cadence
-        if (state.rounds_since_encounter_check >= cadence) {
-          encounterChecks.push({ round: state.rounds_elapsed, due: true });
-          state.rounds_since_encounter_check = 0;
-        }
-      }
-
-      // Warnings
-      if (state.light_sources.length === 0) {
-        warnings.push("DARKNESS — No active light sources! Disadvantage on most tasks. Random encounter check every round.");
-      }
-      for (const light of state.light_sources) {
-        if (light.rounds_remaining === 1) {
-          warnings.push(`${light.type.toUpperCase()} GUTTERING — 1 round (~10 min) remaining!`);
-        } else if (light.rounds_remaining === 2) {
-          warnings.push(`${light.type} low — 2 rounds (~20 min) remaining.`);
-        }
+      if (exhausted) {
+        warnings.push(`'${die.name}' is EXHAUSTED! The resource is depleted.`);
+      } else if (steppedDown) {
+        warnings.push(`'${die.name}' stepped down to ${dieName(die.current_die)}. Pressure building.`);
       }
       break;
     }
 
+    case "remove": {
+      if (!params.name) throw new Error("Name is required for 'remove' action");
+      const idx = state.countdown_dice.findIndex(d => d.name === params.name);
+      if (idx < 0) throw new Error(`No countdown die named '${params.name}' found.`);
+      state.countdown_dice.splice(idx, 1);
+      break;
+    }
+
+    case "reset": {
+      state.countdown_dice = [];
+      state.notes = [];
+      break;
+    }
+
     case "status":
-    default:
-      state.active = true;
-      // Just report — no state changes
-      for (const light of state.light_sources) {
-        if (light.rounds_remaining <= 2) {
-          warnings.push(`${light.type} low — ${light.rounds_remaining} round(s) remaining.`);
+    default: {
+      // Report current state
+      for (const die of state.countdown_dice) {
+        if (die.current_die === 0) {
+          warnings.push(`'${die.name}' is exhausted.`);
+        } else if (die.current_die === 4) {
+          warnings.push(`'${die.name}' is at cd4 — one step from exhaustion!`);
         }
       }
-      if (state.light_sources.length === 0) {
-        warnings.push("No active light sources.");
-      }
       break;
+    }
   }
 
   if (params.note) {
-    state.notes.push(`[Round ${state.rounds_elapsed}] ${params.note}`);
+    state.notes.push(params.note);
   }
 
   saveState(state);
 
   return {
     action: params.action,
-    rounds_elapsed: state.rounds_elapsed,
-    time_elapsed: formatTime(state.rounds_elapsed),
-    danger_level: state.danger_level,
-    light_sources: state.light_sources,
-    has_light: state.light_sources.length > 0,
-    encounter_checks: encounterChecks.length > 0 ? encounterChecks : undefined,
-    expired_lights: expiredLights.length > 0 ? expiredLights : undefined,
+    countdown_dice: state.countdown_dice.map(d => ({
+      name: d.name,
+      current_die: dieName(d.current_die),
+      category: d.category,
+    })),
+    tick_result: tickResult,
     warnings,
   };
 }

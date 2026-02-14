@@ -1,5 +1,5 @@
 ---
-description: "Roll dice for Torchlit"
+description: "Roll dice for [SYSTEM]"
 argument-hint: "[dice-expression or skill-check]"
 allowed-tools:
   - "mcp:glintlock-engine:roll_dice"
@@ -9,13 +9,14 @@ allowed-tools:
 
 Player-initiated dice roll. Parse the player's request and call `roll_dice`.
 
-If the roll requires a stat modifier (e.g. "strength check", "initiative"), read the PC file from `world/characters/` to get the relevant stat.
+If the roll requires a stat (e.g. "vigor check", "initiative"), read the PC file from `world/characters/` to get the relevant stat. Calculate Difficulty = 20 − Stat (or 20 − Stat×2 if the character is trained in the relevant skill).
 
 Examples:
 - "/glintlock:roll 2d6+3" → call roll_dice with expression "2d6+3"
-- "/glintlock:roll strength check" → read PC file for STR mod, roll d20 + STR modifier
+- "/glintlock:roll vigor check" → read PC file for VIG, roll d20, compare to Difficulty
 - "/glintlock:roll d20" → roll a plain d20
-- "/glintlock:roll initiative" → read PC file for DEX mod, roll d20 + DEX modifier
+- "/glintlock:roll initiative" → read PC file for REF, roll d20 + Reflex
 - "/glintlock:roll damage longsword" → roll 1d8
+- "/glintlock:roll stealth" → read PC file for REF + check if trained in Stealth, roll d20, compare to Difficulty
 
-Report the result clearly. If it's a check, state success or failure based on the relevant DC (ask the GM context or use the most recent DC if in combat).
+Report the result clearly. State the Difficulty, whether it's trained or untrained, and the outcome (Critical/Pass/Fail).

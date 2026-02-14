@@ -11,12 +11,12 @@ Generate a campaign dashboard from the world state files. The dashboard is a sin
 
 The dashboard is a VTT-style, viewport-locked multi-view layout with a persistent sidebar and four switchable dashboard views:
 
-1. **Player (Character Sheet)** — Ability scores, hero banner with HP/AC/XP, inventory, location, spells, features, proficiencies
-2. **GM Screen** — Tabbed quests/threads, NPC quick reference grid (with combat stats), session tools panel (session prep, DC reference, recent events, world advances)
-3. **Campaign Overview** — Campaign banner, quest progress tracker, session timeline, factions, world state summary, active threads
+1. **Player (Character Sheet)** — Stats (1-10), hero banner with HP/Armor/Level, inventory, training, countdown dice, location, spells, features
+2. **GM Screen** — Tabbed quests/threads, NPC quick reference grid (with combat stats), session tools panel (session prep, Difficulty reference, recent events, world advances), myth omen tracks, progress clocks
+3. **Campaign Overview** — Campaign banner, quest progress tracker, session timeline, factions, myth status, world state summary, active threads
 4. **Story & Audio** — Chapter list with audio indicators, prose reader, Spotify-style audio player
 
-The sidebar shows a character mini-card (name, class, HP bar, AC, gold), navigation links, current location with danger badge, and XP progress bar — all persistent across views.
+The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navigation links, current location with danger badge, and level/milestone indicator — all persistent across views.
 
 ## Instructions
 
@@ -28,6 +28,9 @@ The sidebar shows a character mini-card (name, class, HP bar, AC, gold), navigat
    - NPC files from `world/npcs/` (glob for `*.md`)
    - Faction files from `world/factions/` (glob for `*.md`)
    - Item files from `world/items/` (glob for `*.md`)
+   - `world/myths.md` (if exists)
+   - `world/clocks.md` (if exists)
+   - `world/countdown.json` (if exists)
    - `world/campaign-context.md` (if exists)
    - `world/CLAUDE.md` — campaign memory (if exists)
    - `world/session-prep.md` (if exists)
@@ -42,18 +45,20 @@ The sidebar shows a character mini-card (name, class, HP bar, AC, gold), navigat
    {
      "dashboard_type": "player",
      "character": {
-       "name", "ancestry", "class", "level", "hp", "ac", "stats",
-       "inventory", "gold", "xp", "location", "background",
+       "name", "ancestry", "class", "level", "hp", "armor", "stats",
+       "training", "inventory", "gold", "location", "background",
        "spells", "talents", "class_features", "ancestry_traits", "worn",
-       "hit_die", "languages", "weapon_proficiencies", "armor_proficiencies",
-       "max_gear_slots", "used_gear_slots"
+       "hp_die", "languages", "max_gear_slots", "used_gear_slots"
      },
      "location": { "name", "danger_level", "light", "description" },
      "quests": { "active": [...], "developing": [...], "completed": [...] },
      "journal": ["ALL session log entries..."],
-     "npcs": [{ "name", "status", "location", "disposition", "description", "hp", "ac", "attacks", "morale", "movement" }, ...],
+     "npcs": [{ "name", "status", "location", "disposition", "description", "hp", "armor", "attack_die", "attack_description", "zone", "priority", "weakness", "morale" }, ...],
      "factions": [{ "name", "disposition", "goals", "members" }, ...],
      "items": [{ "name", "owner", "properties" }, ...],
+     "myths": [{ "name", "omen_level", "location", "current_omen" }, ...],
+     "clocks": [{ "name", "segments_filled", "total_segments", "trigger" }, ...],
+     "countdown_dice": [{ "name", "current_die", "category" }, ...],
      "campaign_context": { "name", "setting", "tone", "premise" },
      "campaign_memory": { "world_state", "active_threads", "play_style" },
      "session_prep": { "strong_start", "secrets", "npcs_to_use", "scenes", "encounters", "treasure" },
@@ -71,22 +76,29 @@ The sidebar shows a character mini-card (name, class, HP bar, AC, gold), navigat
 
    ### Extracting character fields
 
-   - **`spells`**: Array of spell name strings. Parse from the `## Spells` section — extract just the bold spell name from each bullet (e.g. `- **Mage Armor** — ...` → `"Mage Armor"`).
+   - **`stats`**: Object with keys `vigor`, `reflex`, `wits`, `resolve`, `presence`, `lore` (values 1-10).
+   - **`armor`**: Number from frontmatter — damage reduction value (not AC).
+   - **`training`**: Array of strings from frontmatter `training` field (e.g. `["Athletics", "Endurance", "Survival"]`).
+   - **`spells`**: Array of spell name strings. Parse from the `## Spells` section — extract just the bold spell name from each bullet.
    - **`talents`**: Array of strings from frontmatter `talents` field.
    - **`class_features`**: Array of strings from frontmatter `class_features` field.
    - **`ancestry_traits`**: Array of strings from frontmatter `ancestry_traits` field.
    - **`worn`**: Array of strings. Parse from the `**Worn (no slot):**` line in inventory section. If no worn line, empty array.
-   - **`hit_die`**: String from frontmatter (e.g. `"d4"`, `"d8"`).
+   - **`hp_die`**: String from frontmatter (e.g. `"d6"`, `"d10"`).
    - **`languages`**: Array of strings from frontmatter.
-   - **`weapon_proficiencies`**: Array of strings from frontmatter.
-   - **`armor_proficiencies`**: Array of strings from frontmatter.
-   - **`max_gear_slots`**: Number from frontmatter (default 10).
+   - **`max_gear_slots`**: Number from frontmatter (Vigor + 5).
    - **`used_gear_slots`**: Count of inventory items.
 
    ### Extracting NPC fields
 
    - **`description`**: First paragraph from the NPC markdown body (below frontmatter). Truncate to ~120 chars if needed.
-   - **`hp`**, **`ac`**, **`attacks`**, **`morale`**, **`movement`**: From frontmatter, if present. These enable combat stat blocks on the GM dashboard.
+   - **`hp`**, **`armor`**, **`attack_die`**, **`attack_description`**, **`zone`**, **`priority`**, **`weakness`**, **`morale`**: From frontmatter, if present. These enable combat stat blocks on the GM dashboard.
+
+   ### Extracting myth, clock, and countdown dice data
+
+   - **`myths`**: From `world/myths.md` — extract each myth's `name`, `omen_level` (0-6), `location`, and `current_omen` description.
+   - **`clocks`**: From `world/clocks.md` — extract each clock's `name`, `segments_filled`, `total_segments`, and `trigger`.
+   - **`countdown_dice`**: From `world/countdown.json` — extract each die's `name`, `current_die` (0/4/6/8/10/12), and `category`.
 
    ### Extracting faction fields
 

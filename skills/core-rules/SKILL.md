@@ -1,254 +1,415 @@
 ---
 name: core-rules
-description: "Core Torchlit rules: ability checks, DCs, combat, initiative, death and dying, movement, light sources, resting, gear, and class/ancestry reference. This skill should be used when resolving checks, running combat, handling death saves, managing light, equipping gear, creating characters, or making any mechanical ruling."
+description: "Core [SYSTEM] rules: resolution, stats, training, classes, ancestries, backgrounds, combat, countdown dice, pressure systems, death and dying, distance, light, resting, gear, and character creation. This skill should be used when resolving checks, running combat, handling death, managing resources, equipping gear, creating characters, or making any mechanical ruling."
 ---
 
-# Torchlit — Core Rules Reference
+# [SYSTEM] — Core Rules Reference
 
-## Checks
+## Resolution
 
-Roll d20 + stat modifier ≥ DC = success.
+All rolls are player-facing. The GM never rolls dice.
 
-| Difficulty | DC | Example |
-|---|---|---|
-| Easy | 9 | Leaping a narrow chasm, sneaking up on an inattentive guard |
-| Normal | 12 | Kicking open a stuck door, picking a poor lock |
-| Hard | 15 | Swimming against a strong current, stabilizing a dying character |
-| Extreme | 18 | Climbing a slippery cliff one-handed, restraining a frenzied lion |
+**Check:** Roll d20 ≥ Difficulty = success.
 
-**When to roll:** Only when there is a negative consequence for failure, the task requires skill, AND there is time pressure. Characters automatically succeed at what they are trained to do.
+- **Untrained:** Difficulty = 20 − Stat
+- **Trained:** Difficulty = 20 − (Stat × 2)
 
-**Contested checks:** Both participants roll relevant stat check simultaneously. Highest result wins. Reroll ties.
+A stat of 5 means Difficulty 15 untrained, or Difficulty 10 trained.
 
-## Stats
+**Three outcomes:**
+- **Critical (beat Difficulty by 5+):** Exceptional success — extra effect, bonus information, or stylish execution
+- **Pass:** Success as intended
+- **Fail:** Negative consequence — damage, lost time, complication, or worse
 
-- **Strength** — Physical power: smash doors, bend bars, lift rocks, swim
-- **Dexterity** — Agility: dodge traps, disable tripwires, climb walls, sleight of hand
-- **Constitution** — Endurance: hold breath, resist poison, withstand pain
-- **Intelligence** — Logic: first aid (DC 15 to stabilize dying), recall paths, find food/water
-- **Wisdom** — Instinct: spot hidden enemies, detect sounds, decipher noises behind doors
-- **Charisma** — Presence: ventriloquism, disguises, rally terrified allies
+**When to roll:** Only when there is a negative consequence for failure, the task requires skill, AND there is time pressure. Trained characters automatically succeed at routine applications of their skills.
 
-| Stat | Modifier |
-|---|---|
-| 1-3 | -4 |
-| 4-5 | -3 |
-| 6-7 | -2 |
-| 8-9 | -1 |
-| 10-11 | 0 |
-| 12-13 | +1 |
-| 14-15 | +2 |
-| 16-17 | +3 |
-| 18+ | +4 |
+**Contested checks:** Both sides roll. Highest result wins. Ties go to the defender (or reroll if no clear defender).
 
 ## Advantage / Disadvantage
 
-- **Advantage:** Roll the die twice, take the higher result
-- **Disadvantage:** Roll the die twice, take the lower result
+- **Advantage:** Roll d20 twice, take the higher result
+- **Disadvantage:** Roll d20 twice, take the lower result
 - If both apply, they cancel out
 
 ## Natural 20 / Natural 1
 
-- **Natural 20:** Maximum success. Attack auto-hits + critical hit (double weapon damage dice). Spellcasting: double one numerical effect.
-- **Natural 1:** Maximum failure. Attack auto-miss. Spellcasting critical failure: lose spell until rest. Arcanist: roll arcane backlash table. Warden: patron revokes spell, requires tithe.
+- **Natural 20:** Always a critical success regardless of Difficulty. Attacks deal maximum damage. Spells gain an enhanced effect.
+- **Natural 1:** Always a failure regardless of Difficulty. Attacks miss completely. Spells trigger backlash.
+
+## Stats
+
+Six stats, scored 1–10. Stats ARE the numbers — no separate modifier table.
+
+- **Vigor (VIG)** — Strength, toughness, endurance. Smash, lift, resist poison, hold breath.
+- **Reflex (REF)** — Speed, agility, coordination. Dodge, tumble, pick locks, aim.
+- **Wits (WIT)** — Perception, cunning, instinct. Spot ambushes, find traps, read body language, navigate.
+- **Resolve (RES)** — Willpower, courage, faith. Resist fear, maintain concentration, commune with spirits.
+- **Presence (PRE)** — Force of personality, leadership, deception. Persuade, intimidate, perform, lie.
+- **Lore (LOR)** — Knowledge, education, arcane understanding. Recall history, identify magic, treat wounds, decipher scripts.
+
+### Stat Generation
+
+Choose one method:
+
+1. **Roll:** Roll 3d6 six times. Assign each result to a stat. If no stat is 7+, discard and reroll all six.
+2. **Array:** Assign the values [8, 7, 6, 5, 4, 3] to stats in any order.
+
+## Training & Skills
+
+Characters are **trained** in specific skills based on their class, background, and ancestry. Training doubles the stat used for Difficulty calculation.
+
+### Skill List
+
+Each skill has a primary stat. Other stats may apply at GM discretion.
+
+| Skill | Primary Stat | Examples |
+|-------|-------------|----------|
+| Athletics | Vigor | Climb, swim, jump, grapple |
+| Endurance | Vigor | Forced march, resist exhaustion, hold breath |
+| Acrobatics | Reflex | Tumble, balance, escape bonds |
+| Stealth | Reflex | Sneak, hide, shadow someone |
+| Sleight | Reflex | Pick pockets, palm objects, plant evidence |
+| Awareness | Wits | Spot ambush, detect lies, notice hidden things |
+| Survival | Wits | Track, forage, navigate, predict weather |
+| Tinker | Wits | Pick locks, disable traps, jury-rig devices |
+| Fortitude | Resolve | Resist fear, hold concentration, endure pain |
+| Commune | Resolve | Pray, sense spirits, channel divine power |
+| Persuasion | Presence | Negotiate, charm, inspire, rally |
+| Deception | Presence | Lie, disguise, bluff, feint in combat |
+| Arcana | Lore | Cast spells, identify magic, read scrolls |
+| Medicine | Lore | Treat wounds, diagnose illness, craft remedies |
+| History | Lore | Recall lore, identify artifacts, decipher scripts |
+
+**Example:** A Scout (trained in Stealth) with Reflex 6 rolls Stealth at Difficulty 20 − (6 × 2) = 8. An untrained character with Reflex 6 rolls at Difficulty 20 − 6 = 14.
+
+## Classes
+
+### Warden
+- **HP Die:** d10 | **Armor Training:** All armor, shields
+- **Weapon Training:** All melee weapons, crossbows
+- **Trained Skills:** Athletics, Endurance, Fortitude
+- **Identity:** Protector and frontline fighter. Wardens hold the line.
+- **Ability — Shield Wall:** When wielding a shield, allies within close range gain +1 Armor. Once per rest, brace to automatically pass a Vigor or Resolve check.
+- **Starting Gear:** Longsword, shield, chainmail, crawling kit
+
+### Scout
+- **HP Die:** d6 | **Armor Training:** Light armor
+- **Weapon Training:** All ranged weapons, light melee weapons
+- **Trained Skills:** Stealth, Survival, Awareness
+- **Identity:** Pathfinder and ambusher. Scouts move unseen.
+- **Ability — Ambush:** When attacking an unaware target, roll damage twice and take the higher result. Advantage on initiative rolls.
+- **Starting Gear:** Longbow, 20 arrows, shortsword, leather armor, crawling kit
+
+### Invoker
+- **HP Die:** d4 | **Armor Training:** None
+- **Weapon Training:** Daggers, staves
+- **Trained Skills:** Arcana, History, Lore-based skill of choice
+- **Identity:** Arcane scholar. Invokers wield dangerous, volatile magic.
+- **Ability — Arcane Focus:** Can cast Invoker spells (see Spellbook). Starts with 3 Tier 1 spells known. Spell check = Lore (trained via Arcana). On Natural 1, roll Backlash table.
+- **Starting Gear:** Staff, spell components pouch, 2 scrolls (random Tier 1), crawling kit
+
+### Surgeon
+- **HP Die:** d6 | **Armor Training:** Light armor
+- **Weapon Training:** Light melee weapons, crossbows
+- **Trained Skills:** Medicine, Tinker, Awareness
+- **Identity:** Battlefield medic and alchemist. Surgeons keep people alive.
+- **Ability — Field Surgery:** Spend 1 exploration turn to restore 1d6 HP to a creature (Lore check, trained via Medicine). Can stabilize dying creatures without a check. Once per rest, craft a poultice (heals 1d4 HP, usable as an action).
+- **Starting Gear:** Crossbow, 20 bolts, dagger, leather armor, surgeon's kit (3 uses), crawling kit
+
+### Rogue
+- **HP Die:** d6 | **Armor Training:** Light armor
+- **Weapon Training:** Light melee weapons, hand crossbows, shortbows
+- **Trained Skills:** Stealth, Sleight, Tinker
+- **Identity:** Thief, con artist, and infiltrator. Rogues solve problems others can't.
+- **Ability — Exploit Weakness:** When attacking a target that is unaware, flanked, or otherwise compromised, deal +1d6 damage. Advantage on checks to pick locks, disable traps, and find hidden things.
+- **Starting Gear:** Shortsword, dagger, hand crossbow, 20 bolts, leather armor, thieves' tools, crawling kit
+
+### Seer
+- **HP Die:** d6 | **Armor Training:** Light armor
+- **Weapon Training:** Light melee weapons, staves
+- **Trained Skills:** Commune, Fortitude, Awareness
+- **Identity:** Prophet and spirit-speaker. Seers perceive what others cannot.
+- **Ability — Second Sight:** Can cast Seer spells (see Spellbook). Starts with 2 Tier 1 spells known. Spell check = Resolve (trained via Commune). Once per rest, ask the GM one yes-or-no question about a person, place, or object within sight — the GM answers truthfully.
+- **Starting Gear:** Staff, holy symbol, incense (3 uses), leather armor, crawling kit
+
+## Ancestries
+
+### Human
+- **Innate — Adaptable:** Choose one additional trained skill at character creation. Once per session, reroll any one check (must use new result).
+- **Languages:** Common + one additional
+
+### Eldren
+- **Innate — Twilight Sense:** See in dim light as if bright. Advantage on Awareness checks in darkness or twilight. Resistant to magical sleep and charm effects.
+- **Languages:** Common, Eldren
+
+### Dwerrow
+- **Innate — Stoneblood:** +2 maximum HP. Advantage on Endurance checks. Can sense structural integrity of stonework within close range.
+- **Languages:** Common, Dwerrow
+
+### Goblin
+- **Innate — Slippery:** Can never be surprised. Can move through enemy-occupied spaces. Advantage on Acrobatics checks to escape grapples or bonds.
+- **Languages:** Common, Goblin
+
+### Beastkin
+- **Innate — Feral Instinct:** Choose a beast aspect at character creation (Wolf: advantage on Survival tracking; Hawk: advantage on ranged attacks at far range; Bear: +1 melee damage; Cat: advantage on Stealth in dim light). Natural weapon (claws/fangs) dealing 1d4 damage.
+- **Languages:** Common, Beast-tongue
+
+## Backgrounds
+
+Each background grants one trained skill, a narrative hook, and starting gear beyond the class kit.
+
+### Refugee
+- **Trained Skill:** Survival
+- **Hook:** You fled something. What was it? It may still be looking for you.
+- **Starting Gear:** Worn traveling cloak, hidden coin pouch (2d6 gp extra), a keepsake from your old life
+
+### Deserter
+- **Trained Skill:** Athletics
+- **Hook:** You abandoned your post. Your former commander remembers your face.
+- **Starting Gear:** Military-issue boots (never wear out), a stolen weapon (upgrade starting weapon one die size), forged papers
+
+### Prospector
+- **Trained Skill:** Tinker
+- **Hook:** You came to the frontier seeking fortune. You know rock and ore — and what things are worth.
+- **Starting Gear:** Pickaxe (d6 weapon, doubles as tool), magnifying lens, assayer's kit, 1d6 gp
+
+### Pilgrim
+- **Trained Skill:** Commune
+- **Hook:** You follow a path of devotion. What do you seek at the end of it?
+- **Starting Gear:** Prayer beads or holy text, pilgrim's staff (d4 weapon), healing herbs (3 uses, restore 1 HP each), alms bowl
+
+### Exile
+- **Trained Skill:** Deception
+- **Hook:** You were cast out — by family, guild, or homeland. What did you do? Or what were you accused of?
+- **Starting Gear:** Disguise kit, a false identity with papers, lockpicks, 1d6 gp in mixed foreign coins
+
+### Scholar
+- **Trained Skill:** History
+- **Hook:** You study the past. Somewhere out here is the answer to the question that consumed you. What is it?
+- **Starting Gear:** Research journal (contains 1d4 useful lore entries about the region), ink and quills, reading spectacles, a letter of introduction from an academy
 
 ## Combat
 
-**Initiative:** Everyone rolls d20 + DEX modifier. GM uses highest DEX modifier among monsters. Highest goes first, turns proceed clockwise.
+All combat rolls are player-facing. The GM narrates monster actions; the player rolls to attack and to defend.
 
-**Player Turn:**
-1. Count down timers for spells/effects
-2. Take one action + move up to near (split movement any way). Skip action to move near again.
+### Initiative
+
+Everyone rolls d20 + Reflex. GM uses the highest Reflex among the monsters. Highest goes first; turns proceed in order.
+
+### Player Turn
+
+1. Tick any countdown dice that trigger on your turn
+2. Take one **action** + move up to **near**. Forgo your action to move near again.
 3. GM describes results
 
-**Actions:**
-- **Melee Attack:** d20 + STR mod + bonuses ≥ target AC
-- **Ranged Attack:** d20 + DEX mod + bonuses ≥ target AC
-- **Cast a Spell:** See spellcasting rules
-- **Improvise:** Swing on a vine, push a boulder, etc. GM determines check.
-- **Multitask:** Small parallel tasks (stand up, speak, drink potion, activate item) don't use your action.
+### Actions
 
-**Damage:** Roll weapon/spell damage dice + bonuses. Critical hit: double weapon damage dice.
+- **Melee Attack:** Roll d20 ≥ Difficulty (using Vigor, trained in Athletics or weapon skill if applicable). On hit, roll weapon damage die. Target's Armor reduces damage taken.
+- **Ranged Attack:** Roll d20 ≥ Difficulty (using Reflex, trained if applicable). On hit, roll weapon damage die. Target's Armor reduces damage taken.
+- **Cast a Spell:** See Spellbook skill
+- **Defend:** Until your next turn, enemies have disadvantage on attacks against you
+- **Improvise:** Shove, disarm, grapple, etc. GM determines stat and Difficulty.
+- **Free actions:** Speak briefly, drop an item, stand up from prone. Don't cost an action.
 
-**Terrain:** Half cover = disadvantage on attacks against that creature. Full cover = can't target. Difficult terrain = half movement speed.
+### Monster Turns (GM-facing)
 
-**Knockout:** You can choose to knock a creature unconscious instead of killing it at 0 HP.
+Monsters don't roll — their attacks are resolved by the player rolling to **defend**.
 
-## Morale
+**Player Defense Roll:** d20 ≥ Difficulty (using appropriate stat — Reflex to dodge, Vigor to block with a shield). Failure means the monster deals its listed damage minus the player's Armor.
 
-Enemies reduced to half their number (or half HP for solo enemy) **flee** if they fail a DC 15 Wisdom check. Large groups: one check with leader's WIS modifier.
+**Monster Behavior Patterns:**
+Every monster has a **Zone** (preferred range) and **Priority** (target selection):
+- **Zone:** Melee, Near, Far — the monster tries to stay at this range
+- **Priority:** Nearest, Weakest, Spellcaster, Random, Leader — who the monster targets
+- **Weakness:** A vulnerability the player can exploit (type, element, tactic)
+
+### Damage & Armor
+
+- **Weapon damage** = the weapon's die (d4–d12)
+- **Armor** = damage reduction (subtracted from each hit). Shields add +1 Armor.
+- **Minimum damage** = 1 (a hit always deals at least 1 damage after Armor)
+- **Critical hit (Natural 20):** Maximum damage (ignore Armor)
+
+### Morale
+
+Enemies reduced to half their number (or half HP for a solo enemy) must make a morale check. Roll d20 ≥ 15 or they flee/surrender. Mindless creatures and fanatics are immune.
+
+## Countdown Dice
+
+Countdown dice (cd) track depleting resources. A countdown die starts at a size (cd12, cd10, cd8, cd6, cd4) and steps down toward exhaustion.
+
+**Trigger:** When a countdown die is triggered (by GM call, event, or rule), roll it. On a **1**, the die steps down one size: cd12 → cd10 → cd8 → cd6 → cd4 → **exhausted** (resource depleted).
+
+**Common countdown dice:**
+- **Torch (cd6):** Triggered each exploration turn in a dungeon. Exhausted = darkness.
+- **Rations (cd8):** Triggered each day of travel. Exhausted = starving.
+- **Ammunition (cd8):** Triggered after each combat where ranged weapons were used. Exhausted = out of arrows.
+- **Spell Components (cd6):** Triggered each time a spell is cast. Exhausted = can't cast component-requiring spells.
+- **Morale (cd8):** For hirelings. Triggered on frightening events. Exhausted = they flee.
+
+**Multiple units:** Carrying 3 torches? Start at cd10 instead of cd6. Extra supplies push the starting die higher.
+
+| Quantity | Starting Die |
+|----------|-------------|
+| 1 | cd4 |
+| 2 | cd6 |
+| 3 | cd8 |
+| 4–5 | cd10 |
+| 6+ | cd12 |
+
+## Pressure Systems
+
+### Myth Escalation (Omen Tracks)
+
+Campaign myths each have an **omen level** (0–6). Omens advance when:
+- The party ignores a myth-related event
+- Time passes (some myths advance at the end of each session)
+- The party's actions inadvertently feed the myth
+
+At each omen level, the myth's influence on the world grows — strange events, corrupted terrain, emboldened servants. At omen level 6, the myth **manifests** — a catastrophic event that reshapes the region.
+
+Omens can be reduced by confronting the myth at its source (adventure site). See the active adventure skill (e.g. `pale-reach`) for myth details.
+
+### Progress Clocks
+
+Progress clocks track slow-burn situations with a set number of segments (4, 6, or 8).
+
+- **Tick** a segment when a triggering event occurs (defined per clock)
+- When all segments are filled, the clock **completes** — something happens
+- Clocks can be positive (building toward a goal) or negative (impending doom)
+
+Examples: "Winter Approaches" (8 segments — environment worsens), "Faction Morale" (6 segments — the home base's defenders weaken), "Trade Route" (4 segments — supply line secured).
 
 ## Death & Dying
 
-- 0 HP = unconscious, dying
-- **Death timer:** Roll 1d4 + CON modifier rounds (minimum 1)
-- Each turn, roll d20. **Natural 20** = rise with 1 HP
-- **Stabilize:** Close range, DC 15 INT check. Stops dying, still unconscious.
-- Dead characters are retired from play
+- **0 HP** = unconscious and dying
+- **Death Clock:** Start a 4-segment progress clock labeled "{Name}'s Death." Tick one segment at the start of each of your turns.
+- **Natural 20:** If you roll a natural 20 on any check while dying (including defense rolls), stabilize at 1 HP
+- **Stabilize:** An ally within close range can attempt a Medicine check (Lore, trained) to stabilize you. Stops the death clock. You remain unconscious with 1 HP until healed or rested.
+- **Clock fills:** Dead. The character is retired from play.
+- **Massive damage:** If a single hit deals damage equal to or exceeding your maximum HP, you die instantly.
 
 ## Distance
 
-- **Close:** ~5 feet
-- **Near:** up to ~30 feet
-- **Far:** within sight
+- **Close:** ~5 feet — melee range, whisper distance
+- **Near:** ~30 feet — a thrown weapon, a short dash
+- **Far:** Within sight — bowshot, across a clearing
 
-## Movement
+## Light & Darkness
 
-- **Climbing:** STR or DEX check, half speed. Fall if fail by 5+ points
-- **Falling:** 1d6 damage per 10 feet
-- **Moving through allies:** free. Through enemies: STR or DEX check.
-- **Swimming:** Half speed. STR check in rough water. Hold breath for CON modifier rounds (min 1). Then CON check each round or 1d6 damage.
+Light is tracked with countdown dice instead of real time.
 
-## Light Sources
-
-- **Torch:** Near distance, 1 hour real time. 3 torches = campfire (8 hours, near distance, can't be moved)
-- **Lantern:** Double near distance, 1 hour real time (requires oil flask)
-- **Light spell:** Near distance, 1 hour real time
-- New light sources "ride along" on the current timer
-- **Total darkness:** Disadvantage on most tasks. Random encounter check every crawling round.
+- **Torch (cd6):** Illuminates near distance. Triggered each exploration turn.
+- **Lantern (cd8):** Illuminates far distance. Requires oil flask. Triggered each exploration turn.
+- **Light spell:** Illuminates near distance. Uses spell duration countdown die.
+- **Campfire:** 3 torches = campfire. Illuminates near distance. Lasts until the party moves on (no countdown).
+- **Total darkness:** Disadvantage on all checks requiring sight. Monsters with darkvision gain advantage against you.
 
 ## Resting
 
-Sleep 8 hours + consume 1 ration = regain all HP, recover stat damage, regain lost spells.
+**Short Rest (1 exploration turn):** Catch your breath. Spend a use of a healing item (potion, poultice, surgeon's kit). No HP recovery otherwise.
 
-**Interruption:** Each stressful interruption requires DC 12 CON check. Fail = consume ration but gain no benefit.
+**Long Rest (8 hours sleep + consume ration):** Recover all HP. Regain all class abilities. Reset spell slots. Remove exhaustion.
 
-**Resting in dungeons:** Random encounter checks at overland cadence:
-- Unsafe: every 3 hours
-- Risky: every 2 hours
-- Deadly: every hour
+**Interruption:** Each stressful interruption requires a Resolve check (Difficulty 12). Fail = consume ration but gain no benefit.
 
-## Gear Slots
+**Resting in dungeons:** Random encounter checks at exploration cadence:
+- Unsafe: every 3 exploration turns
+- Risky: every 2 exploration turns
+- Deadly: every exploration turn
 
-Carry items equal to STR stat or 10, whichever is higher. All gear = 1 slot unless noted. Coins: 100 per slot (first 100 free). Arrows/bolts: 20 per slot. Backpack: first one free.
+## Gear & Inventory
 
-## Stealth & Surprise
+### Carry Capacity
 
-- **Hiding/sneaking:** DEX checks. Can't hide while visible.
-- **Detecting:** Active search. Looking in right place = auto-detect. Otherwise WIS check.
-- **Surprise:** Undetected creature gets one free turn before initiative is rolled. Advantage on attack rolls against surprised targets.
+Carry items equal to your **Vigor + 5** in slots. All gear = 1 slot unless noted. Coins: 100 per slot (first 100 free). Arrows/bolts: 20 per slot. Backpack: first one is free.
 
-## Luck Tokens
+### Basic Gear
 
-GM awards for exceptional roleplaying, heroism, daring maneuvers. Max 1 per player. Spend to reroll any roll (must use new result). Can give to a companion.
+| Item | Cost | Notes |
+|------|------|-------|
+| Arrows (20) | 1 gp | — |
+| Backpack | 2 gp | First free |
+| Caltrops (bag) | 5 sp | Covers close area |
+| Crossbow bolts (20) | 1 gp | — |
+| Crowbar | 5 sp | Advantage on Vigor checks to pry |
+| Flask/bottle | 3 sp | — |
+| Flint & steel | 5 sp | — |
+| Grappling hook | 1 gp | — |
+| Healing herbs (3 uses) | 3 gp | Restore 1 HP per use |
+| Iron spikes (10) | 1 gp | — |
+| Lantern | 5 gp | cd8 light, far distance |
+| Mirror | 10 gp | — |
+| Oil flask | 5 sp | Fuel for lantern |
+| Pole (10') | 5 sp | — |
+| Rations (3) | 5 sp | cd8 for 3 |
+| Rope, 60' | 1 gp | — |
+| Surgeon's kit (3 uses) | 10 gp | Required for Field Surgery |
+| Torch | 5 sp | cd6 light, near distance |
 
-## XP & Leveling
+### Crawling Kit (7 gp, 7 slots)
 
-XP from treasure quality: Poor (0), Normal (1), Fabulous (3), Legendary (10).
-Level up at: current level x 10 XP. XP resets to 0 on level up.
-Talent roll at levels 1, 3, 5, 7, 9.
+Backpack, flint & steel, 2 torches, 3 rations, 10 iron spikes, grappling hook, 60' rope.
+
+### Armor
+
+| Armor | Cost | Slots | Armor (DR) | Notes |
+|-------|------|-------|-----------|-------|
+| Leather | 10 gp | 1 | 1 | — |
+| Chainmail | 60 gp | 2 | 2 | Disadvantage on Stealth, Acrobatics |
+| Plate | 130 gp | 3 | 3 | Disadvantage on Stealth, Acrobatics. Cannot swim. |
+| Shield | 10 gp | 1 | +1 | One hand occupied |
+
+### Weapons
+
+| Weapon | Cost | Damage | Range | Properties |
+|--------|------|--------|-------|------------|
+| Club | 5 cp | d4 | Close | — |
+| Dagger | 1 gp | d4 | Close/Near | Finesse, Thrown |
+| Shortsword | 7 gp | d6 | Close | Finesse |
+| Longsword | 9 gp | d8 | Close | — |
+| Greatsword | 12 gp | d12 | Close | Two-handed, 2 slots |
+| Greataxe | 10 gp | d10 | Close | Two-handed, 2 slots |
+| Spear | 5 sp | d6 | Close/Near | Thrown, Versatile (d8 two-handed) |
+| Mace | 5 gp | d6 | Close | — |
+| Warhammer | 10 gp | d10 | Close | Two-handed |
+| Shortbow | 6 gp | d4 | Far | Two-handed |
+| Longbow | 8 gp | d8 | Far | Two-handed |
+| Crossbow | 8 gp | d6 | Far | Two-handed, Loading |
+| Hand crossbow | 12 gp | d4 | Near | Loading |
+
+**Properties:** Finesse (use Vigor or Reflex), Loading (forgo moving to reload), Thrown (ranged using Vigor), Two-handed, Versatile (higher damage with two hands).
+
+## Advancement
+
+Characters advance by earning **Milestones** — concrete achievements rather than abstract XP.
+
+**Level up after completing a milestone:**
+- Survive a myth-site adventure (reach the heart and escape alive)
+- Resolve a major progress clock (positive or negative)
+- Complete a significant quest arc
+- Make a meaningful sacrifice for the community
+
+**On level up:**
+1. Roll your class HP die and add the result to your maximum HP
+2. Increase one stat by 1 (max 10)
+3. Gain one new trained skill from your class or background list
+4. At levels 3, 5, 7, and 9: gain a **class talent** (roll or choose from class talent table)
+
+**Maximum level:** 10. The frontier doesn't make heroes — it makes survivors.
 
 ## Random Encounters
 
-GM rolls 1d6 based on danger level cadence. Encounter on 1.
-- **Unsafe:** Every 3 crawling rounds
-- **Risky:** Every 2 crawling rounds
-- **Deadly:** Every crawling round
+GM rolls 1d6 based on danger level cadence. Encounter on a **1**.
+- **Unsafe:** Every 3 exploration turns
+- **Risky:** Every 2 exploration turns
+- **Deadly:** Every exploration turn
 
-Also check after loud disturbances. For overland travel, use hours instead of rounds.
-
-## Gold Per Encounter (guidelines)
-
-- Levels 1-2: ~20 gp value
-- Levels 4-6: ~50 gp value
-- Levels 7-9: ~80 gp value
+Also check after loud disturbances. For overland travel, use hours instead of turns.
 
 ## Currency
 
 1 gp = 10 sp = 100 cp
-
-## Gear Tables
-
-### Basic Gear
-
-| Item | Cost | Per Slot |
-|---|---|---|
-| Arrows (20) | 1 gp | 1-20 |
-| Backpack | 2 gp | 1 (first free) |
-| Caltrops (one bag) | 5 sp | 1 |
-| Crossbow bolts (20) | 1 gp | 1-20 |
-| Crowbar | 5 sp | 1 |
-| Flask or bottle | 3 sp | 1 |
-| Flint and steel | 5 sp | 1 |
-| Grappling hook | 1 gp | 1 |
-| Iron spikes (10) | 1 gp | 1-10 |
-| Lantern | 5 gp | 1 |
-| Mirror | 10 gp | 1 |
-| Oil, flask | 5 sp | 1 |
-| Pole (10') | 5 sp | 1 |
-| Rations (3) | 5 sp | 1-3 |
-| Rope, 60' | 1 gp | 1 |
-| Torch | 5 sp | 1 |
-
-### Crawling Kit (7 gp, 7 slots)
-
-Backpack, flint and steel, 2 torches, 3 rations, 10 iron spikes, grappling hook, 60' rope.
-
-### Armor
-
-| Armor | Cost | Slots | AC | Notes |
-|---|---|---|---|---|
-| Leather | 10 gp | 1 | 11 + DEX mod | — |
-| Chainmail | 60 gp | 2 | 13 + DEX mod | Disadvantage stealth, swim |
-| Plate mail | 130 gp | 3 | 15 | No swim, disadvantage stealth |
-| Shield | 10 gp | 1 | +2 | One hand occupied |
-| Mithral (metal only) | x4 cost | -1 slot | same | No stealth/swim penalty |
-
-### Weapons
-
-| Weapon | Cost | Type | Range | Damage | Properties |
-|---|---|---|---|---|---|
-| Bastard sword | 10 gp | M | C | 1d8/1d10 | Versatile, 2 slots |
-| Club | 5 cp | M | C | 1d4 | — |
-| Crossbow | 8 gp | R | F | 1d6 | Two-handed, Loading |
-| Dagger | 1 gp | M/R | C/N | 1d4 | Finesse, Thrown |
-| Greataxe | 10 gp | M | C | 1d8/1d10 | Versatile, 2 slots |
-| Greatsword | 12 gp | M | C | 1d12 | Two-handed, 2 slots |
-| Javelin | 5 sp | M/R | C/F | 1d4 | Thrown |
-| Longbow | 8 gp | R | F | 1d8 | Two-handed |
-| Longsword | 9 gp | M | C | 1d8 | — |
-| Mace | 5 gp | M | C | 1d6 | — |
-| Shortbow | 6 gp | R | F | 1d4 | Two-handed |
-| Shortsword | 7 gp | M | C | 1d6 | — |
-| Spear | 5 sp | M/R | C/N | 1d6 | Thrown |
-| Staff | 5 sp | M | C | 1d4 | Two-handed |
-| Warhammer | 10 gp | M | C | 1d10 | Two-handed |
-
-**Properties:** Finesse (use STR or DEX), Loading (forgo moving to reload), Thrown (ranged using STR or DEX), Two-handed, Versatile (higher damage with two hands).
-
-## Classes
-
-### Sellsword
-- **Weapons:** All. **Armor:** All + shields. **HP:** 1d8/level
-- **Pack Mule:** Add CON mod (if positive) to gear slots
-- **Blade Mastery:** Choose one weapon type: +1 attack/damage + half level (round down)
-- **Grit:** Choose STR or DEX. Advantage on checks to overcome opposing force.
-
-### Warden
-- **Weapons:** Club, crossbow, dagger, mace, longsword, staff, warhammer. **Armor:** All + shields. **HP:** 1d6/level
-- **Languages:** Luminous, Infernal, or Primordial
-- **Banish the Unquiet:** Free spell (doesn't count toward known spells)
-- **Spellcasting:** WIS-based. Starts with 2 tier 1 Warden spells.
-
-### Shade
-- **Weapons:** Club, crossbow, dagger, shortbow, shortsword. **Armor:** Leather, mithral chainmail. **HP:** 1d4/level
-- **Ambush Strike:** Extra weapon die when target unaware + half level dice (round down)
-- **Shadow Craft:** Advantage on climbing, sneaking, hiding, disguises, finding/disabling traps, picking pockets/locks. Has tools (no gear slots).
-
-### Arcanist
-- **Weapons:** Dagger, staff. **Armor:** None. **HP:** 1d4/level
-- **Languages:** 2 additional common + 2 rare
-- **Learning Spells:** Can learn from scrolls (1 day study, DC 15 INT). Scroll consumed either way.
-- **Spellcasting:** INT-based. Starts with 3 tier 1 Arcanist spells.
-
-## Ancestries
-
-- **Ironborn:** +2 starting HP. Roll HP per level with advantage. Languages: Common, Ironspeak.
-- **Faekin:** +1 ranged attack OR +1 spellcasting checks. Languages: Common, Sylvani, Primordial.
-- **Gremlin:** Can't be surprised. Languages: Common, Chattertongue.
-- **Duskfolk:** Once/day become invisible 3 rounds. Language: Common.
-- **Brute:** +1 melee attack and damage. Languages: Common, Brutish.
-- **Human:** One additional talent roll at 1st level. Languages: Common + one additional common language.
 
 ## Related Skills
 - **bestiary** — Monster stat blocks for combat encounters

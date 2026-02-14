@@ -22,21 +22,25 @@ If the user provided a `[type]` argument (`player`, `gm`, `campaign`, or `media`
 5. Glob `world/npcs/*.md` and read each NPC file
 6. Glob `world/factions/*.md` and read each faction file
 7. Glob `world/items/*.md` and read each item file
-8. Read `world/campaign-context.md` if it exists
-9. Read `world/CLAUDE.md` (campaign memory) if it exists — extract `world_state`, `active_threads`, `play_style` from the markdown tables
-10. Read `world/session-prep.md` if it exists — extract `strong_start`, `secrets`, `npcs_to_use`, `scenes`, `encounters`, `treasure`
-11. Glob `world/chronicles/chapter-*.md` — read each chapter file's full content
-12. Glob `world/audiobooks/chapter-*.mp3` — collect audiobook file paths
-13. Call `get_session_metadata` with action "read" for session count and dates
-14. Extract structured data from YAML frontmatter and markdown content
-15. Assemble the dashboard JSON (see schema below)
-16. Inject into the HTML template from the dashboard-generation skill
-17. Write to `world/dashboard.html`
+8. Read `world/myths.md` if it exists — extract myth name, omen_level, location, current omen description
+9. Read `world/clocks.md` if it exists — extract clock name, segments_filled, total_segments, trigger
+10. Read `world/countdown.json` if it exists — extract countdown dice name, current_die, category
+11. Read `world/campaign-context.md` if it exists
+12. Read `world/CLAUDE.md` (campaign memory) if it exists — extract `world_state`, `active_threads`, `play_style` from the markdown tables
+13. Read `world/session-prep.md` if it exists — extract `strong_start`, `secrets`, `npcs_to_use`, `scenes`, `encounters`, `treasure`
+14. Glob `world/chronicles/chapter-*.md` — read each chapter file's full content
+15. Glob `world/audiobooks/chapter-*.mp3` — collect audiobook file paths
+16. Call `get_session_metadata` with action "read" for session count and dates
+17. Extract structured data from YAML frontmatter and markdown content
+18. Assemble the dashboard JSON (see schema below)
+19. Inject into the HTML template from the dashboard-generation skill
+20. Write to `world/dashboard.html`
 
 ## Character Extraction
 
 From the PC file, extract these fields:
-- **name**, **ancestry**, **class**, **level**, **hp** (object: current/max), **ac**, **stats** (object: str/dex/con/int/wis/cha), **xp**, **gold**, **location**
+- **name**, **ancestry**, **class**, **level**, **hp** (object: current/max), **armor** (DR number), **stats** (object: vigor/reflex/wits/resolve/presence/lore), **gold**, **location**
+- **training**: From the frontmatter `training` array (e.g. `["Athletics", "Endurance"]`)
 - **background**: From the frontmatter `background` field
 - **inventory**: Array of item strings from the Inventory section
 - **spells**: Parse the `## Spells` section — extract bold spell names from each bullet (e.g. `- **Mage Armor** — ...` becomes `"Mage Armor"`)
@@ -44,11 +48,9 @@ From the PC file, extract these fields:
 - **class_features**: From the frontmatter `class_features` array
 - **ancestry_traits**: From the frontmatter `ancestry_traits` array
 - **worn**: Parse from the `**Worn (no slot):**` line in the Inventory section. Split by comma if multiple. Empty array if not present.
-- **hit_die**: From the frontmatter `hit_die` field (e.g. `"d4"`)
+- **hp_die**: From the frontmatter `hp_die` field (e.g. `"d6"`, `"d10"`)
 - **languages**: From the frontmatter `languages` array
-- **weapon_proficiencies**: From the frontmatter `weapon_proficiencies` array
-- **armor_proficiencies**: From the frontmatter `armor_proficiencies` array
-- **max_gear_slots**: From the frontmatter `max_gear_slots` field (default 10)
+- **max_gear_slots**: From the frontmatter `max_gear_slots` field (Vigor + 5)
 - **used_gear_slots**: Count of items in the inventory array
 
 ## NPC Extraction
@@ -57,10 +59,13 @@ For each NPC file, extract:
 - **name**, **status**, **location**, **disposition** from frontmatter
 - **description**: First paragraph from the NPC markdown body (below frontmatter heading). Truncate to ~120 chars if needed.
 - **hp**: From frontmatter (number or {current, max} object), if present
-- **ac**: From frontmatter, if present
-- **attacks**: From frontmatter array, if present
+- **armor**: From frontmatter (DR number), if present
+- **attack_die**: From frontmatter, if present
+- **attack_description**: From frontmatter, if present
+- **zone**: From frontmatter, if present
+- **priority**: From frontmatter, if present
+- **weakness**: From frontmatter, if present
 - **morale**: From frontmatter, if present
-- **movement**: From frontmatter, if present
 
 ## Faction Extraction
 
