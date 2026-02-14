@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Glintlock is a Claude Code plugin that turns Claude into a solo TTRPG Game Master for Torchlit. Plugin components (agents, commands, skills, hooks) live at the repository root for auto-discovery. The MCP server (`engine/`) provides dice, oracle, TTS, sound effects, music, voice browsing, and session metadata tools.
+Glintlock is a Claude Code plugin that turns Claude into a solo TTRPG campaign and adventure engine for [SYSTEM]. It can run the included Pale Reach starter sandbox or generate unique custom campaigns through session-zero worldbuilding and on-demand adventure generation. Plugin components (agents, commands, skills, hooks) live at the repository root for auto-discovery. The MCP server (`engine/`) provides dice, oracle, TTS, sound effects, music, voice browsing, and session metadata tools.
 
 ## Development Commands
 
@@ -35,7 +35,8 @@ There are no tests yet. The MCP server is tested by installing the plugin in Cla
 Claude Code (claude --plugin-dir ./glintlock)
   ├── .claude-plugin/plugin.json  → manifest (name, version)
   ├── .mcp.json                   → MCP server config (portable paths)
-  ├── agents/gm.md                → GM identity + rules
+  ├── SOUL.md                     → philosophical foundation (identity, values, voice, pact)
+  ├── agents/gm.md                → GM operating manual (mechanics, tools, state, session flow)
   ├── commands/                   → slash commands (/glintlock:*)
   ├── skills/                     → rules, templates, dashboard, story generation
   ├── hooks/hooks.json            → SessionStart hook
@@ -55,6 +56,10 @@ Game state lives in `world/` inside the **user's project directory** (not inside
 - **Quests:** `world/quests.md` — Active / Developing / Completed sections
 - **Session Log:** `world/session-log.md` — append-only tagged entries
 - **Session Prep:** `world/session-prep.md` — GM's private prep notes (Lazy GM framework), regenerated each session
+- **Adventures:** `world/adventures/{name}.md` — Generated adventure content
+- **Myths:** `world/myths.md` — Myth omen tracks (0-6 per myth, 3-6 myths per campaign)
+- **Clocks:** `world/clocks.md` — Progress clocks (segmented, BitD-style)
+- **Countdown Dice:** `world/countdown.json` — Active countdown dice (cd12→cd4→exhausted)
 - **Campaign Context:** `world/campaign-context.md` — premise, setting, tone
 
 See `skills/state-management/SKILL.md` for file templates and conventions.
@@ -78,7 +83,7 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 ### Oracle Tables
 
 `engine/data/oracle-tables.json` has three table formats:
-- **Flat array**: Index by dice roll (e.g. `background` — 1d20 maps to array index)
+- **Flat array**: Index by dice roll (e.g. `background` — 1d6 maps to array index)
 - **Range object**: Keys are ranges like `"2-4"`, `"5-6"` (e.g. `creature_activity`)
 - **Multi-column**: Independent roll per column, results concatenated (e.g. `adventure_name` has `name_1`, `name_2`, `name_3`)
 - **Subtypes**: `npc_name` has per-ancestry arrays selected by a `subtype` parameter
@@ -87,11 +92,12 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 
 | Skill | Purpose |
 |-------|---------|
-| `core-rules` | Core rules: 4 classes (Sellsword, Warden, Shade, Arcanist), 6 ancestries, gear, combat |
+| `core-rules` | Core rules: 6 classes (Warden, Scout, Invoker, Surgeon, Rogue, Seer), 5 ancestries, d20 roll-over resolution, countdown dice, gear, combat |
 | `bestiary` | Monster stat blocks |
 | `spellbook` | Spell lists and descriptions |
 | `treasure` | Treasure tables and magic items |
-| `adventure-sandbox` | West Marches sandbox: home base, hexmap, quickstart dungeon, adapted Keep, encounter tables |
+| `adventure-design` | Adventure design principles, 7 structural templates (location-based, pointcrawl, investigation, faction conflict, defense/siege, expedition, heist), generation workflow |
+| `pale-reach` | The Pale Reach starter sandbox: Thornwall home base, 7x5 hex map, 5 myth-site dungeons, First Watch starter adventure, encounter tables |
 | `state-management` | Entity file templates (PC, NPC, location, item, faction) |
 | `dashboard-generation` | HTML dashboard template |
 | `story-generation` | Chronicle/prose generation guidelines |
@@ -102,7 +108,7 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 
 | Command | Purpose |
 |---------|---------|
-| `/glintlock:new-session` | Start a new campaign with character creation |
+| `/glintlock:new-session` | Start a new campaign (Pale Reach press-play or session-zero custom) |
 | `/glintlock:continue-session` | Resume an existing campaign |
 | `/glintlock:end-session` | End session with save, world-advance, campaign memory update |
 | `/glintlock:status` | Show PC character sheet |
@@ -111,6 +117,7 @@ See `skills/state-management/SKILL.md` for file templates and conventions.
 | `/glintlock:chronicle` | Generate a narrative story chapter from session events |
 | `/glintlock:recap` | Deep audit of full campaign state |
 | `/glintlock:audiobook` | Generate an audiobook from a chronicle chapter |
+| `/glintlock:generate-adventure` | Generate and seed a new adventure into the campaign |
 
 ### Environment Variables
 
@@ -129,13 +136,17 @@ The MCP server reads env vars (set in `.mcp.json`):
 ## When Acting as GM
 
 When the plugin is active during play:
+- SOUL.md defines your identity, values, and voice — loaded at session start via hook
 - ALWAYS use `roll_dice` for ALL mechanical resolution — never simulate randomness
 - ALWAYS use `roll_oracle` for random content instead of inventing it
 - The world files (`world/`) are ground truth — Read before narrating, Write immediately after state changes
 - Append significant events to `world/session-log.md` with tags
 - Update `world/quests.md` when quests change
-- Standard DCs: easy 9, normal 12, hard 15, extreme 18
+- Resolution: d20 ≥ Difficulty. Difficulty = 20 − Stat (untrained) or 20 − Stat×2 (trained). Critical = beat by 5+.
 - Only call for checks when: time pressure + consequences + requires skill
+- Countdown dice track resources (torches, rations, ammo, spells). Roll on trigger, step down on 1.
+- Myth omens (0-6) advance through neglect or triggers. Update `world/myths.md`.
+- Progress clocks tick when fiction dictates. Update `world/clocks.md`.
 - Use `generate_sfx` for environmental and combat sounds at dramatic moments
 - Use `play_music` to set mood when entering new areas or shifting tone; stop for tense silence
 - Use `list_voices` when creating important NPCs — store `voice_id` in frontmatter, use it with `tts_narrate`

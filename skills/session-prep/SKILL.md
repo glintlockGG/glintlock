@@ -83,7 +83,7 @@ What active NPCs are doing *right now*, independent of the PC. NPCs have goals a
 
 ### 5. Encounter Prep (2-3)
 
-Pre-selected combat or tense encounters with mechanical details ready to go. Use `roll_oracle` (tables: `dungeon_encounter`, `wilderness_encounter`, `creature_activity`) and the `bestiary` skill to build these.
+Pre-selected combat or tense encounters with mechanical details ready to go. Use `roll_oracle` with terrain-specific encounter tables (`encounter_thornwood`, `encounter_wolds`, `encounter_ashfall`, `encounter_fenway`, `encounter_greenmere`, `encounter_bleach`) and the `bestiary` skill to build these.
 
 **Each encounter has:**
 - **Monsters:** Type, count, reference to bestiary stats
@@ -99,7 +99,7 @@ Pre-selected combat or tense encounters with mechanical details ready to go. Use
 
 ### 6. Treasure (2-3)
 
-Pre-rolled rewards with placement context. Use `roll_oracle` (tables: `treasure_type`, `magic_item`) and the `treasure` skill to generate these.
+Pre-rolled rewards with placement context. Use `roll_oracle` and the `treasure` skill to generate these.
 
 **Each treasure has:**
 - **Item:** What it is (with mechanical properties if magical)
@@ -178,6 +178,6 @@ At end-session, unused prep elements are recycled into **prep seeds** — carrie
 - 2-3 suggested strong start ideas based on where the session ended
 
 ## Related Skills
-- **adventure-sandbox** — Hex map, dungeon content, and encounter tables for prepping scenes
+- **pale-reach** — Hex map, dungeon content, and encounter tables for prepping scenes (or active adventure skill for custom campaigns)
 - **bestiary** — Monster stat blocks for encounter prep
 - **treasure** — Pre-rolled loot for session rewards
