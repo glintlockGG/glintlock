@@ -10,14 +10,16 @@ Glintlock is a Claude Code plugin that turns Claude into an always-on solo TTRPG
 
 ```bash
 # Build the MCP server (must be done before the plugin can be used)
-cd engine && npm install && npm run build
+cd engine && npm install --cache /tmp/npm-cache && npm run build
 
-# Watch mode for development
+# Watch mode for development (type-checking only, no output)
 cd engine && npm run dev
 
 # Run the built MCP server directly (for testing)
 node engine/dist/index.js
 ```
+
+The build uses esbuild to produce a single self-contained `dist/index.js` bundle. All npm dependencies (`@modelcontextprotocol/sdk`, `zod`) are inlined — no `node_modules/` needed at runtime. TypeScript compilation (`tsc --noEmit`) runs first for type-checking only.
 
 There are no tests yet. The MCP server is tested by installing the plugin in Claude Code and calling tools interactively.
 
@@ -27,7 +29,7 @@ There are no tests yet. The MCP server is tested by installing the plugin in Cla
 
 1. **Plugin shell** — Auto-discovered at plugin root. Agent identity (`agents/gm.md`), slash commands (`commands/`), game rules and templates (`skills/`), hooks (`hooks/`), and MCP config (`.mcp.json`). Manifest at `.claude-plugin/plugin.json`.
 
-2. **MCP server** (`engine/`) — Lightweight. Node.js/TypeScript process spawned by Claude Code over stdio. Exposes 11 tools via `@modelcontextprotocol/sdk`: `roll_dice`, `roll_oracle`, `oracle_yes_no`, `tts_narrate`, `generate_sfx`, `play_music`, `list_voices`, `get_session_metadata`, `render_audiobook`, `mix_audiobook`, `track_time`.
+2. **MCP server** (`engine/`) — Lightweight. Node.js/TypeScript process spawned by Claude Code over stdio. Bundled with esbuild into a single self-contained `dist/index.js` — no `node_modules/` needed. Exposes 11 tools via `@modelcontextprotocol/sdk`: `roll_dice`, `roll_oracle`, `oracle_yes_no`, `tts_narrate`, `generate_sfx`, `play_music`, `list_voices`, `get_session_metadata`, `render_audiobook`, `mix_audiobook`, `track_time`.
 
 ### Data Flow
 
@@ -59,7 +61,8 @@ Game state lives in `world/` inside the **user's project directory** (not inside
 ### Config Details
 
 - ESM modules (`"type": "module"` in package.json)
-- TypeScript target: ES2022
+- TypeScript target: ES2022, type-check only (`noEmit: true`)
+- esbuild bundles `src/index.ts` → `dist/index.js` (single file, all deps inlined)
 - Module resolution: node
 - Strict mode enabled
 
@@ -74,7 +77,7 @@ Game state lives in `world/` inside the **user's project directory** (not inside
 ## Developer Gotchas
 
 1. **ESM import extensions** — All local imports in `engine/src/` must use `.js` extensions, even for `.ts` source files. TypeScript compiles but doesn't rewrite extensions.
-2. **`engine/dist/` is committed** — Pre-built for plugin distribution. Always rebuild (`cd engine && npm run build`) before committing MCP server changes.
+2. **`engine/dist/` is committed** — Pre-built, self-contained bundle for plugin distribution. Always rebuild (`cd engine && npm run build`) before committing MCP server changes. The bundle inlines all npm dependencies — no `node_modules/` needed at runtime.
 3. **Oracle tables cached at startup** — After editing `engine/data/oracle-tables.json`, you must restart Claude Code for changes to take effect.
 4. **macOS `afplay` has no `--loops` flag** — Looping audio uses a bash `while` loop, not an `afplay` flag.
 5. **ElevenLabs `stability` param** — Only accepts `0.0`, `0.5`, or `1.0`. Arbitrary floats will error.

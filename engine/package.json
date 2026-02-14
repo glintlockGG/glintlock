@@ -5,8 +5,8 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
+    "build": "tsc --noEmit && node esbuild.config.js",
+    "dev": "tsc --watch --noEmit",
     "start": "node dist/index.js"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.4",
+    "esbuild": "^0.27.3",
     "typescript": "^5.7.3"
   }
 }

@@ -1,1 +1,0 @@
-{"version":3,"file":"metadata.d.ts","sourceRoot":"","sources":["../../src/tools/metadata.ts"],"names":[],"mappings":"AAGA,MAAM,WAAW,eAAe;IAC9B,eAAe,EAAE,MAAM,CAAC;IACxB,WAAW,EAAE,MAAM,CAAC;IACpB,gBAAgB,EAAE,MAAM,CAAC;CAC1B;AAaD,wBAAgB,kBAAkB,IAAI,eAAe,CAQpD;AAED,wBAAgB,qBAAqB,CACnC,OAAO,EAAE,OAAO,CAAC,eAAe,CAAC,GAChC,eAAe,CAOjB"}
