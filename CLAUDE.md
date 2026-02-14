@@ -46,89 +46,15 @@ Claude Code (claude --plugin-dir ./glintlock)
 
 ### State Management
 
-Game state lives in `world/` inside the **user's project directory** (not inside the plugin repo). The `world/` directory is created by `/glintlock:start` and contains human-readable markdown files with YAML frontmatter. The agent reads and writes these files directly using the Read and Write tools. No database. State is continuously persisted during play.
-
-- **Characters:** `world/characters/{name}.md` — YAML frontmatter for stats/HP/inventory, markdown body for description/notes
-- **NPCs:** `world/npcs/{name}.md` — disposition, location, combat stats, current_goal, current_action
-- **Locations:** `world/locations/{name}.md` — danger level, light, connections, contents
-- **Items:** `world/items/{name}.md` — properties, owner, history
-- **Factions:** `world/factions/{name}.md` — members, goals, disposition
-- **Quests:** `world/quests.md` — Active / Developing / Completed sections
-- **Session Log:** `world/session-log.md` — append-only tagged entries
-- **GM Notes:** `world/gm-notes.md` — persistent prep buffer (strong starts, secrets, NPC moves, scenes, encounters, treasure). Refreshed by `/glintlock:resume`, `/glintlock:world-turn`, and at narrative pauses.
-- **Calendar:** `world/calendar.md` — in-game date, season, weather, real-time sync metadata
-- **Adventures:** `world/adventures/{name}.md` — Generated adventure content
-- **Dooms:** `world/dooms.md` — Doom portent tracks (0-6 per doom, 3-6 dooms per campaign)
-- **Clocks:** `world/clocks.md` — Progress clocks (segmented, BitD-style)
-- **Countdown Dice:** `world/countdown.json` — Active countdown dice (cd12→cd4→exhausted)
-- **Campaign Context:** `world/campaign-context.md` — premise, setting, tone
-- **Campaign Memory:** `world/CLAUDE.md` — hot cache of campaign state (PC summary, play style, active threads, doom status, world state). Created at `/glintlock:start`, updated periodically during play and when resuming. The GM's primary quick-reference — loaded first by the SessionStart hook.
-
-See `skills/state-management/SKILL.md` for file templates and conventions.
-
-### MCP Server Modules
-
-| File | Implements |
-|------|-----------|
-| `engine/src/index.ts` | MCP server entry, stdio transport, 11 tool registrations |
-| `engine/src/tools/dice.ts` | `roll_dice` — NdS+M parser, `crypto.randomInt` RNG, advantage/disadvantage |
-| `engine/src/tools/oracle.ts` | `roll_oracle` + `oracle_yes_no` — loads oracle-tables.json, handles subtypes + range matching + multi-column rolls + Ironsworn-style yes/no oracle |
-| `engine/src/tools/tts.ts` | `tts_narrate` — ElevenLabs TTS with voice settings (stability, similarity, style) |
-| `engine/src/tools/sfx.ts` | `generate_sfx` — ElevenLabs sound generation, background playback |
-| `engine/src/tools/music.ts` | `play_music` — ElevenLabs music generation, looping playback, single-track management |
-| `engine/src/tools/voices.ts` | `list_voices` — ElevenLabs voice browsing with search/filter |
-| `engine/src/tools/metadata.ts` | `get_session_metadata` — session count, dates, read/write JSON |
-| `engine/src/tools/audiobook.ts` | `render_audiobook` — parses chapter markdown into audio manifest (segments, chunks, voice assignments) |
-| `engine/src/tools/audiobook-mixer.ts` | `mix_audiobook` — ffmpeg-based mixing: speech spine + music bed + SFX → final MP3 |
-| `engine/src/tools/audio-utils.ts` | Shared utilities: `getAudioDurationMs` (ffprobe), `generateSilence` (ffmpeg) |
-| `engine/src/tools/timer.ts` | `track_time` — countdown dice manager (add/tick/remove/reset/status), persists to world/countdown.json |
+Game state lives in `world/` inside the **user's project directory** (not inside the plugin repo). See README.md for the full file listing and `skills/state-management/SKILL.md` for templates and conventions.
 
 ### Oracle Tables
 
-`engine/data/oracle-tables.json` has three table formats:
+`engine/data/oracle-tables.json` has four table formats:
 - **Flat array**: Index by dice roll (e.g. `background` — 1d6 maps to array index)
 - **Range object**: Keys are ranges like `"2-4"`, `"5-6"` (e.g. `creature_activity`)
 - **Multi-column**: Independent roll per column, results concatenated (e.g. `adventure_name` has `name_1`, `name_2`, `name_3`)
 - **Subtypes**: `npc_name` has per-ancestry arrays selected by a `subtype` parameter
-
-### Skills
-
-| Skill | Purpose |
-|-------|---------|
-| `core-rules` | Core rules: 6 classes (Warden, Scout, Invoker, Surgeon, Rogue, Seer), 5 ancestries, d20 roll-over resolution, countdown dice, gear, combat |
-| `bestiary` | Monster stat blocks |
-| `spellbook` | Spell lists and descriptions |
-| `treasure` | Treasure tables and magic items |
-| `adventure-design` | Adventure design principles, 7 structural templates (location-based, pointcrawl, investigation, faction conflict, defense/siege, expedition, heist), generation workflow |
-| `pale-reach` | The Pale Reach starter sandbox: Thornwall home base, 7x5 hex map, 5 doom-site dungeons, First Watch starter adventure, encounter tables |
-| `state-management` | Entity file templates (PC, NPC, location, item, faction) |
-| `dashboard-generation` | HTML dashboard template |
-| `story-generation` | Chronicle/prose generation guidelines |
-| `audiobook-generation` | Audiobook pipeline: voice assignment, SFX/music cues, rendering, mixing |
-| `gm-prep` | Continuous GM preparation: oracle-first methodology, just-in-time content generation, strong starts, secrets, NPC moves, encounters, treasure |
-
-### Commands
-
-| Command | Purpose |
-|---------|---------|
-| `/glintlock:start` | Create a character and start a new campaign (Pale Reach press-play or session-zero custom) |
-| `/glintlock:resume` | Return to your campaign (hot-cache-first, world-advance if needed, strong start) |
-| `/glintlock:world-turn` | Advance the living world (tick clocks, advance dooms, execute NPC/faction moves, refresh prep) |
-| `/glintlock:feedback` | Signal your preferences to the GM |
-| `/glintlock:status` | Show PC character sheet |
-| `/glintlock:roll` | Player-initiated dice roll |
-| `/glintlock:dashboard` | Generate visual HTML dashboard |
-| `/glintlock:chronicle` | Generate a narrative story chapter from session events |
-| `/glintlock:recap` | Deep audit of full campaign state |
-| `/glintlock:audiobook` | Generate an audiobook from a chronicle chapter |
-| `/glintlock:generate-adventure` | Generate and seed a new adventure into the campaign |
-
-### Environment Variables
-
-The MCP server reads env vars (set in `.mcp.json`):
-- `GLINTLOCK_WORLD_DIR` — Path to world/ directory (resolves to `./world` in the user's project)
-- `GLINTLOCK_ORACLE_PATH` — Oracle tables JSON path
-- `ELEVENLABS_API_KEY` — ElevenLabs API key for TTS, sound effects, music, and voice browsing (optional)
 
 ### Config Details
 
@@ -136,6 +62,40 @@ The MCP server reads env vars (set in `.mcp.json`):
 - TypeScript target: ES2022
 - Module resolution: node
 - Strict mode enabled
+
+## Plugin Component Conventions
+
+- **Agents** need `name` in frontmatter
+- **Skills** need `name` and a third-person `description` in frontmatter
+- **Hooks** need `matcher: {}` in their entry in `hooks/hooks.json`
+- **MCP servers** are configured in `.mcp.json` at the project root — NOT in `.claude/settings.json`
+- Plugin author uses object format: `{"name": "Glintlock"}` (not a plain string)
+
+## Developer Gotchas
+
+1. **ESM import extensions** — All local imports in `engine/src/` must use `.js` extensions, even for `.ts` source files. TypeScript compiles but doesn't rewrite extensions.
+2. **`engine/dist/` is committed** — Pre-built for plugin distribution. Always rebuild (`cd engine && npm run build`) before committing MCP server changes.
+3. **Oracle tables cached at startup** — After editing `engine/data/oracle-tables.json`, you must restart Claude Code for changes to take effect.
+4. **macOS `afplay` has no `--loops` flag** — Looping audio uses a bash `while` loop, not an `afplay` flag.
+5. **ElevenLabs `stability` param** — Only accepts `0.0`, `0.5`, or `1.0`. Arbitrary floats will error.
+6. **`output_path` on audio tools** — When set, saves audio to file and skips playback. Returns `duration_ms` instead of playing.
+7. **`world/` lives in the user's project** — Created by `/glintlock:start` in the user's working directory, not inside the plugin repo. It is fully gitignored in the plugin repo.
+8. **`npm cache` permissions** — If you hit permissions errors, use `--cache /tmp/npm-cache` as a workaround.
+
+## Key Files by Task
+
+| Task | Key files |
+|------|-----------|
+| Modifying game rules | `skills/core-rules/`, `skills/bestiary/`, `skills/spellbook/`, `skills/treasure/` |
+| Modifying MCP tools | `engine/src/tools/*.ts`, `engine/src/index.ts` (tool registration) |
+| Modifying GM behavior | `agents/gm.md`, `SOUL.md`, `skills/gm-prep/SKILL.md` |
+| Modifying state templates | `skills/state-management/SKILL.md` + `references/` |
+| Modifying dashboard | `skills/dashboard-generation/SKILL.md` + `references/dashboard-template.html` |
+| Modifying oracle tables | `engine/data/oracle-tables.json` (restart after editing) |
+| Modifying slash commands | `commands/*.md` |
+| Modifying hooks | `hooks/hooks.json` |
+| Modifying the starter sandbox | `skills/pale-reach/` |
+| Modifying audiobook pipeline | `skills/audiobook-generation/SKILL.md`, `engine/src/tools/audiobook.ts`, `engine/src/tools/audiobook-mixer.ts` |
 
 ## When Acting as GM
 

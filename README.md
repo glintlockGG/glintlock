@@ -35,6 +35,8 @@ claude --plugin-dir ./glintlock
 
 ## Quick Demo
 
+Here's what a typical exchange looks like — you describe actions in natural language, and the GM handles everything:
+
 ```
 > I search the fallen knight's body for anything useful.
 
@@ -212,6 +214,8 @@ npm run build
 npm run dev
 ```
 
+The `engine/dist/` directory is committed to the repo (pre-built for plugin distribution). If you modify the MCP server source, rebuild before committing.
+
 There are no automated tests yet. The MCP server is tested by installing the plugin in Claude Code and calling tools interactively.
 
 ### Environment Variables
@@ -230,6 +234,22 @@ The following are configured automatically by the plugin and do not need to be s
 | `GLINTLOCK_ORACLE_PATH` | Path to oracle tables JSON (set via `${CLAUDE_PLUGIN_ROOT}`) |
 
 `ffmpeg` and `ffprobe` must be on your PATH for audiobook mixing.
+
+## Troubleshooting
+
+**Audio tools not working (TTS, SFX, music)**
+- Ensure `ELEVENLABS_API_KEY` is set in your shell before launching Claude Code. The plugin passes it to the MCP server via `.mcp.json`.
+- Your API key needs these permissions: `text_to_speech`, `sound_generation`, `music_generation`, `voices_read`.
+
+**MCP server won't start**
+- Run `cd engine && npm run build` to ensure the server is built. The plugin expects `engine/dist/index.js` to exist.
+- Check that Node.js 18+ is installed.
+
+**Oracle table changes not taking effect**
+- Oracle tables are cached when the MCP server starts. Restart Claude Code after editing `engine/data/oracle-tables.json`.
+
+**`world/` directory not found**
+- The `world/` directory is created in your **project directory** (where you launched Claude Code), not inside the plugin repo. Run `/glintlock:start` to create it.
 
 ## License
 
