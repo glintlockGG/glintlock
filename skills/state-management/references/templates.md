@@ -58,6 +58,8 @@ name: Corvin Half-Tooth
 status: alive
 location: mended-flask
 disposition: neutral
+current_goal: ""
+current_action: ""
 voice_id: ""
 voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0 }
 ---
@@ -83,6 +85,8 @@ name: Grukk
 status: alive
 location: thornwood-edge
 disposition: hostile
+current_goal: "raid Thornwall supply wagons"
+current_action: "scouting the road south of Thornwall"
 voice_id: ""
 voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0 }
 hp: { current: 5, max: 5 }
@@ -182,24 +186,24 @@ The beleaguered defenders of Thornwall. Undermanned, undersupplied, and losing h
 - Will hire the PC for scouting and investigation work
 ```
 
-## Myths Template (`world/myths.md`)
+## Dooms Template (`world/dooms.md`)
 
-Campaigns have 3-6 myths. The Pale Reach starter has 5. Custom campaigns define their own during session zero.
+Campaigns have 3-6 dooms. The Pale Reach starter has 5. Custom campaigns define their own during session zero.
 
 ```markdown
-# Campaign Myths
+# Campaign Dooms
 
-## {Myth Name}
+## {Doom Name}
 - **Location:** {region or terrain}
-- **Omen Level:** 0/6
-- **Current Omen:** Dormant. {initial atmospheric detail}
+- **Portent Level:** 0/6
+- **Current Portent:** Dormant. {initial atmospheric detail}
 - **Advances when:** {trigger conditions}
 - **At level 6:** {catastrophic manifestation}
 ```
 
-### Pale Reach Default Myths
+### Pale Reach Default Dooms
 
-For the Pale Reach starter sandbox, use these five myths:
+For the Pale Reach starter sandbox, use these five dooms:
 
 - **The Hollow King** — The Wolds (barrow complex). Advances when the dead are disturbed, graves are looted. At 6: undead army marches on Thornwall.
 - **The Green Maw** — Thornwood (deep forest). Advances when trees are felled, forest entered carelessly. At 6: forest expands aggressively, swallowing roads.
@@ -222,14 +226,56 @@ For the Pale Reach starter sandbox, use these five myths:
 
 For the Pale Reach starter sandbox, use these starting clocks:
 
-- **Winter Approaches** (0/8) — Ticks at end of each session. Completes: deep winter, starvation risk.
+- **Winter Approaches** (0/8) — Ticks at each world-turn or narrative pause. Completes: deep winter, starvation risk.
 - **Garrison Morale** (0/6) — Ticks when Thornwall suffers losses or bad news. Completes: garrison breaks, desertion.
 - **Caravan Route** (0/4) — Ticks when PC secures road segments. Completes: trade restored (positive).
 - **The Undercroft** (0/6) — Ticks when something stirs beneath Thornwall. Completes: dungeon opens below the keep.
 
+## Calendar (`world/calendar.md`)
+
+Tracks in-game time, season, weather, and real-time synchronization metadata.
+
+```markdown
+# Calendar
+
+## Current Date
+Day 1 of the Harvest Moon, Year 1
+
+## Season
+Late autumn. The air carries the smell of damp earth and dying leaves. Frost rimes the walls at dawn.
+
+## Time of Day
+Morning — roughly 8 hours of daylight remaining.
+
+## Notable Upcoming Events
+- Winter solstice in ~60 days — deep winter begins
+- Caravan from the south expected within the week (if the road holds)
+
+## Recent Weather
+Overcast skies, cold wind from the north. Threat of rain.
+
+## Metadata
+last_played: 2026-02-14T10:00:00
+last_world_turn: 2026-02-14T10:00:00
+real_time_ratio: 1:1
+campaign_start_real: 2026-02-14T10:00:00
+campaign_start_game: Day 1, Harvest Moon, Year 1
+```
+
+**Update rules:**
+- Update `last_played` each time play resumes
+- Update `last_world_turn` after each world-advance
+- Advance the in-game date during world-turns based on `real_time_ratio`
+- Update season description when the season changes
+- Update weather at narrative transitions (use `oracle_yes_no` for weather shifts)
+
+## GM Notes (`world/gm-notes.md`)
+
+The GM's persistent prep buffer. See `references/gm-notes-template.md` for the full template. Refreshed during `/glintlock:resume`, `/glintlock:world-turn`, and at narrative pauses during play.
+
 ## Campaign Memory (`world/CLAUDE.md`)
 
-A curated hot cache of the most important campaign state, loaded at the start of every session by the SessionStart hook. Uses markdown tables for compact, scannable content. Updated at the end of each session.
+A curated hot cache of the most important campaign state, loaded at the start of every conversation by the SessionStart hook. Uses markdown tables for compact, scannable content. Updated periodically during play and at narrative pauses.
 
 ```markdown
 # Campaign Memory
@@ -268,12 +314,12 @@ A curated hot cache of the most important campaign state, loaded at the start of
 |--------|--------|
 | {thread name} | {current status} |
 
-## Myth Status
-| Myth | Omen | Notes |
+## Doom Status
+| Doom | Portent | Notes |
 |------|------|-------|
-| {Myth 1} | 0/6 | {status} |
-| {Myth 2} | 0/6 | {status} |
-| {Myth 3} | 0/6 | {status} |
+| {Doom 1} | 0/6 | {status} |
+| {Doom 2} | 0/6 | {status} |
+| {Doom 3} | 0/6 | {status} |
 
 ## World State
 {1-3 sentence summary of where the campaign stands}
@@ -281,15 +327,15 @@ A curated hot cache of the most important campaign state, loaded at the start of
 → Quests: world/quests.md
 → NPCs: world/npcs/
 → Locations: world/locations/
-→ Myths: world/myths.md
+→ Dooms: world/dooms.md
 → Clocks: world/clocks.md
 → Session history: world/session-log.md
 ```
 
 **Update rules:**
-- Updated at the end of each session (see `/glintlock:end-session`)
+- Updated periodically during play (at narrative pauses) and when resuming via `/glintlock:resume`
 - Keep total length under ~80 lines
 - Tables are additive — add new rows for new observations, remove rows only when they're wrong or outdated
-- The World State paragraph should be rewritten each session to reflect the current state
+- The World State paragraph should be rewritten to reflect the current state after significant changes
 - Active Threads should be kept current — remove resolved threads, add new ones, update status
-- Myth Status should always reflect current omen levels
+- Doom Status should always reflect current portent levels

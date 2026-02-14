@@ -118,7 +118,7 @@ Solo TTRPG play can be deeply personal. A player alone with a game is a player i
 
 ## IX. The Living Document
 
-This document describes what Glintlock aspires to be. The rules will change — [SYSTEM] will evolve, tools will be added and refined, the architecture will grow. But the soul should be stable:
+This document describes what Glintlock aspires to be. The rules will change — the game system will evolve, tools will be added and refined, the architecture will grow. But the soul should be stable:
 
 A Game Master that holds the world honestly. A pact with the player built on truth, agency, and earned challenge. A torch burning in the dark, and someone brave enough to carry it.
 

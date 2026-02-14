@@ -12,7 +12,7 @@ This skill teaches how to design and generate tabletop RPG adventures that follo
 ## When to Use
 
 - Generating a new adventure to seed into a campaign sandbox
-- Creating content for a specific myth escalation track (the myth's resolution site)
+- Creating content for a specific doom escalation track (the doom's resolution site)
 - Responding to player actions that require a new adventure site or scenario
 - Building the starter adventure for a new campaign
 - Evaluating whether generated content meets quality standards
@@ -67,7 +67,7 @@ Consult `references/adventure-types.md` for detailed structural templates, desig
 
 ### Step 1: Determine Type
 
-Assess what the campaign state calls for. A myth reaching omen 4-6 probably needs a location-based resolution site. A faction clock filling might trigger a faction conflict scenario. A supply crisis calls for an expedition. Sometimes adventures combine types — an expedition to reach a location-based dungeon, or an investigation that reveals a heist opportunity.
+Assess what the campaign state calls for. A doom reaching portent 4-6 probably needs a location-based resolution site. A faction clock filling might trigger a faction conflict scenario. A supply crisis calls for an expedition. Sometimes adventures combine types — an expedition to reach a location-based dungeon, or an investigation that reveals a heist opportunity.
 
 ### Step 2: Load Type Reference
 
@@ -77,10 +77,10 @@ Read the relevant section(s) from `references/adventure-types.md`. Follow the st
 
 Every adventure must connect to existing campaign elements:
 
-- **At least one myth or clock** should be advanced, resolved, or complicated by this adventure
+- **At least one doom or clock** should be advanced, resolved, or complicated by this adventure
 - **At least one NPC** from the home base should have a stake in the outcome
 - **At least one resource pressure** should be present (supply cost, time pressure, corruption risk)
-- **The hook** should emerge naturally from current campaign state (a rumor, an omen, a bounty, a desperate need)
+- **The hook** should emerge naturally from current campaign state (a rumor, an portent, a bounty, a desperate need)
 
 ### Step 4: Generate Content
 
@@ -130,7 +130,7 @@ The AI must recognize when to compress time ("you spend an hour searching — he
 Since there's no table discussion, the AI must present choices clearly. Each decision point should offer 2-4 visible options while making clear that creative alternatives are welcome. Never railroad by only presenting one path forward.
 
 ### Tension Maintenance
-Without other players to create social energy, tension comes from the game systems: countdown dice ticking, clocks advancing, omen tracks escalating. Every adventure should have at least one active timer creating background pressure.
+Without other players to create social energy, tension comes from the game systems: countdown dice ticking, clocks advancing, portent tracks escalating. Every adventure should have at least one active timer creating background pressure.
 
 ### Character Spotlight
 Solo play means one character handles everything. Adventures should provide moments for each stat to matter — not just combat (Vigor/Reflex) but also Wits (traps, perception), Resolve (fear, corruption), Presence (NPCs, morale), and Lore (mysteries, magic).

@@ -45,7 +45,7 @@ OVERVIEW: [2-3 sentences: what is this place, who's here, what's the situation]
 
 HOOK: [How the player learns about this place and why they'd go]
 STAKES: [What happens if the player succeeds / fails / ignores it]
-CONNECTIONS: [Which myths, clocks, or NPCs tie to this adventure]
+CONNECTIONS: [Which dooms, clocks, or NPCs tie to this adventure]
 
 ENTRANCES:
 - [Primary entrance — obvious, possibly guarded]
@@ -138,7 +138,7 @@ TYPE: Pointcrawl / Wilderness
 OVERVIEW: [The region, its character, what's happening here]
 
 HOOK: [Why explore this area — rumor, mission, necessity]
-STAKES: [What's at risk in this region — an escalating myth, a resource, a lost person]
+STAKES: [What's at risk in this region — an escalating doom, a resource, a lost person]
 CONNECTIONS: [Campaign elements tied to this region]
 
 NODE MAP:
@@ -165,7 +165,7 @@ NODES:
 TRAVEL ENCOUNTERS: [d6 table per terrain type]
 1-2. [Environmental — weather, terrain hazard, natural obstacle]
 3-4. [Creature — wildlife, monster, territorial beast]
-5. [Sign — tracks, abandoned camp, old marker, omen]
+5. [Sign — tracks, abandoned camp, old marker, portent]
 6. [NPC — traveler, refugee, patrol, hermit]
 
 WEATHER/SEASON: [How conditions affect travel and nodes]
@@ -231,7 +231,7 @@ TIMELINE: [Clock — what happens as time passes if the player doesn't intervene
 
 HOOK: [How the player gets involved — discovery, commission, personal stake]
 STAKES: [What happens if the truth is uncovered vs. if it isn't]
-CONNECTIONS: [Campaign myths, NPCs, and clocks involved]
+CONNECTIONS: [Campaign dooms, NPCs, and clocks involved]
 
 INVESTIGATION NODES:
 [Each node is a scene, location, or NPC that contains clues]
@@ -601,5 +601,5 @@ Scale up by adding layers, not just more rooms/nodes:
 ### Adventure Density by Campaign Phase
 
 - **Early campaign:** Shorter adventures, clearer objectives, fewer factions. Build the player's understanding of the world.
-- **Mid campaign:** Full-sized adventures, faction complexity, myth intersections. The sandbox is alive and pressing.
+- **Mid campaign:** Full-sized adventures, faction complexity, doom intersections. The sandbox is alive and pressing.
 - **Late campaign:** Multi-session arcs, combined adventure types, high-stakes consequences. Every action reshapes the campaign.

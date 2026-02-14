@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import crypto from "node:crypto";
 import path from "node:path";
 import { parseAndRoll } from "./dice.js";
 
@@ -38,6 +39,27 @@ function matchesRange(key: string, roll: number): boolean {
     return roll >= lo && roll <= hi;
   }
   return roll === parseRangeValue(key);
+}
+
+export interface OracleYesNoParams {
+  odds: "almost_certain" | "likely" | "even" | "unlikely" | "nearly_impossible";
+  question: string;
+}
+
+const yesNoThresholds: Record<OracleYesNoParams["odds"], number> = {
+  almost_certain: 90,
+  likely: 75,
+  even: 50,
+  unlikely: 25,
+  nearly_impossible: 10,
+};
+
+export function oracleYesNo(params: OracleYesNoParams) {
+  const { odds, question } = params;
+  const threshold = yesNoThresholds[odds];
+  const roll = crypto.randomInt(1, 101); // 1-100
+  const result = roll <= threshold ? "yes" : "no";
+  return { question, odds, threshold, roll, result };
 }
 
 export function rollOracle(params: RollOracleParams) {

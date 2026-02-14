@@ -1,6 +1,6 @@
 # The Antler Court
 
-**Location:** Hex 0603 (Greenmere Valley) | **Danger:** Risky | **Myth:** Antler Court (Omen 0-6)
+**Location:** Hex 0603 (Greenmere Valley) | **Danger:** Risky | **Doom:** Antler Court (Portent 0-6)
 **Theme:** Fey bargains, broken pacts, beauty that devours, the price of promises
 
 The Antler Court is the ruin of a fey palace in the heart of Greenmere Valley — a place of shattered marble, wild roses, and moonlight that falls wrong. The Court was once bound by a pact with a mortal settlement that no longer exists. The pact is broken, and the fey are furious. They want satisfaction — and they are patient enough to take it slowly, one stolen mortal at a time.
@@ -54,12 +54,12 @@ The Antler Court is the ruin of a fey palace in the heart of Greenmere Valley �
 
 ### Resolution Paths
 
-**Fight:** Defeat the Court Herald and its retinue. This is the hardest combat option of any myth-site — the Herald is a mini-boss with support. Iron weapons are essential (instant-kill on Thorn Sprites, bypass Antler Knight armor). Victory drives the fey deeper into the valley. Omen resets to 0 but the fey are not destroyed — they nurse their grudge. The Court may reform at higher omen levels with greater hostility.
+**Fight:** Defeat the Court Herald and its retinue. This is the hardest combat option of any doom-site — the Herald is a mini-boss with support. Iron weapons are essential (instant-kill on Thorn Sprites, bypass Antler Knight armor). Victory drives the fey deeper into the valley. Portent resets to 0 but the fey are not destroyed — they nurse their grudge. The Court may reform at higher portent levels with greater hostility.
 
-**Bargain:** The Herald offers terms. It wants a champion — someone to serve the Court for a year and a day. This can be the player character (campaign changes drastically), an NPC volunteer, or a compromise (service for a month, or a series of quests performed for the Court). Every bargain has a cost. The Herald negotiates fairly but ruthlessly. Presence (Persuasion) check, Difficulty 15 to get favorable terms. Success reduces the omen by 3. Complete fulfillment of the bargain resets omen to 0.
+**Bargain:** The Herald offers terms. It wants a champion — someone to serve the Court for a year and a day. This can be the player character (campaign changes drastically), an NPC volunteer, or a compromise (service for a month, or a series of quests performed for the Court). Every bargain has a cost. The Herald negotiates fairly but ruthlessly. Presence (Persuasion) check, Difficulty 15 to get favorable terms. Success reduces the portent by 3. Complete fulfillment of the bargain resets portent to 0.
 
-**Fulfill the Pact:** Find a descendant of Greenmere (an NPC in Thornwall or elsewhere — the GM places this hook) or declare oneself champion voluntarily with the Locket of Greenmere as proof of intent. Sit the antler throne in Room 3 and swear the oath. The champion serves the Court through a series of three quests (fey tasks, woven into future sessions). Upon completion, the pact is restored. Omen resets to 0, the valley is protected again, and the Court becomes an ally — offering sanctuary, information, and a **Moonsilver Blade** (longsword, +1 damage, deals radiant damage to undead and fiends, glows in the presence of lies — Legendary quality).
+**Fulfill the Pact:** Find a descendant of Greenmere (an NPC in Thornwall or elsewhere — the GM places this hook) or declare oneself champion voluntarily with the Locket of Greenmere as proof of intent. Sit the antler throne in Room 3 and swear the oath. The champion serves the Court through a series of three quests (fey tasks, woven into future sessions). Upon completion, the pact is restored. Portent resets to 0, the valley is protected again, and the Court becomes an ally — offering sanctuary, information, and a **Moonsilver Blade** (longsword, +1 damage, deals radiant damage to undead and fiends, glows in the presence of lies — Legendary quality).
 
 ### If Left Alone
 
-The valley grows strange. Thorn Sprites lure travelers off paths. At omen 3+, Antler Knights ride the borders of Greenmere, challenging anyone who enters. At omen 5, fey glamour spreads — illusions plague the valley, and people go missing. At omen 6, the Wild Hunt rides — the Court Herald leads a mounted host across the Pale Reach, taking one mortal each night until the debt is paid.
+The valley grows strange. Thorn Sprites lure travelers off paths. At portent 3+, Antler Knights ride the borders of Greenmere, challenging anyone who enters. At portent 5, fey glamour spreads — illusions plague the valley, and people go missing. At portent 6, the Wild Hunt rides — the Court Herald leads a mounted host across the Pale Reach, taking one mortal each night until the debt is paid.

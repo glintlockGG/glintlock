@@ -22,12 +22,12 @@ If the user provided a `[type]` argument (`player`, `gm`, `campaign`, or `media`
 5. Glob `world/npcs/*.md` and read each NPC file
 6. Glob `world/factions/*.md` and read each faction file
 7. Glob `world/items/*.md` and read each item file
-8. Read `world/myths.md` if it exists — extract myth name, omen_level, location, current omen description
+8. Read `world/dooms.md` if it exists — extract doom name, portent_level, location, current portent description
 9. Read `world/clocks.md` if it exists — extract clock name, segments_filled, total_segments, trigger
 10. Read `world/countdown.json` if it exists — extract countdown dice name, current_die, category
 11. Read `world/campaign-context.md` if it exists
 12. Read `world/CLAUDE.md` (campaign memory) if it exists — extract `world_state`, `active_threads`, `play_style` from the markdown tables
-13. Read `world/session-prep.md` if it exists — extract `strong_start`, `secrets`, `npcs_to_use`, `scenes`, `encounters`, `treasure`
+13. Read `world/gm-notes.md` if it exists — extract `strong_start`, `secrets`, `npcs_to_use`, `scenes`, `encounters`, `treasure`
 14. Glob `world/chronicles/chapter-*.md` — read each chapter file's full content
 15. Glob `world/audiobooks/chapter-*.mp3` — collect audiobook file paths
 16. Call `get_session_metadata` with action "read" for session count and dates
@@ -80,7 +80,7 @@ For each faction file, extract:
 
 ## Session Prep
 
-- **session_prep**: From `world/session-prep.md` — extract `strong_start` (text), `secrets` (array), `npcs_to_use` (array of names), `scenes` (array), `encounters` (array), `treasure` (array)
+- **gm_notes**: From `world/gm-notes.md` — extract `strong_start` (text), `secrets` (array), `npcs_to_use` (array of names), `scenes` (array), `encounters` (array), `treasure` (array)
 
 ## Filtered Log Entries
 

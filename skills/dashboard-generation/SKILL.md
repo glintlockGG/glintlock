@@ -12,8 +12,8 @@ Generate a campaign dashboard from the world state files. The dashboard is a sin
 The dashboard is a VTT-style, viewport-locked multi-view layout with a persistent sidebar and four switchable dashboard views:
 
 1. **Player (Character Sheet)** — Stats (1-10), hero banner with HP/Armor/Level, inventory, training, countdown dice, location, spells, features
-2. **GM Screen** — Tabbed quests/threads, NPC quick reference grid (with combat stats), session tools panel (session prep, Difficulty reference, recent events, world advances), myth omen tracks, progress clocks
-3. **Campaign Overview** — Campaign banner, quest progress tracker, session timeline, factions, myth status, world state summary, active threads
+2. **GM Screen** — Tabbed quests/threads, NPC quick reference grid (with combat stats), session tools panel (GM notes, Difficulty reference, recent events, world advances), doom portent tracks, progress clocks
+3. **Campaign Overview** — Campaign banner, quest progress tracker, session timeline, factions, doom status, world state summary, active threads
 4. **Story & Audio** — Chapter list with audio indicators, prose reader, Spotify-style audio player
 
 The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navigation links, current location with danger badge, and level/milestone indicator — all persistent across views.
@@ -28,12 +28,12 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
    - NPC files from `world/npcs/` (glob for `*.md`)
    - Faction files from `world/factions/` (glob for `*.md`)
    - Item files from `world/items/` (glob for `*.md`)
-   - `world/myths.md` (if exists)
+   - `world/dooms.md` (if exists)
    - `world/clocks.md` (if exists)
    - `world/countdown.json` (if exists)
    - `world/campaign-context.md` (if exists)
    - `world/CLAUDE.md` — campaign memory (if exists)
-   - `world/session-prep.md` (if exists)
+   - `world/gm-notes.md` (if exists)
    - Chronicle chapters from `world/chronicles/chapter-*.md` (read each file's content)
    - Check for audiobook files: glob `world/audiobooks/chapter-*.mp3`
    - Read session metadata if available
@@ -48,7 +48,8 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
        "name", "ancestry", "class", "level", "hp", "armor", "stats",
        "training", "inventory", "gold", "location", "background",
        "spells", "talents", "class_features", "ancestry_traits", "worn",
-       "hp_die", "languages", "max_gear_slots", "used_gear_slots"
+       "hp_die", "languages", "max_gear_slots", "used_gear_slots",
+       "death_clock"
      },
      "location": { "name", "danger_level", "light", "description" },
      "quests": { "active": [...], "developing": [...], "completed": [...] },
@@ -56,12 +57,12 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
      "npcs": [{ "name", "status", "location", "disposition", "description", "hp", "armor", "attack_die", "attack_description", "zone", "priority", "weakness", "morale" }, ...],
      "factions": [{ "name", "disposition", "goals", "members" }, ...],
      "items": [{ "name", "owner", "properties" }, ...],
-     "myths": [{ "name", "omen_level", "location", "current_omen" }, ...],
+     "dooms": [{ "name", "portent_level", "location", "current_portent" }, ...],
      "clocks": [{ "name", "segments_filled", "total_segments", "trigger" }, ...],
      "countdown_dice": [{ "name", "current_die", "category" }, ...],
      "campaign_context": { "name", "setting", "tone", "premise" },
      "campaign_memory": { "world_state", "active_threads", "play_style" },
-     "session_prep": { "strong_start", "secrets", "npcs_to_use", "scenes", "encounters", "treasure" },
+     "gm_notes": { "strong_start", "secrets", "npcs_to_use", "scenes", "encounters", "treasure" },
      "world_advances": ["filtered [world-advance] log entries..."],
      "open_threads": ["filtered [thread] log entries..."],
      "chapters": [
@@ -88,15 +89,16 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
    - **`languages`**: Array of strings from frontmatter.
    - **`max_gear_slots`**: Number from frontmatter (Vigor + 5).
    - **`used_gear_slots`**: Count of inventory items.
+   - **`death_clock`**: Integer 0-4 from frontmatter (segments filled on Death Clock). Default 0. Only displayed on the dashboard when > 0.
 
    ### Extracting NPC fields
 
    - **`description`**: First paragraph from the NPC markdown body (below frontmatter). Truncate to ~120 chars if needed.
    - **`hp`**, **`armor`**, **`attack_die`**, **`attack_description`**, **`zone`**, **`priority`**, **`weakness`**, **`morale`**: From frontmatter, if present. These enable combat stat blocks on the GM dashboard.
 
-   ### Extracting myth, clock, and countdown dice data
+   ### Extracting doom, clock, and countdown dice data
 
-   - **`myths`**: From `world/myths.md` — extract each myth's `name`, `omen_level` (0-6), `location`, and `current_omen` description.
+   - **`dooms`**: From `world/dooms.md` — extract each doom's `name`, `portent_level` (0-6), `location`, and `current_portent` description.
    - **`clocks`**: From `world/clocks.md` — extract each clock's `name`, `segments_filled`, `total_segments`, and `trigger`.
    - **`countdown_dice`**: From `world/countdown.json` — extract each die's `name`, `current_die` (0/4/6/8/10/12), and `category`.
 
@@ -110,9 +112,9 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
    - **`campaign_context`**: From `world/campaign-context.md` frontmatter — `name`, `setting`, `tone`, `premise`.
    - **`campaign_memory`**: From `world/CLAUDE.md` — extract `world_state` (text paragraph), `active_threads` (array of strings), `play_style` (text) from the markdown tables/sections.
 
-   ### Extracting session prep
+   ### Extracting GM notes
 
-   - **`session_prep`**: From `world/session-prep.md` — extract `strong_start`, `secrets` (array), `npcs_to_use` (array of names), `scenes` (array), `encounters` (array), `treasure` (array). These appear in the GM Screen's Session Tools panel.
+   - **`gm_notes`**: From `world/gm-notes.md` — extract `strong_start`, `secrets` (array), `npcs_to_use` (array of names), `scenes` (array), `encounters` (array), `treasure` (array). These appear in the GM Screen's Session Tools panel.
 
    ### Extracting filtered log entries
 

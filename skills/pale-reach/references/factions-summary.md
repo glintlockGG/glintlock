@@ -45,7 +45,7 @@ Five factions operate in and around Thornwall. Their goals sometimes align, some
 - Establish a permanent mining camp
 
 **Resources:** Mining expertise, coin, dwerrow-forged equipment, knowledge of the crags
-**Conflict with:** The Iron Seam myth (they're inadvertently feeding it by mining)
+**Conflict with:** The Iron Seam doom (they're inadvertently feeding it by mining)
 
 ## The Fenway Pilgrims
 
@@ -60,7 +60,7 @@ Five factions operate in and around Thornwall. Their goals sometimes align, some
 - They believe the Pale Shepherd is benevolent — a guide for lost souls
 
 **Resources:** Knowledge of safe marsh paths, herbal medicine, spiritual counsel
-**Secret:** They may be right about the Shepherd — or they may be walking into a trap. Their devotion feeds the myth either way.
+**Secret:** They may be right about the Shepherd — or they may be walking into a trap. Their devotion feeds the doom either way.
 
 ## The Antler Court (Fey)
 

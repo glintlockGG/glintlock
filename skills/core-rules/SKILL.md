@@ -1,9 +1,9 @@
 ---
 name: core-rules
-description: "Core [SYSTEM] rules: resolution, stats, training, classes, ancestries, backgrounds, combat, countdown dice, pressure systems, death and dying, distance, light, resting, gear, and character creation. This skill should be used when resolving checks, running combat, handling death, managing resources, equipping gear, creating characters, or making any mechanical ruling."
+description: "Core rules: resolution, stats, training, classes, ancestries, backgrounds, combat, countdown dice, pressure systems, death and dying, distance, light, resting, gear, and character creation. This skill should be used when resolving checks, running combat, handling death, managing resources, equipping gear, creating characters, or making any mechanical ruling."
 ---
 
-# [SYSTEM] — Core Rules Reference
+# Core Rules Reference
 
 ## Resolution
 
@@ -259,16 +259,16 @@ Countdown dice (cd) track depleting resources. A countdown die starts at a size 
 
 ## Pressure Systems
 
-### Myth Escalation (Omen Tracks)
+### Doom Escalation (Portent Tracks)
 
-Campaign myths each have an **omen level** (0–6). Omens advance when:
-- The party ignores a myth-related event
-- Time passes (some myths advance at the end of each session)
-- The party's actions inadvertently feed the myth
+Campaign dooms each have an **portent level** (0–6). Portents advance when:
+- The party ignores a doom-related event
+- Time passes (some dooms advance during world-turns or narrative pauses)
+- The party's actions inadvertently feed the doom
 
-At each omen level, the myth's influence on the world grows — strange events, corrupted terrain, emboldened servants. At omen level 6, the myth **manifests** — a catastrophic event that reshapes the region.
+At each portent level, the doom's influence on the world grows — strange events, corrupted terrain, emboldened servants. At portent level 6, the doom **manifests** — a catastrophic event that reshapes the region.
 
-Omens can be reduced by confronting the myth at its source (adventure site). See the active adventure skill (e.g. `pale-reach`) for myth details.
+Portents can be reduced by confronting the doom at its source (adventure site). See the active adventure skill (e.g. `pale-reach`) for doom details.
 
 ### Progress Clocks
 
@@ -385,7 +385,7 @@ Backpack, flint & steel, 2 torches, 3 rations, 10 iron spikes, grappling hook, 6
 Characters advance by earning **Milestones** — concrete achievements rather than abstract XP.
 
 **Level up after completing a milestone:**
-- Survive a myth-site adventure (reach the heart and escape alive)
+- Survive a doom-site adventure (reach the heart and escape alive)
 - Resolve a major progress clock (positive or negative)
 - Complete a significant quest arc
 - Make a meaningful sacrifice for the community

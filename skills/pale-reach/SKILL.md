@@ -1,23 +1,23 @@
 ---
 name: pale-reach
-description: "The Pale Reach — default starter sandbox for [SYSTEM]. Contains home base (Thornwall), hex map with 6 terrain types, 5 myth-site dungeons, encounter tables, factions, and First Watch starter adventure. This skill should be used when running exploration, entering dungeons, checking encounter tables, looking up hex terrain, or referencing sandbox NPCs and factions in the Pale Reach setting."
+description: "The Pale Reach — default starter sandbox. Contains home base (Thornwall), hex map with 6 terrain types, 5 doom-site dungeons, encounter tables, factions, and First Watch starter adventure. This skill should be used when running exploration, entering dungeons, checking encounter tables, looking up hex terrain, or referencing sandbox NPCs and factions in the Pale Reach setting."
 ---
 
 # The Pale Reach — Starter Sandbox
 
-The Pale Reach is the default press-play sandbox for [SYSTEM]. For custom campaigns, use the `adventure-design` skill to generate adventures during session zero or mid-campaign.
+The Pale Reach is the default press-play sandbox. For custom campaigns, use the `adventure-design` skill to generate adventures during session zero or mid-campaign.
 
-A frontier sandbox designed for level 1-10 characters in a West Marches-style campaign where the player chooses where to go and what to do. Five myths threaten the land, progress clocks track the region's fate, and countdown dice ensure every expedition is a gamble against time and resources.
+A frontier sandbox designed for level 1-10 characters in a West Marches-style campaign where the player chooses where to go and what to do. Five dooms threaten the land, progress clocks track the region's fate, and countdown dice ensure every expedition is a gamble against time and resources.
 
 ## Regional Overview
 
 The Pale Reach is a dark frontier at the edge of civilization — a stretch of contested wilderness where old things stir beneath barrow mounds, ancient forests hunger, and the land itself remembers injuries done to it centuries ago. Thornwall, the last fortified waystation, clings to survival at the center of a region that wants to swallow it.
 
-**Theme:** Civilization is fragile. The land has memory and intent. Five myths — sleeping powers woven into the geography — are waking. Each has an adventure site at its heart. The player must decide which threats to confront, which to ignore, and how to keep Thornwall alive through winter.
+**Theme:** Civilization is fragile. The land has memory and intent. Five dooms — sleeping powers woven into the geography — are waking. Each has an adventure site at its heart. The player must decide which threats to confront, which to ignore, and how to keep Thornwall alive through winter.
 
-**Tone:** Grim frontier survival meets mythic horror. Resources are scarce. Allies are few. The darkness is hungry. But there are treasures in the old places, secrets worth uncovering, and a community worth saving — if you can hold the line long enough.
+**Tone:** Grim frontier survival meets doomic horror. Resources are scarce. Allies are few. The darkness is hungry. But there are treasures in the old places, secrets worth uncovering, and a community worth saving — if you can hold the line long enough.
 
-**The Five Myths:** Each myth is a dormant power tied to a specific terrain. As omens advance (tracked in `world/myths.md`), the myth's influence spreads — corrupting wildlife, warping weather, emboldening servants. At omen level 6, the myth manifests catastrophically. The player can push back by confronting the myth at its source (adventure site).
+**The Five Dooms:** Each doom is a dormant power tied to a specific terrain. As portents advance (tracked in `world/dooms.md`), the doom's influence spreads — corrupting wildlife, warping weather, emboldening servants. At portent level 6, the doom manifests catastrophically. The player can push back by confronting the doom at its source (adventure site).
 
 **Current Situation:** Thornwall is undermanned and undersupplied. The garrison is shrinking. Supply caravans have stopped arriving reliably. The surrounding lands grow stranger by the week. Commander Vess needs scouts, investigators, and anyone willing to venture beyond the walls. The bounty board at Warden's Hall has work — and the Pale Reach has secrets worth dying for.
 
@@ -36,7 +36,7 @@ The Pale Reach is mapped as a 7×5 grid of 6-mile hexes. Columns run 01-07 (west
 | **Ashfall Crags** | Volcanic ridges and abandoned mines. Steam vents, unstable ground, the Iron Seam's domain. |
 | **The Fenway** | Marshland and bog. Fog, sucking mud, disease, the Pale Shepherd's domain. |
 | **Greenmere Valley** | Lush valley with overgrown ruins. Unsettlingly beautiful, the Antler Court's domain. |
-| **The Bleach** | Salt flats and wasteland. Howling wind, no cover, no life. Where all myths converge. |
+| **The Bleach** | Salt flats and wasteland. Howling wind, no cover, no life. Where all dooms converge. |
 
 ### Travel Times
 
@@ -58,10 +58,10 @@ The Pale Reach is mapped as a 7×5 grid of 6-mile hexes. Columns run 01-07 (west
 | Hex | Terrain | Danger | Feature |
 |------|-----------|----------|--------------------------------------|
 | 0101 | Ashfall Crags | Deadly | Volcanic vent field |
-| 0201 | Ashfall Crags | Risky | **The Iron Seam** (myth-site dungeon) |
+| 0201 | Ashfall Crags | Risky | **The Iron Seam** (doom-site dungeon) |
 | 0301 | Ashfall Crags | Risky | Collapsed watchtower |
 | 0401 | Wolds | Unsafe | Northern barrow field |
-| 0501 | Wolds | Risky | **Hollow King's Barrow** (myth-site dungeon) |
+| 0501 | Wolds | Risky | **Hollow King's Barrow** (doom-site dungeon) |
 | 0601 | Wolds | Unsafe | Shepherd's ruins |
 | 0701 | Fenway | Risky | Deep marsh (impassable without guide) |
 | 0102 | Ashfall Crags | Risky | Abandoned prospector camps |
@@ -69,14 +69,14 @@ The Pale Reach is mapped as a 7×5 grid of 6-mile hexes. Columns run 01-07 (west
 | 0302 | Thornwood | Unsafe | Forest edge — patrol route |
 | 0402 | Wolds | Unsafe | Road to Thornwall (maintained) |
 | 0502 | Wolds | Unsafe | Crossroads waystone |
-| 0602 | Fenway | Risky | **Pale Shepherd's Domain** (myth-site dungeon) |
+| 0602 | Fenway | Risky | **Pale Shepherd's Domain** (doom-site dungeon) |
 | 0702 | Fenway | Deadly | Poison gas flats |
 | 0103 | Thornwood | Risky | Hermit's cabin (sage) |
-| 0203 | Thornwood | Risky | **Heart of the Green Maw** (myth-site dungeon) |
+| 0203 | Thornwood | Risky | **Heart of the Green Maw** (doom-site dungeon) |
 | 0303 | Thornwood | Unsafe | Western approach to Thornwall |
 | 0403 | Wolds | Safe | **Thornwall** (home base) |
 | 0503 | Greenmere Valley | Unsafe | Valley entrance — standing stones |
-| 0603 | Greenmere Valley | Risky | **Antler Court Ruins** (myth-site dungeon) |
+| 0603 | Greenmere Valley | Risky | **Antler Court Ruins** (doom-site dungeon) |
 | 0703 | Greenmere Valley | Risky | Eldren settlement ruins |
 | 0104 | Thornwood | Deadly | Deep forest — the canopy closes |
 | 0204 | Thornwood | Risky | Goblin encampment |
@@ -100,7 +100,7 @@ The Pale Reach is mapped as a 7×5 grid of 6-mile hexes. Columns run 01-07 (west
 | Safe | 1-in-12 per 4 hours | Wildlife, travelers |
 | Unsafe | 1-in-8 per 4 hours | Patrols, predators, minor threats |
 | Risky | 1-in-6 per 4 hours | Monsters, hostile factions, traps |
-| Deadly | 1-in-4 per 4 hours | Boss creatures, overwhelming numbers, myth servants |
+| Deadly | 1-in-4 per 4 hours | Boss creatures, overwhelming numbers, doom servants |
 
 ---
 
@@ -112,16 +112,16 @@ For detailed adventure content, load the appropriate reference file:
 - **Thornwall** — `references/thornwall.md` — Fortified waystation, 5 locations, 5 key NPCs, bounty board, services
 
 ### Starter Adventure
-- **First Watch** — `references/first-watch.md` — 3-act tutorial adventure introducing resource pressure, myth omens, and sandbox exploration
+- **First Watch** — `references/first-watch.md` — 3-act tutorial adventure introducing resource pressure, doom portents, and sandbox exploration
 
-### Myth-Site Dungeons (5)
-Each myth has an adventure site — a dungeon at the heart of the threat. Confronting and resolving the myth at its source reduces or resets the omen track.
+### Doom-Site Dungeons (5)
+Each doom has an adventure site — a dungeon at the heart of the threat. Confronting and resolving the doom at its source reduces or resets the portent track.
 
-- **The Hollow King's Barrow** — `references/myth-hollow-king.md` — Undead lord's tomb in the Wolds (hex 0501)
-- **The Heart of the Green Maw** — `references/myth-green-maw.md` — Living heart-tree deep in Thornwood (hex 0203)
-- **The Pale Shepherd's Domain** — `references/myth-pale-shepherd.md` — Death shrine in the Fenway marshes (hex 0602)
-- **The Iron Seam** — `references/myth-iron-seam.md` — Abandoned mine with living metal in Ashfall Crags (hex 0201)
-- **The Antler Court** — `references/myth-antler-court.md` — Fey court ruins in Greenmere Valley (hex 0603)
+- **The Hollow King's Barrow** — `references/doom-hollow-king.md` — Undead lord's tomb in the Wolds (hex 0501)
+- **The Heart of the Green Maw** — `references/doom-green-maw.md` — Living heart-tree deep in Thornwood (hex 0203)
+- **The Pale Shepherd's Domain** — `references/doom-pale-shepherd.md` — Death shrine in the Fenway marshes (hex 0602)
+- **The Iron Seam** — `references/doom-iron-seam.md` — Abandoned mine with living metal in Ashfall Crags (hex 0201)
+- **The Antler Court** — `references/doom-antler-court.md` — Fey court ruins in Greenmere Valley (hex 0603)
 
 ### Encounter Tables
 Use `roll_oracle` with terrain-specific encounter tables:
@@ -132,7 +132,7 @@ Use `roll_oracle` with terrain-specific encounter tables:
 - `encounter_greenmere` — Valley/fey encounters
 - `encounter_bleach` — Wasteland encounters
 
-Higher omen levels unlock more dangerous entries on each table (noted in parentheses).
+Higher portent levels unlock more dangerous entries on each table (noted in parentheses).
 
 ### Factions
 - **Faction summary** — `references/factions-summary.md` — 5 factions operating in the Pale Reach

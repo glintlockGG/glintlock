@@ -24,7 +24,7 @@ A fortified waystation at the center of the Pale Reach (hex 0403). Built on a lo
 *A cramped building packed floor to ceiling with books, scrolls, and curios. Maren Sable sits cross-legged on a pile of manuscripts, reading by candlelight.*
 
 - **Function:** Library, arcanist's workshop, identification services
-- **Services:** Identify magic items (10 gp, takes 1 day), buy/sell scrolls, research lore. Maren can answer questions about the myths, the old world, and the region's history.
+- **Services:** Identify magic items (10 gp, takes 1 day), buy/sell scrolls, research lore. Maren can answer questions about the dooms, the old world, and the region's history.
 - **Special:** Maren is looking for artifacts from the old world — she'll pay double for recovered books, scrolls, or inscriptions
 
 ### 4. Root Cellar
@@ -39,7 +39,7 @@ A fortified waystation at the center of the Pale Reach (hex 0403). Built on a lo
 
 - **Function:** Sealed dungeon entrance — opens when the Undercroft progress clock completes
 - **Current state:** Sealed. Strange sounds at night. Scratching. Commander Vess has forbidden investigation.
-- **When it opens:** A dungeon beneath Thornwall itself — contents determined by which myths have been confronted and what the player has done
+- **When it opens:** A dungeon beneath Thornwall itself — contents determined by which dooms have been confronted and what the player has done
 
 ## Key NPCs
 
@@ -58,13 +58,13 @@ A fortified waystation at the center of the Pale Reach (hex 0403). Built on a lo
 ### Maren Sable
 - **Role:** Scholar, arcanist, curator of old-world knowledge
 - **Personality:** Intense, distracted, brilliant. Forgets to eat. Talks too fast about subjects she loves. Talks not at all about herself.
-- **Knows:** The myths — their histories, their patterns, their connections. The old world and what destroyed it. Magic theory.
-- **Wants:** Knowledge. Specifically: artifacts, texts, and inscriptions from the old world. She believes the myths are connected and wants to prove it.
+- **Knows:** The dooms — their histories, their patterns, their connections. The old world and what destroyed it. Magic theory.
+- **Wants:** Knowledge. Specifically: artifacts, texts, and inscriptions from the old world. She believes the dooms are connected and wants to prove it.
 
 ### Sister Efa
 - **Role:** Healer, herbalist, spiritual guide
 - **Personality:** Calm, patient, with kind eyes that have seen terrible things. Moves slowly and deliberately. Speaks softly.
-- **Knows:** Herbal medicine, the Fenway's flora, the Pale Shepherd myth (more than she admits). Has a past connection to the marshes.
+- **Knows:** Herbal medicine, the Fenway's flora, the Pale Shepherd doom (more than she admits). Has a past connection to the marshes.
 - **Wants:** To protect Thornwall's people. To keep something buried. She fears the Pale Shepherd is not what people think it is.
 
 ### Sergeant Brenn

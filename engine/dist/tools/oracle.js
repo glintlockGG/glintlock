@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import crypto from "node:crypto";
 import path from "node:path";
 import { parseAndRoll } from "./dice.js";
 const oraclePath = path.resolve(process.env.GLINTLOCK_ORACLE_PATH ?? "./engine/data/oracle-tables.json");
@@ -17,6 +18,20 @@ function matchesRange(key, roll) {
         return roll >= lo && roll <= hi;
     }
     return roll === parseRangeValue(key);
+}
+const yesNoThresholds = {
+    almost_certain: 90,
+    likely: 75,
+    even: 50,
+    unlikely: 25,
+    nearly_impossible: 10,
+};
+export function oracleYesNo(params) {
+    const { odds, question } = params;
+    const threshold = yesNoThresholds[odds];
+    const roll = crypto.randomInt(1, 101); // 1-100
+    const result = roll <= threshold ? "yes" : "no";
+    return { question, odds, threshold, roll, result };
 }
 export function rollOracle(params) {
     const { table: tableName, subtype } = params;

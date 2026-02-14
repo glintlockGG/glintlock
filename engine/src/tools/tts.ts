@@ -112,7 +112,6 @@ export async function ttsNarrate(params: TtsParams): Promise<TtsResult> {
   const tmpPath = join(tmpdir(), `glintlock-tts-${Date.now()}.mp3`);
   await writeFile(tmpPath, Buffer.from(audioBuffer));
 
-  // Spawn platform-appropriate audio player (detached, non-blocking)
   const playerCmd = getAudioPlayer(tmpPath);
   if (!playerCmd) {
     // Clean up temp file since we can't play it

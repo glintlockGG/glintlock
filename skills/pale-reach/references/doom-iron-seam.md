@@ -1,6 +1,6 @@
 # The Iron Seam
 
-**Location:** Hex 0201 (Ashfall Crags) | **Danger:** Risky | **Myth:** Iron Seam (Omen 0-6)
+**Location:** Hex 0201 (Ashfall Crags) | **Danger:** Risky | **Doom:** Iron Seam (Portent 0-6)
 **Theme:** Industry vs. nature, sleeping power, the cost of extraction, living earth
 
 The Iron Seam is an abandoned mine driven deep into the Ashfall Crags. Prospectors broke through into something ancient — a vein of metal that grows, repairs itself, and resists extraction. The deeper shafts are warm, humming with subsonic vibration. Something vast and metallic sleeps at the bottom, and the living ore is its dreaming body.
@@ -51,12 +51,12 @@ The Iron Seam is an abandoned mine driven deep into the Ashfall Crags. Prospecto
 
 ### Resolution Paths
 
-**Seal It:** Collapse the vertical shaft (Room 5) using explosives, the forge, or brute force. Vigor (Athletics) check, Difficulty 15, or Tinker check, Difficulty 12 with proper tools. The entity goes back to sleep. Omen resets to 0. The living metal stops growing — but the mine is permanently inaccessible, and any living metal already harvested goes inert.
+**Seal It:** Collapse the vertical shaft (Room 5) using explosives, the forge, or brute force. Vigor (Athletics) check, Difficulty 15, or Tinker check, Difficulty 12 with proper tools. The entity goes back to sleep. Portent resets to 0. The living metal stops growing — but the mine is permanently inaccessible, and any living metal already harvested goes inert.
 
-**Awaken and Bargain:** Touching the cocoon-formation triggers communication — not words, but impressions of territory, pain, intrusion. A character can attempt to negotiate through empathy and will. Resolve (Commune or Fortitude) check, Difficulty 15. Success: the entity understands. It offers a pact — it will withdraw its influence from the surface (omen resets to 0) if the party ensures no one mines its body again. It gifts a lump of living metal that can be forged into any single weapon or armor piece of Fabulous quality (+1 bonus, self-repairing).
+**Awaken and Bargain:** Touching the cocoon-formation triggers communication — not words, but impressions of territory, pain, intrusion. A character can attempt to negotiate through empathy and will. Resolve (Commune or Fortitude) check, Difficulty 15. Success: the entity understands. It offers a pact — it will withdraw its influence from the surface (portent resets to 0) if the party ensures no one mines its body again. It gifts a lump of living metal that can be forged into any single weapon or armor piece of Fabulous quality (+1 bonus, self-repairing).
 
-**Harvest the Ore:** Using the tongs from Room 4, a character can extract living metal directly from the walls. Each extraction attempt takes 1 exploration turn and yields one unit (enough for one item). But each extraction enrages the entity — it spawns 2 Ore Crawlers per unit taken and eventually wakes the Seam Guardian again if more than 3 units are taken. Harvesting does NOT reduce the omen — it increases it by 1 per unit taken.
+**Harvest the Ore:** Using the tongs from Room 4, a character can extract living metal directly from the walls. Each extraction attempt takes 1 exploration turn and yields one unit (enough for one item). But each extraction enrages the entity — it spawns 2 Ore Crawlers per unit taken and eventually wakes the Seam Guardian again if more than 3 units are taken. Harvesting does NOT reduce the portent — it increases it by 1 per unit taken.
 
 ### If Left Alone
 
-Living metal spreads through the Crags. Ore Crawlers appear in adjacent hexes, consuming metal equipment. At omen 3+, Iron Husks patrol the mine approaches. At omen 5, metal objects in Thornwall begin to corrode or behave strangely. At omen 6, the entity half-wakes — a wave of magnetic force disrupts all metal within two hexes, and the Seam Guardian roams the surface.
+Living metal spreads through the Crags. Ore Crawlers appear in adjacent hexes, consuming metal equipment. At portent 3+, Iron Husks patrol the mine approaches. At portent 5, metal objects in Thornwall begin to corrode or behave strangely. At portent 6, the entity half-wakes — a wave of magnetic force disrupts all metal within two hexes, and the Seam Guardian roams the surface.

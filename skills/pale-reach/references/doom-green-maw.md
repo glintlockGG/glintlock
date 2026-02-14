@@ -1,6 +1,6 @@
 # The Heart of the Green Maw
 
-**Location:** Hex 0203 (Thornwood) | **Danger:** Risky | **Myth:** Green Maw (Omen 0-6)
+**Location:** Hex 0203 (Thornwood) | **Danger:** Risky | **Doom:** Green Maw (Portent 0-6)
 **Theme:** Corruption, hunger, nature twisted against itself, stolen birthright
 
 The Heart is a massive tree at the center of a corrupted grove deep in Thornwood. Its canopy blots out the sky. Its roots have spread for miles, drinking the life from the surrounding forest. The tree was once a sacred grove-warden — corrupted when a relic was stolen from its roots centuries ago. It wants the relic back. Until then, it feeds.
@@ -53,12 +53,12 @@ The Heart is a massive tree at the center of a corrupted grove deep in Thornwood
 
 ### Resolution Paths
 
-**Burn It:** Fire deals double damage to both the Tendril and the tree. If the tree reaches 0 HP by fire, the entire grove ignites — the party has 3 rounds to escape the Dying Ring before the fire spreads. Omen resets to 0. The surrounding Thornwood begins recovering within weeks, but a massive dead zone remains.
+**Burn It:** Fire deals double damage to both the Tendril and the tree. If the tree reaches 0 HP by fire, the entire grove ignites — the party has 3 rounds to escape the Dying Ring before the fire spreads. Portent resets to 0. The surrounding Thornwood begins recovering within weeks, but a massive dead zone remains.
 
-**Return the Heartstone:** If the party finds and returns the Heartstone (a quest that may involve tracking it to a collector, merchant, or another dungeon), placing it in the hollow at the tree's base heals the corruption instantly. The Maw Tendril goes dormant. The tree's canopy blooms green. Omen resets to 0, and the tree gifts a **Rootshield** (see treasure skill) grown from its own wood.
+**Return the Heartstone:** If the party finds and returns the Heartstone (a quest that may involve tracking it to a collector, merchant, or another dungeon), placing it in the hollow at the tree's base heals the corruption instantly. The Maw Tendril goes dormant. The tree's canopy blooms green. Portent resets to 0, and the tree gifts a **Rootshield** (see treasure skill) grown from its own wood.
 
-**Purge the Corruption:** An Invoker or Seer can attempt to cleanse the tree directly. This requires casting a healing or purification spell into the hollow while maintaining concentration for 3 rounds. Each round, the Maw Tendril attacks. Lore (Arcana) or Resolve (Commune) check, Difficulty 15, each round — three successes purges the corruption. Omen resets to 0.
+**Purge the Corruption:** An Invoker or Seer can attempt to cleanse the tree directly. This requires casting a healing or purification spell into the hollow while maintaining concentration for 3 rounds. Each round, the Maw Tendril attacks. Lore (Arcana) or Resolve (Commune) check, Difficulty 15, each round — three successes purges the corruption. Portent resets to 0.
 
 ### If Left Alone
 
-The Thornwood darkens. Thornlings appear on forest paths. At omen 3+, Root Horrors block the roads through Thornwood. At omen 5, the tree's roots reach Thornwall's foundations. At omen 6, the Green Maw swallows a hex of forest entirely — everything living in it dies, and a Maw Tendril sprouts at every crossroads.
+The Thornwood darkens. Thornlings appear on forest paths. At portent 3+, Root Horrors block the roads through Thornwood. At portent 5, the tree's roots reach Thornwall's foundations. At portent 6, the Green Maw swallows a hex of forest entirely — everything living in it dies, and a Maw Tendril sprouts at every crossroads.

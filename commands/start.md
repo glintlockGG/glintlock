@@ -1,8 +1,9 @@
 ---
-description: "Start a new [SYSTEM] campaign"
+description: "Create a character and start a new campaign"
 allowed-tools:
   - "mcp:glintlock-engine:roll_dice"
   - "mcp:glintlock-engine:roll_oracle"
+  - "mcp:glintlock-engine:oracle_yes_no"
   - "mcp:glintlock-engine:get_session_metadata"
   - "mcp:glintlock-engine:track_time"
   - "Skill"
@@ -25,6 +26,7 @@ world/
   factions/
   chronicles/
   audiobooks/
+  adventures/
 ```
 
 Also create `world/.gitignore` with the following content so campaign data doesn't pollute the user's git repo:
@@ -70,8 +72,8 @@ Walk the player through each step conversationally — this should feel like col
 Before world setup, ask the player:
 
 > **How would you like to start?**
-> 1. **The Pale Reach** (Recommended) — A dark frontier sandbox ready to play. Thornwall keep, five escalating myths, hex map with six terrains, and a starter adventure.
-> 2. **Session Zero** — Build a custom campaign from scratch. Choose setting truths, design a home base, create myths and factions.
+> 1. **The Pale Reach** (Recommended) — A dark frontier sandbox ready to play. Thornwall keep, five escalating dooms, hex map with six terrains, and a starter adventure.
+> 2. **Session Zero** — Build a custom campaign from scratch. Choose setting truths, design a home base, create dooms and factions.
 
 ### Path A: The Pale Reach (Press Play)
 
@@ -82,13 +84,48 @@ Load the `pale-reach` skill. Write the world files:
     - Setting: The Pale Reach — a dark frontier at the edge of civilization
     - Home base: Thornwall — a fortified waystation clinging to survival
     - Premise: Generated from the character's background hook + the region's threats
-    - Tone: Grim frontier survival, mythic horror, resource scarcity
-12. Write `world/myths.md` with the five Pale Reach myths at omen level 0 (from pale-reach skill)
+    - Tone: Grim frontier survival, doomic horror, resource scarcity
+12. Write `world/dooms.md` with the five Pale Reach dooms at portent level 0 (from pale-reach skill)
 13. Write `world/clocks.md` with starting progress clocks (from pale-reach skill)
 14. Write `world/quests.md` with initial quest hooks
 15. Write `world/session-log.md` with first entry
-16. Initialize session metadata via `get_session_metadata` (action: "update") with `campaign_created` set to today, `sessions_played: 1`, `last_played` set to today
-17. Set the opening scene in Thornwall
+16. Write `world/calendar.md`:
+    ```markdown
+    # Calendar
+
+    ## Current Date
+    Day 1 of the Harvest Moon, Year 1
+
+    ## Season
+    Late autumn. The air carries the smell of damp earth and dying leaves. Frost rimes the walls at dawn.
+
+    ## Time of Day
+    Morning — roughly 8 hours of daylight remaining.
+
+    ## Notable Upcoming Events
+    - Winter solstice in ~60 days — deep winter begins
+    - Caravan from the south expected within the week (if the road holds)
+
+    ## Recent Weather
+    Overcast skies, cold wind from the north. Threat of rain.
+
+    ## Metadata
+    last_played: {today ISO 8601}
+    last_world_turn: {today ISO 8601}
+    real_time_ratio: 1:1
+    campaign_start_real: {today ISO 8601}
+    campaign_start_game: Day 1, Harvest Moon, Year 1
+    ```
+17. Initialize session metadata via `get_session_metadata` (action: "update") with `campaign_created` set to today, `sessions_played: 1`, `last_played` set to today
+18. Write `world/gm-notes.md` — initial GM prep. Read the `gm-notes-template` from `skills/state-management/references/gm-notes-template.md`. Populate with:
+    - 2-3 strong starts based on the PC's background hook and the Pale Reach opening situation
+    - 3-5 initial secrets drawn from the Pale Reach content (doom clues, faction secrets, NPC motivations)
+    - NPC moves for initial Thornwall NPCs
+    - 3-5 potential scenes for early play
+    - 2-3 encounter setups using the pale-reach encounter tables
+    - 2-3 treasure items
+19. Write `world/CLAUDE.md` — the campaign hot cache. Use the Campaign Memory template from `state-management`. Populate it with the PC's starting stats, location, empty play-style/narrative tables (first game — nothing observed yet), doom portent levels at 0, and a World State paragraph describing the opening situation.
+20. Set the opening scene in Thornwall
 
 ### Path B: Session Zero (Custom Campaign)
 
@@ -121,12 +158,12 @@ A guided worldbuilding conversation using collaborative truth-selection. Each ch
     - 2-3 known landmarks, rest mysterious
     Include the map description in campaign-context.md.
 
-14. **Myths (3-5)** — Generate escalating threats:
-    - Each myth connected to a terrain/region
-    - 6-level omen track with escalating consequences
-    - Resolution requires confronting the myth at its source
+14. **Dooms (3-5)** — Generate escalating threats:
+    - Each doom connected to a terrain/region
+    - 6-level portent track with escalating consequences
+    - Resolution requires confronting the doom at its source
     - Use `roll_oracle` for inspiration, refine with player
-    Write `world/myths.md`.
+    Write `world/dooms.md`.
 
 15. **Factions (3-5)** — Generate competing groups:
     - Each faction has a goal, strength, weakness, and attitude toward PC
@@ -137,13 +174,25 @@ A guided worldbuilding conversation using collaborative truth-selection. Each ch
 16. **Starting Clocks (3-5)** — Generate situation timers:
     - At least 1 environmental/seasonal clock
     - At least 1 faction-driven clock
-    - At least 1 tied to a myth
+    - At least 1 tied to a doom
     Write `world/clocks.md`.
 
 17. Write PC file, quests, session-log, initialize metadata (same as Path A)
 
-18. **Opening Scene** — Set the opening at the home base. Use the starting crisis. End with something that invites action.
+18. Write `world/calendar.md` — adapted to the custom setting:
+    - Current date using the campaign's calendar system
+    - Season and weather appropriate to the setting
+    - Notable upcoming events from the worldbuilding
+    - Metadata with real_time_ratio, timestamps
+
+19. Write `world/gm-notes.md` — initial GM prep based on the custom campaign content. Follow the template from `skills/state-management/references/gm-notes-template.md`.
+
+20. Write `world/CLAUDE.md` — the campaign hot cache. Use the Campaign Memory template from `state-management`. Populate it with the PC's starting stats, location, empty play-style/narrative tables (first game — nothing observed yet), doom portent levels, faction names, and a World State paragraph summarizing the custom campaign's opening situation.
+
+21. **Opening Scene** — Set the opening at the home base. Use the starting crisis. End with something that invites action.
 
 **Session Zero Note:** Session zero IS play. The worldbuilding is collaborative and should feel like a conversation, not a questionnaire. Use `roll_oracle` and `roll_dice` throughout to surprise both player and GM. Each session zero produces a unique sandbox.
 
 Use `roll_dice` for every roll. Use `roll_oracle` for random names if needed.
+
+**Closing:** The game has begun. When you return, just run `/glintlock:resume` or simply start talking.

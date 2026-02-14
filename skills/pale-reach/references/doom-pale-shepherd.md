@@ -1,6 +1,6 @@
 # The Pale Shepherd's Domain
 
-**Location:** Hex 0602 (The Fenway) | **Danger:** Risky | **Myth:** Pale Shepherd (Omen 0-6)
+**Location:** Hex 0602 (The Fenway) | **Danger:** Risky | **Doom:** Pale Shepherd (Portent 0-6)
 **Theme:** Death as mercy or prison, the boundary between rest and oblivion, fog and forgetting
 
 The Domain is a flooded temple half-sunk into the Fenway marshes. Once a shrine where the dead were prepared for passage, it has become a gathering place for lost souls. The Pale Shepherd — an entity of unclear origin — dwells at its heart. It may be a corrupted death-priest, a grief-born spirit, or something older. Its nature depends on what the party discovers inside.
@@ -54,12 +54,12 @@ The Domain is a flooded temple half-sunk into the Fenway marshes. Once a shrine 
 
 ### Resolution Paths
 
-**Destroy It:** Kill the Shepherd's Herald. On death, the fog lifts across the entire Fenway for one full day, and all Lost Pilgrims in the Domain dissolve peacefully. Omen resets to 0. However, the dead have nowhere to go — without a guide, restless undead may appear elsewhere in the Pale Reach over time. The temple goes dark and silent.
+**Destroy It:** Kill the Shepherd's Herald. On death, the fog lifts across the entire Fenway for one full day, and all Lost Pilgrims in the Domain dissolve peacefully. Portent resets to 0. However, the dead have nowhere to go — without a guide, restless undead may appear elsewhere in the Pale Reach over time. The temple goes dark and silent.
 
-**Bargain:** The Shepherd offers a deal — it will reduce its influence (omen drops by 3) in exchange for a service. It wants a specific soul brought to the Domain (an NPC who cheated death, or a ghost haunting another location). Completing the bargain does not end the myth but keeps it in check. The Shepherd honors its word precisely and literally.
+**Bargain:** The Shepherd offers a deal — it will reduce its influence (portent drops by 3) in exchange for a service. It wants a specific soul brought to the Domain (an NPC who cheated death, or a ghost haunting another location). Completing the bargain does not end the doom but keeps it in check. The Shepherd honors its word precisely and literally.
 
-**Fulfill the Rite:** Ring the bell tower bell three times and resolve the trapped souls in the Confession Pool. This completes the old death-rite the temple was built for. The Shepherd's purpose is fulfilled — it was never malevolent, only bound to duty in a broken shrine. It bows, the crook clatters to the dais, and the fog lifts permanently. Omen resets to 0. The crook becomes a **Staff of Passage** (staff, d6 damage, +1 to Commune checks, undead must make a check to approach the wielder — Fabulous quality).
+**Fulfill the Rite:** Ring the bell tower bell three times and resolve the trapped souls in the Confession Pool. This completes the old death-rite the temple was built for. The Shepherd's purpose is fulfilled — it was never malevolent, only bound to duty in a broken shrine. It bows, the crook clatters to the dais, and the fog lifts permanently. Portent resets to 0. The crook becomes a **Staff of Passage** (staff, d6 damage, +1 to Commune checks, undead must make a check to approach the wielder — Fabulous quality).
 
 ### If Left Alone
 
-Fog spreads from the Fenway. Lost Pilgrims appear on roads at night. At omen 3+, the fog reaches adjacent hexes and travelers go missing. At omen 5, a Shepherd's Herald appears outside the Domain, collecting souls. At omen 6, permanent supernatural fog blankets half the Pale Reach — navigation becomes nearly impossible, and the dead walk openly.
+Fog spreads from the Fenway. Lost Pilgrims appear on roads at night. At portent 3+, the fog reaches adjacent hexes and travelers go missing. At portent 5, a Shepherd's Herald appears outside the Domain, collecting souls. At portent 6, permanent supernatural fog blankets half the Pale Reach — navigation becomes nearly impossible, and the dead walk openly.

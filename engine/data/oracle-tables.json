@@ -219,7 +219,7 @@
       "22-23": "A patrol went missing near the Fenway three days ago",
       "24-25": "The Ashfall mines are home to something that eats iron",
       "26-27": "A prospector found living metal growing in the mine shafts",
-      "28-29": "A fortune-telling eldren in the valley speaks true omens",
+      "28-29": "A fortune-telling eldren in the valley speaks true portents",
       "30-31": "Every new moon, something raids the Root Cellar stores",
       "32-33": "A famous scout hasn't returned from the Thornwood",
       "34-35": "A glowing meteor crashed deep inside the marshlands",
@@ -254,7 +254,7 @@
       "94-95": "Commander Vess is hiding something about what's beneath Thornwall",
       "96-97": "A sealed tomb has been found beneath the shrine in the Wolds",
       "98-99": "The fey courts are stirring — the Antler Court wants something",
-      "00": "All five myths are connected. Someone — or something — is waking them all."
+      "00": "All five dooms are connected. Someone — or something — is waking them all."
     }
   },
   "encounter_thornwood": {
@@ -268,10 +268,10 @@
       "1d6 giant bats roosting in a hollow trunk — disturbed by light",
       "An owlbear crashing through the undergrowth, hunting",
       "Thick roots writhing slowly across the trail — the Green Maw stirs",
-      "A root horror erupts from the forest floor (omen 2+)",
+      "A root horror erupts from the forest floor (portent 2+)",
       "2d4 goblin scouts with a captive they're dragging to their camp",
       "A clearing where all the trees lean inward, whispering",
-      "A Maw Tendril — a massive vine-thing reaching from the canopy (omen 4+)"
+      "A Maw Tendril — a massive vine-thing reaching from the canopy (portent 4+)"
     ]
   },
   "encounter_wolds": {
@@ -286,9 +286,9 @@
       "Cold wind extinguishes all light sources — relight or face darkness",
       "An old burial cairn, partially excavated — something glints inside",
       "1d6 ghouls feeding on a dead horse",
-      "A hollow knight standing motionless on a hilltop, watching (omen 3+)",
+      "A hollow knight standing motionless on a hilltop, watching (portent 3+)",
       "Ground tremors — coffins shifting beneath the earth",
-      "A bone shepherd leading a procession of the dead (omen 5+)"
+      "A bone shepherd leading a procession of the dead (portent 5+)"
     ]
   },
   "encounter_ashfall": {
@@ -304,8 +304,8 @@
       "Strange metallic growths on the rock walls, warm to the touch",
       "A prospector's camp, recently abandoned — tools left behind",
       "An ogre lair in a shallow cave, bones scattered at the entrance",
-      "A seam of living metal pulses with dim light (omen 3+)",
-      "A seam guardian blocks the main mine passage (omen 4+)"
+      "A seam of living metal pulses with dim light (portent 3+)",
+      "A seam guardian blocks the main mine passage (portent 4+)"
     ]
   },
   "encounter_fenway": {
@@ -320,9 +320,9 @@
       "Quicksand — Wits (Survival) check to spot before stepping in",
       "A ruined shrine half-submerged in brackish water",
       "1d6 giant frogs erupting from a stagnant pool",
-      "A shepherd's herald standing in the fog, beckoning (omen 3+)",
+      "A shepherd's herald standing in the fog, beckoning (portent 3+)",
       "The sound of a funeral bell tolling from deep in the marsh",
-      "A death-procession of spectral figures crossing the path (omen 5+)"
+      "A death-procession of spectral figures crossing the path (portent 5+)"
     ]
   },
   "encounter_greenmere": {
@@ -337,9 +337,9 @@
       "1d6 giant beetles rolling through a meadow",
       "Ruins overgrown with ivy — an old eldren settlement",
       "A fey bargain: a voice from the trees offers something you want",
-      "A court herald appears with an invitation to the Antler Court (omen 3+)",
+      "A court herald appears with an invitation to the Antler Court (portent 3+)",
       "Time distortion — hours pass as minutes (or minutes as hours)",
-      "The valley shifts around you — paths change, landmarks move (omen 5+)"
+      "The valley shifts around you — paths change, landmarks move (portent 5+)"
     ]
   },
   "encounter_bleach": {
@@ -356,7 +356,7 @@
       "A mirage of a thriving settlement that vanishes when approached",
       "An ancient sealed door half-buried in salt — no apparent mechanism",
       "Nothing lives here. Nothing moves. The silence is deafening.",
-      "All five myths pulse simultaneously — every omen track advances 1 (omen 4+ on any)"
+      "All five dooms pulse simultaneously — every portent track advances 1 (portent 4+ on any)"
     ]
   }
 }

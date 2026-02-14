@@ -7,7 +7,7 @@
     {
       "name": "glintlock",
       "source": ".",
-      "description": "Solo TTRPG campaign and adventure engine for [SYSTEM] — starter sandbox or custom campaigns, adventure generation, persistent world state, dice rolling, curated random tables, audiobook generation, and campaign dashboard."
+      "description": "Solo TTRPG campaign and adventure engine — starter sandbox or custom campaigns, adventure generation, persistent world state, dice rolling, curated random tables, audiobook generation, and campaign dashboard."
     }
   ]
 }

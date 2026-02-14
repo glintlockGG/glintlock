@@ -1,6 +1,6 @@
 # The Hollow King's Barrow
 
-**Location:** Hex 0501 (The Wolds) | **Danger:** Risky | **Myth:** Hollow King (Omen 0-6)
+**Location:** Hex 0501 (The Wolds) | **Danger:** Risky | **Doom:** Hollow King (Portent 0-6)
 **Theme:** Undead sovereignty, unfinished grief, the weight of broken oaths
 
 The barrow is a stone-lined burial mound sunk into the windswept Wolds. Three standing stones mark the entrance — one cracked, one leaning, one etched with a name worn smooth by centuries. Inside, the air is tomb-cold and still. The Hollow King was a warlord-protector who died betrayed by his own court. He refuses to stay dead because an oath sworn to him was never honored.
@@ -42,7 +42,7 @@ The barrow is a stone-lined burial mound sunk into the windswept Wolds. Three st
 *Behind a frozen iron door, a small vault glitters with frost-covered offerings. Gold coins, gem-studded chalices, a sword laid across an altar. Everything arranged with funereal precision.*
 
 **Contents:** The king's grave goods. Worth approximately 80 gp total (coins, jewelry, two gold chalices). The sword on the altar is **Oathkeeper** (longsword, +1 damage, glows faintly blue near oath-breakers — Fabulous quality).
-**Hazard:** Taking any treasure without the king's permission (see Room 7) triggers a curse — disadvantage on all Resolve checks until the items are returned or the myth is resolved.
+**Hazard:** Taking any treasure without the king's permission (see Room 7) triggers a curse — disadvantage on all Resolve checks until the items are returned or the doom is resolved.
 
 ## Room 6 — The Bone Shepherd's Sanctum
 
@@ -61,12 +61,12 @@ The barrow is a stone-lined burial mound sunk into the windswept Wolds. Three st
 
 ### Resolution Paths
 
-**Combat:** Defeat the Hollow King. His crown shatters on death, releasing a blast of cold (d6 to all in Near). All undead in the barrow collapse. The myth omen resets to 0. The barrow goes silent — permanently.
+**Combat:** Defeat the Hollow King. His crown shatters on death, releasing a blast of cold (d6 to all in Near). All undead in the barrow collapse. The doom portent resets to 0. The barrow goes silent — permanently.
 
-**Destroy the Crown:** The crown can be targeted directly (HP 4, Armor 0). Destroying it while the king still stands causes him to crumble — no final cold blast, and the king's spirit whispers thanks before fading. Omen resets to 0.
+**Destroy the Crown:** The crown can be targeted directly (HP 4, Armor 0). Destroying it while the king still stands causes him to crumble — no final cold blast, and the king's spirit whispers thanks before fading. Portent resets to 0.
 
-**Hear His Grievance:** If the party reads the Oathstone (Room 3) and speaks to the king, he explains the broken pact. He wants the oath honored — the descendant of the oath-breaker (an NPC in Thornwall or elsewhere, GM's choice) must come to the barrow and swear the oath anew. If the party arranges this, the king rests voluntarily. Omen resets to 0, and the king gifts Oathkeeper from the treasury with his blessing (no curse).
+**Hear His Grievance:** If the party reads the Oathstone (Room 3) and speaks to the king, he explains the broken pact. He wants the oath honored — the descendant of the oath-breaker (an NPC in Thornwall or elsewhere, GM's choice) must come to the barrow and swear the oath anew. If the party arranges this, the king rests voluntarily. Portent resets to 0, and the king gifts Oathkeeper from the treasury with his blessing (no curse).
 
 ### If Left Alone
 
-Each session the barrow is ignored, the Hollow King's influence spreads. Barrow Wights begin appearing in Wolds hexes. At omen 4+, Hollow Knights patrol the roads at night. At omen 6, the Hollow King marches on Thornwall with an army of the dead.
+Each session the barrow is ignored, the Hollow King's influence spreads. Barrow Wights begin appearing in Wolds hexes. At portent 4+, Hollow Knights patrol the roads at night. At portent 6, the Hollow King marches on Thornwall with an army of the dead.

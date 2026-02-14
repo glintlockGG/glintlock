@@ -2,7 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { rollDice } from "./tools/dice.js";
-import { rollOracle } from "./tools/oracle.js";
+import { rollOracle, oracleYesNo } from "./tools/oracle.js";
 import { ttsNarrate } from "./tools/tts.js";
 import { generateSfx } from "./tools/sfx.js";
 import { playMusic } from "./tools/music.js";
@@ -13,7 +13,7 @@ import { mixAudiobook } from "./tools/audiobook-mixer.js";
 import { trackTime } from "./tools/timer.js";
 const server = new McpServer({
     name: "glintlock-engine",
-    version: "1.0.0",
+    version: "2.0.0",
 });
 // --- roll_dice ---
 server.tool("roll_dice", "Roll dice using standard notation. Returns individual die results and total. Use for ALL mechanical resolution — attacks, damage, checks, initiative, random encounters, death timers. NEVER simulate dice results.", {
@@ -31,7 +31,7 @@ server.tool("roll_dice", "Roll dice using standard notation. Returns individual 
     }
 });
 // --- roll_oracle ---
-server.tool("roll_oracle", "Roll on a random oracle table from the [SYSTEM] rules. Returns a real random result from curated content. Use instead of inventing NPCs, encounters, treasure, etc.", {
+server.tool("roll_oracle", "Roll on a random oracle table from the game rules. Returns a real random result from curated content. Use instead of inventing NPCs, encounters, treasure, etc.", {
     table: z.enum([
         "npc_name", "something_happens", "rumors",
         "treasure_0_3", "creature_activity", "creature_reaction", "starting_distance",
@@ -45,6 +45,19 @@ server.tool("roll_oracle", "Roll on a random oracle table from the [SYSTEM] rule
 }, async (params) => {
     try {
         const result = rollOracle(params);
+        return { content: [{ type: "text", text: JSON.stringify(result) }] };
+    }
+    catch (err) {
+        return { content: [{ type: "text", text: err.message }], isError: true };
+    }
+});
+// --- oracle_yes_no ---
+server.tool("oracle_yes_no", "Roll a yes/no oracle with set odds (Ironsworn-style). Use for ambiguous world-state questions, NPC decisions, doom advancement checks, and any uncertain outcome that needs a fair random answer.", {
+    odds: z.enum(["almost_certain", "likely", "even", "unlikely", "nearly_impossible"]).describe("How likely is a 'yes' result? almost_certain=90%, likely=75%, even=50%, unlikely=25%, nearly_impossible=10%."),
+    question: z.string().describe("The yes/no question being resolved (e.g. 'Does the faction discover the PC's sabotage?')."),
+}, async (params) => {
+    try {
+        const result = oracleYesNo(params);
         return { content: [{ type: "text", text: JSON.stringify(result) }] };
     }
     catch (err) {

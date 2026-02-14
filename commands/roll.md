@@ -1,5 +1,5 @@
 ---
-description: "Roll dice for [SYSTEM]"
+description: "Roll dice"
 argument-hint: "[dice-expression or skill-check]"
 allowed-tools:
   - "mcp:glintlock-engine:roll_dice"

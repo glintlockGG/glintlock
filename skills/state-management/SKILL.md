@@ -11,7 +11,7 @@ All game state lives in `world/` as human-readable markdown files with YAML fron
 
 - **Filenames:** lowercase-kebab-case (e.g. `kael.md`, `corvin-half-tooth.md`, `wardens-hall.md`)
 - **Directories:** `world/characters/`, `world/npcs/`, `world/locations/`, `world/items/`, `world/factions/`
-- **Global files:** `world/quests.md`, `world/session-log.md`, `world/campaign-context.md`, `world/myths.md`, `world/clocks.md`
+- **Global files:** `world/quests.md`, `world/session-log.md`, `world/campaign-context.md`, `world/dooms.md`, `world/clocks.md`, `world/calendar.md`, `world/gm-notes.md`
 - **Create:** Use the Write tool with the appropriate template (see `references/templates.md`)
 - **Read:** Use the Read tool to load a file before narrating or making decisions
 - **Update:** Read the file first, modify the relevant sections, Write the full updated file back
@@ -21,13 +21,15 @@ All game state lives in `world/` as human-readable markdown files with YAML fron
 
 Read `references/templates.md` for the full templates for all entity types:
 - **Player Character** — stats (1-10), training, armor (DR), countdown dice, inventory, spells, notes
-- **NPC** — description, combat stats (armor, attack_die, zone, priority, weakness), voice settings
+- **NPC** — description, combat stats (armor, attack_die, zone, priority, weakness), voice settings, current_goal, current_action
 - **Location** — danger level, light, connections, contents
 - **Item** — properties, owner, history
 - **Faction** — members, goals, disposition
-- **Myths** (`world/myths.md`) — five myths with omen levels 0-6
+- **Dooms** (`world/dooms.md`) — five dooms with portent levels 0-6
 - **Progress Clocks** (`world/clocks.md`) — segmented progress clocks
-- **Campaign Memory** (`world/CLAUDE.md`) — compact markdown tables, updated each session
+- **Calendar** (`world/calendar.md`) — in-game date, season, weather, time tracking metadata
+- **GM Notes** (`world/gm-notes.md`) — persistent prep buffer (strong starts, secrets, NPC moves, scenes, encounters, treasure)
+- **Campaign Memory** (`world/CLAUDE.md`) — compact markdown tables, updated periodically during play and at narrative pauses
 
 ## Quest Board (`world/quests.md`)
 
@@ -59,20 +61,20 @@ Append entries chronologically. Use tags in brackets for categorization.
 - [event] Met Corvin Half-Tooth at the Mended Flask — traded a coin for a rumor about the Wolds
 - [ruling] Ruled that listening for sounds under the Undercroft is Wits (Awareness), Difficulty 12
 - [thread] Strange scraping sounds beneath the Undercroft at night
-- [world-advance] The Hollow King's omen advances to 1 — cold winds from the Wolds
+- [world-advance] The Hollow King's portent advances to 1 — cold winds from the Wolds
 - [world-advance] Winter Approaches clock ticks 1 — first frost on the walls
 ```
 
 ## Campaign Context (`world/campaign-context.md`)
 
-Written once during `/glintlock:new-session`. Updated only if the campaign premise fundamentally changes.
+Written once during `/glintlock:start`. Updated only if the campaign premise fundamentally changes.
 
 ```markdown
 # Campaign Context
 
 **Setting:** The Pale Reach — a dark frontier at the edge of civilization. Home base: Thornwall.
-**Premise:** Five myths stir in the surrounding lands. Thornwall is the last waystation, undermanned and undersupplied, fighting to survive until spring.
-**Tone:** Grim frontier survival, mythic horror. Resources are scarce, allies are few, and the land itself remembers.
+**Premise:** Five dooms stir in the surrounding lands. Thornwall is the last waystation, undermanned and undersupplied, fighting to survive until spring.
+**Tone:** Grim frontier survival, doomic horror. Resources are scarce, allies are few, and the land itself remembers.
 **Language:** eng
 **Starting Date:** Day 1 of the Harvest Moon.
 ```

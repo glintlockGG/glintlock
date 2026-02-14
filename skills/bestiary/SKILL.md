@@ -1,9 +1,9 @@
 ---
 name: bestiary
-description: "Monster stat blocks for [SYSTEM], with HP, Armor (DR), attack dice, zone, priority, weakness, and special abilities. This skill should be used when spawning monsters, running combat, looking up creature stats, or generating encounters."
+description: "Monster stat blocks with HP, Armor (DR), attack dice, zone, priority, weakness, and special abilities. This skill should be used when spawning monsters, running combat, looking up creature stats, or generating encounters."
 ---
 
-# [SYSTEM] — Bestiary Reference
+# Bestiary Reference
 
 ## Stat Block Format
 
@@ -50,15 +50,15 @@ Wandering monsters have a 50% chance of carrying treasure. Lair encounters alway
 
 ## Stat Blocks
 
-Read `references/monsters.md` for the full alphabetical stat block reference (~50 monsters). This includes standard fantasy creatures and setting-specific myth creatures. Custom campaigns will have their own myth creatures defined in their adventure files.
+Read `references/monsters.md` for the full alphabetical stat block reference (~50 monsters). This includes standard fantasy creatures and setting-specific doom creatures. Custom campaigns will have their own doom creatures defined in their adventure files.
 
 When you need a specific monster's stats during combat or encounter setup, load the reference file and find the entry by name. All stat blocks follow the format above.
 
-### Pale Reach Myth Creatures
+### Pale Reach Doom Creatures
 
-The following creatures are specific to The Pale Reach starter sandbox. Custom campaigns will have their own myth creatures defined in their adventure files.
+The following creatures are specific to The Pale Reach starter sandbox. Custom campaigns will have their own doom creatures defined in their adventure files.
 
-| Myth | Theme | Creatures |
+| Doom | Theme | Creatures |
 |------|-------|-----------|
 | Hollow King | Undead, barrows | Barrow Wight, Hollow Knight, Bone Shepherd |
 | Green Maw | Forest, plant horror | Thornling, Root Horror, Maw Tendril |
@@ -66,7 +66,7 @@ The following creatures are specific to The Pale Reach starter sandbox. Custom c
 | Iron Seam | Metal, constructs | Ore Crawler, Iron Husk, Seam Guardian |
 | Antler Court | Fey, wild hunts | Thorn Sprite, Antler Knight, Court Herald |
 
-Each myth has two standard creatures and one mini-boss. Mini-bosses are significantly tougher and should anchor encounters, not appear in groups.
+Each doom has two standard creatures and one mini-boss. Mini-bosses are significantly tougher and should anchor encounters, not appear in groups.
 
 ## Related Skills
 - **core-rules** — Combat mechanics, check DCs, death and dying

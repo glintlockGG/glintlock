@@ -58,7 +58,7 @@ When the party defeats a significant enemy or discovers a cache:
 
 3. **Roll specific items** — Use `roll_oracle` with table `treasure_0_3` for random items. For magic items, also roll on `magic_item_name` for evocative names.
 
-4. **Milestone connection** — Treasure can be tied to milestones. Recovering a legendary artifact from a myth-site counts as a milestone toward leveling up.
+4. **Milestone connection** — Treasure can be tied to milestones. Recovering a legendary artifact from a doom-site counts as a milestone toward leveling up.
 
 ## Sample Magic Items
 

@@ -1,6 +1,6 @@
 # Glintlock
 
-A [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code) that turns Claude into a solo TTRPG campaign and adventure engine. Play the included Pale Reach starter sandbox or build a custom campaign from scratch through session-zero worldbuilding. Generate new adventures on demand during play. Real dice, curated random tables, voice-acted NPCs, atmospheric audio, and full audiobook generation — all in the terminal.
+A [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code) that turns Claude into an always-on solo TTRPG campaign engine. A campaign is a folder + a thread — play is continuous, the world advances between sessions, and state is always persisted. Play the included Pale Reach starter sandbox or build a custom campaign from scratch. Generate new adventures on demand during play. Real dice, curated random tables, voice-acted NPCs, atmospheric audio, and full audiobook generation — all in the terminal.
 
 **Homepage:** [glintlock.gg](https://glintlock.gg)
 
@@ -29,8 +29,8 @@ claude --plugin-dir ./glintlock
 ### Play
 
 ```
-> /glintlock:new-session        # Create a character and start playing
-> /glintlock:continue-session   # Resume where you left off
+> /glintlock:start    # Create a character and start playing
+> /glintlock:resume   # Return to your campaign
 ```
 
 ## Quick Demo
@@ -52,17 +52,18 @@ What do you do with what you've found?
 
 ## How It Works
 
-You talk. Claude runs the game. Describe what your character does in natural language. Claude narrates the world, voices NPCs, rolls dice, tracks your inventory, manages quests, and plays atmospheric audio — all in the terminal. Game state is saved automatically to markdown files as you play, so you can pick up exactly where you left off.
+You talk. Claude runs the game. Describe what your character does in natural language. Claude narrates the world, voices NPCs, rolls dice, tracks your inventory, manages quests, and plays atmospheric audio — all in the terminal. Game state is saved continuously to markdown files as you play. The world advances between sessions — NPCs pursue their goals, clocks tick, dooms escalate. When you return, the GM catches you up and drops you into the action.
 
 ## Features
 
 ### Gameplay
 
 - **Real dice** — All rolls use cryptographic randomness (`crypto.randomInt`) via the `roll_dice` tool. Standard NdS+M notation with advantage and disadvantage.
-- **20+ oracle tables** — Curated random tables for NPC names (5 ancestries: human, eldren, dwerrow, goblin, beastkin), 6 terrain encounter tables, treasure, traps, rumors, hazards, creature behavior, backgrounds, gear, adventure names, and magic item names. The GM rolls on these instead of inventing content, keeping results surprising for both player and AI.
-- **Full [SYSTEM] rules** — 6 classes (Warden, Scout, Invoker, Surgeon, Rogue, Seer), 5 ancestries, ~50 monster stat blocks, spells for 4 casting classes, d20 roll-over resolution with Difficulty = 20 − Stat, countdown dice for resource pressure, myth escalation tracks, BitD-style progress clocks, and milestone advancement. All encoded as skills that load on demand.
+- **20+ oracle tables + yes/no oracle** — Curated random tables for NPC names (5 ancestries: human, eldren, dwerrow, goblin, beastkin), 6 terrain encounter tables, treasure, traps, rumors, hazards, creature behavior, backgrounds, gear, adventure names, and magic item names. An Ironsworn-style yes/no oracle for ambiguous decisions. The GM rolls on these instead of inventing content, keeping results surprising for both player and AI.
+- **Full rules system** — 6 classes (Warden, Scout, Invoker, Surgeon, Rogue, Seer), 5 ancestries, ~50 monster stat blocks, spells for 4 casting classes, d20 roll-over resolution with Difficulty = 20 − Stat, countdown dice for resource pressure, doom escalation tracks, BitD-style progress clocks, and milestone advancement. All encoded as skills that load on demand.
 - **Persistent world state** — Characters, NPCs, locations, items, factions, quests, and a session log are stored as human-readable markdown files with YAML frontmatter. No database. Files are version-controllable and editable by hand.
-- **GM learning** — The plugin tracks play style preferences, rulings precedents, narrative patterns, and active threads across sessions in a campaign memory file (`world/CLAUDE.md`). It remembers that you prefer exploration over combat, or that swimming in armor gives disadvantage, without being told twice.
+- **Always-on world** — The campaign world is alive. Between play sessions, NPCs pursue goals, factions make moves, dooms escalate, and clocks tick. Run `/glintlock:world-turn` manually or on a cron schedule to advance the world. The GM maintains a persistent prep buffer (`world/gm-notes.md`) with secrets, NPC moves, and ready-to-deploy scenes.
+- **GM learning** — The plugin tracks play style preferences, rulings precedents, narrative patterns, and active threads in a campaign memory file (`world/CLAUDE.md`). Use `/glintlock:feedback` to explicitly signal preferences. The GM remembers that you prefer exploration over combat, or that swimming in armor gives disadvantage, without being told twice.
 
 ### Audio
 
@@ -97,9 +98,10 @@ Requires an [ElevenLabs](https://elevenlabs.io/) API key. All audio plays in the
 
 | Command | Description |
 |---------|-------------|
-| `/glintlock:new-session` | Start a new campaign (Pale Reach press-play or session-zero custom) |
-| `/glintlock:continue-session` | Resume an existing campaign |
-| `/glintlock:end-session` | End session with save, world-advance, and campaign memory update |
+| `/glintlock:start` | Create a character and start a new campaign (Pale Reach press-play or session-zero custom) |
+| `/glintlock:resume` | Return to your campaign (world catches up, then strong start) |
+| `/glintlock:world-turn` | Advance the living world (tick clocks, advance dooms, NPC/faction moves, refresh prep) |
+| `/glintlock:feedback` | Signal your preferences to the GM |
 | `/glintlock:status` | Show your character sheet |
 | `/glintlock:roll` | Player-initiated dice roll |
 | `/glintlock:dashboard` | Generate a visual HTML campaign dashboard |
@@ -119,7 +121,7 @@ Markdown files at the repository root, auto-discovered by Claude Code. These def
 ```
 agents/gm.md              — GM identity and behavioral rules
 agents/audiobook-producer.md — Background audiobook generation agent
-commands/                  — 10 slash commands
+commands/                  — 11 slash commands
 skills/                    — 11 skills (rules, adventure design, templates, generation pipelines)
 hooks/hooks.json           — SessionStart hook (loads campaign context)
 .claude-plugin/plugin.json — Plugin manifest
@@ -128,12 +130,13 @@ hooks/hooks.json           — SessionStart hook (loads campaign context)
 
 ### MCP Server
 
-A lightweight Node.js/TypeScript process (`engine/`) spawned by Claude Code over stdio. Provides 10 tools:
+A lightweight Node.js/TypeScript process (`engine/`) spawned by Claude Code over stdio. Provides 11 tools:
 
 | Tool | What it does |
 |------|-------------|
 | `roll_dice` | Parse NdS+M expressions, cryptographic RNG, advantage/disadvantage |
-| `roll_oracle` | Roll on 20+ curated [SYSTEM] random tables with subtype and range matching |
+| `roll_oracle` | Roll on 20+ curated random tables with subtype and range matching |
+| `oracle_yes_no` | Ironsworn-style yes/no oracle with adjustable odds (almost certain → nearly impossible) |
 | `tts_narrate` | ElevenLabs v3 text-to-speech with per-character voice settings and multilingual support |
 | `generate_sfx` | AI sound effect generation with background playback |
 | `play_music` | AI music generation with looping playback, single-track management |
@@ -154,16 +157,16 @@ Skills are bundles of rules and templates that load on demand when the GM needs 
 | `spellbook` | Spells for 4 casting classes (Invoker, Seer, Surgeon, Warden), spellcasting, backlash |
 | `treasure` | Treasure tables, magic item generation, loot rules |
 | `adventure-design` | Adventure design principles, 7 structural templates (location-based, pointcrawl, investigation, faction conflict, defense/siege, expedition, heist), generation workflow |
-| `pale-reach` | The Pale Reach starter sandbox: Thornwall home base, 7x5 hex map, 5 myth-site dungeons, First Watch starter adventure, encounter tables, factions |
-| `state-management` | Entity file templates (PC, NPC, location, item, faction, myths, clocks) and conventions |
-| `dashboard-generation` | HTML dashboard template with myth omen tracks, progress clocks, countdown dice |
+| `pale-reach` | The Pale Reach starter sandbox: Thornwall home base, 7x5 hex map, 5 doom-site dungeons, First Watch starter adventure, encounter tables, factions |
+| `state-management` | Entity file templates (PC, NPC, location, item, faction, dooms, clocks) and conventions |
+| `dashboard-generation` | HTML dashboard template with doom portent tracks, progress clocks, countdown dice |
 | `story-generation` | Guidelines for transforming session logs into prose chapters |
 | `audiobook-generation` | Full audiobook pipeline: voice assignment, SFX/music cues, rendering, mixing |
-| `session-prep` | Lazy GM framework: strong starts, scenes, secrets, NPCs, encounters, treasure |
+| `gm-prep` | Continuous GM preparation: oracle-first methodology, just-in-time content generation, strong starts, secrets, NPC moves, encounters, treasure |
 
 ### State Management
 
-All game state lives in `world/` inside your **project directory** (not inside the plugin). The `/glintlock:new-session` command creates this directory automatically. Files are human-readable markdown with YAML frontmatter. No database.
+All game state lives in `world/` inside your **project directory** (not inside the plugin). The `/glintlock:start` command creates this directory automatically. Files are human-readable markdown with YAML frontmatter. No database. State is continuously persisted during play.
 
 ```
 world/                   # Created in your project directory
@@ -173,11 +176,12 @@ world/                   # Created in your project directory
   items/                 # Notable items and artifacts
   factions/              # Groups and their goals
   quests.md              # Active / Developing / Completed quest board
-  myths.md               # 5 myth omen tracks (0-6 per myth)
+  dooms.md               # 5 doom portent tracks (0-6 per doom)
   clocks.md              # Progress clocks (segmented, BitD-style)
   countdown.json         # Active countdown dice (managed by track_time tool)
   session-log.md         # Append-only tagged event log
-  session-prep.md        # GM's private session prep notes
+  gm-notes.md            # GM's persistent prep buffer (refreshed during play)
+  calendar.md            # In-game date, season, weather, time sync metadata
   campaign-context.md    # Campaign premise and setting
   CLAUDE.md              # Campaign memory (play style, rulings, active threads)
   dashboard.html         # Generated campaign dashboard

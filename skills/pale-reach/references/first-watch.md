@@ -1,6 +1,6 @@
 # First Watch — Starter Adventure
 
-A 3-act tutorial adventure that introduces the core systems of [SYSTEM]: resource pressure (countdown dice), myth omens, combat, and sandbox exploration. Designed for a level 1 character arriving at Thornwall for the first time.
+A 3-act tutorial adventure that introduces the core systems: resource pressure (countdown dice), doom portents, combat, and sandbox exploration. Designed for a level 1 character arriving at Thornwall for the first time.
 
 **Hook:** The player arrives at Thornwall just as things are getting worse. Commander Vess needs help immediately — the garrison is stretched thin. First Watch introduces the world, the mechanics, and the threats, then opens the sandbox.
 
@@ -35,7 +35,7 @@ Vess pays 10 gp for the recovered supplies. If the player dealt with the goblins
 
 ---
 
-## Act 2: The First Omen
+## Act 2: The First Portent
 
 **Trigger:** The night after Act 1, something happens. The player is woken by shouting from the walls.
 
@@ -43,7 +43,7 @@ Vess pays 10 gp for the recovered supplies. If the player dealt with the goblins
 *Sergeant Brenn is on the wall platform, staring east. The Wolds are visible in moonlight — rolling grassland, barrow mounds like dark humps. One of the barrows is glowing. A faint, cold blue light pulses from within.*
 
 - Brenn: "That's been dark as long as anyone remembers. Started glowing an hour ago. Soldiers won't go near it."
-- **Tutorial moment:** Advance the Hollow King's omen from 0 to 1. Update `world/myths.md`.
+- **Tutorial moment:** Advance the Hollow King's portent from 0 to 1. Update `world/dooms.md`.
 
 ### Scene 2: Investigation (Optional)
 If the player wants to investigate the nearest barrow (hex 0401):
@@ -54,12 +54,12 @@ If the player wants to investigate the nearest barrow (hex 0401):
 - **Loot:** Tarnished silver ring (5 gp), old sword (functional longsword), a stone tablet with worn runes (Maren Sable will pay 10 gp for this).
 
 ### Scene 3: Report Back
-Whether the player investigates or not, reporting to Vess triggers a conversation about the myths:
+Whether the player investigates or not, reporting to Vess triggers a conversation about the dooms:
 
-*Vess folds her arms. "Maren says there are five of these... things. Old powers. Tied to the land. She calls them myths." A pause. "I call them threats. And they're waking up."*
+*Vess folds her arms. "Maren says there are five of these... things. Old powers. Tied to the land. She calls them dooms." A pause. "I call them threats. And they're waking up."*
 
-- Vess explains: the bounty board now includes myth-related jobs alongside standard work
-- Maren offers to explain the myths in detail (loads pale-reach myth-site references)
+- Vess explains: the bounty board now includes doom-related jobs alongside standard work
+- Maren offers to explain the dooms in detail (loads pale-reach doom-site references)
 
 ---
 
@@ -76,7 +76,7 @@ Three categories of work:
 - Hex scouting (reveal undiscovered hexes) — 10 gp per new hex mapped
 - Threat elimination — varies by target
 
-**Myth Investigation:**
+**Doom Investigation:**
 - Investigate the glowing barrows (Hollow King) — 20 gp
 - Scout the Thornwood for signs of the Green Maw — 15 gp
 - Check the old mine in Ashfall Crags for activity — 15 gp
@@ -93,9 +93,9 @@ Three categories of work:
 At this point, the player has:
 - Used countdown dice for resource management
 - Experienced combat
-- Seen an omen advance
+- Seen an portent advance
 - Met the key NPCs
 - Understood the progress clocks
 - Seen the bounty board / quest system
 
-The sandbox is now fully open. The player chooses where to go and what to do. The myths advance whether they're addressed or not.
+The sandbox is now fully open. The player chooses where to go and what to do. The dooms advance whether they're addressed or not.
