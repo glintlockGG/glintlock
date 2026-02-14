@@ -5,7 +5,6 @@
       "args": ["${CLAUDE_PLUGIN_ROOT}/engine/scripts/start-engine.sh"],
       "env": {
         "GLINTLOCK_WORLD_DIR": "./world",
-        "GLINTLOCK_ORACLE_PATH": "${CLAUDE_PLUGIN_ROOT}/engine/data/oracle-tables.json",
         "ELEVENLABS_API_KEY": "${ELEVENLABS_API_KEY}"
       }
     }

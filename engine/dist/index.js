@@ -210,6 +210,8 @@ server.tool("track_time", "Manage countdown dice for resource pressure. Countdow
     }
 });
 // --- Start server ---
+console.error("[glintlock-engine] registering tools...");
 const transport = new StdioServerTransport();
 await server.connect(transport);
+console.error("[glintlock-engine] connected — all tools available");
 //# sourceMappingURL=index.js.map

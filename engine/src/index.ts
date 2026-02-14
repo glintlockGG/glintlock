@@ -268,5 +268,7 @@ server.tool(
 );
 
 // --- Start server ---
+console.error("[glintlock-engine] registering tools...");
 const transport = new StdioServerTransport();
 await server.connect(transport);
+console.error("[glintlock-engine] connected — all tools available");

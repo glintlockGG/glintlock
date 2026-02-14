@@ -1,14 +1,35 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import crypto from "node:crypto";
 import path from "node:path";
 import { parseAndRoll } from "./dice.js";
 
-const oraclePath = path.resolve(
-  process.env.GLINTLOCK_ORACLE_PATH ?? "./engine/data/oracle-tables.json"
-);
-const oracleTables: Record<string, OracleTable> = JSON.parse(
-  readFileSync(oraclePath, "utf-8")
-);
+let cachedTables: Record<string, OracleTable> | null = null;
+let cachedError: string | null = null;
+
+function loadOracleTables(): Record<string, OracleTable> {
+  if (cachedTables) return cachedTables;
+  if (cachedError) throw new Error(cachedError);
+
+  const oraclePath = path.resolve(
+    process.env.GLINTLOCK_ORACLE_PATH || "./data/oracle-tables.json"
+  );
+
+  if (!existsSync(oraclePath)) {
+    cachedError = `Oracle tables not found at ${oraclePath}. Set GLINTLOCK_ORACLE_PATH or ensure the file exists. Other tools (dice, TTS, SFX, music) still work.`;
+    console.error(`[glintlock-engine] ${cachedError}`);
+    throw new Error(cachedError);
+  }
+
+  try {
+    cachedTables = JSON.parse(readFileSync(oraclePath, "utf-8"));
+    console.error(`[glintlock-engine] oracle tables loaded from ${oraclePath}`);
+    return cachedTables!;
+  } catch (err) {
+    cachedError = `Failed to parse oracle tables at ${oraclePath}: ${(err as Error).message}`;
+    console.error(`[glintlock-engine] ${cachedError}`);
+    throw new Error(cachedError);
+  }
+}
 
 interface OracleTable {
   dice?: string;
@@ -65,9 +86,10 @@ export function oracleYesNo(params: OracleYesNoParams) {
 export function rollOracle(params: RollOracleParams) {
   const { table: tableName, subtype } = params;
 
-  const table = oracleTables[tableName];
+  const tables = loadOracleTables();
+  const table = tables[tableName];
   if (!table) {
-    throw new Error(`Unknown oracle table: "${tableName}". Available: ${Object.keys(oracleTables).join(", ")}`);
+    throw new Error(`Unknown oracle table: "${tableName}". Available: ${Object.keys(tables).join(", ")}`);
   }
 
   if (!table.dice) {
