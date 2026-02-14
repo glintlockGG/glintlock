@@ -10,3 +10,6 @@ world-*/
 
 # Playwright MCP cache
 .playwright-mcp/
+
+# Engram project journal (local developer state)
+.engram/
