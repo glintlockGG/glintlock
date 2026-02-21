@@ -9,7 +9,7 @@ allowed-tools:
 
 Player-initiated dice roll. Parse the player's request and call `roll_dice`.
 
-If the roll requires a stat (e.g. "vigor check", "initiative"), read the PC file from `world/characters/` to get the relevant stat. Calculate Difficulty = 20 − Stat (or 20 − Stat×2 if the character is trained in the relevant skill).
+If the roll requires a stat (e.g. "vigor check", "initiative"), read the PC file from `world/characters/` to get the relevant stat. Use the resolution formula from the `core-rules` skill to calculate Difficulty.
 
 Examples:
 - "/glintlock:roll 2d6+3" → call roll_dice with expression "2d6+3"
