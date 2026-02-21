@@ -8,44 +8,40 @@
   @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:wght@400;500;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root {
-    /* Surfaces — deep navy */
-    --background:  #080a0f;
-    --surface-1:   #0d1017;
-    --surface-2:   #12151e;
-    --surface-3:   #161a24;
-    --surface-4:   #1a1f2a;
-
-    /* Text — warm parchment */
-    --text:           #e2ddd5;
-    --text-secondary: #b0aaa2;
-    --text-muted:     #7a7680;
-    --text-dim:       #4e4b55;
-
-    /* Brand & status */
-    --primary:        #d4622a;
-    --primary-bright: #e8773a;
-    --primary-soft:   rgba(212, 98, 42, 0.1);
-    --success:        #3ddc84;
-    --success-soft:   rgba(61, 220, 132, 0.1);
-    --warning:        #eab308;
-    --warning-soft:   rgba(234, 179, 8, 0.1);
-    --danger:         #ef4444;
-    --danger-soft:    rgba(239, 68, 68, 0.1);
-    --discord:        #5865F2;
-    --discord-soft:   rgba(88, 101, 242, 0.1);
-    --violet:         #a78bfa;
-    --violet-soft:    rgba(167, 139, 250, 0.1);
+    /* Surfaces */
+    --bg-app:        #0f1117;
+    --bg-rail:       #13151c;
+    --bg-surface:    #181b24;
+    --bg-card:       #1e2130;
+    --bg-card-hover: #252839;
+    --bg-input:      #12141b;
 
     /* Borders */
-    --border:        #1c2030;
-    --border-light:  #252a3a;
-    --border-accent: rgba(212, 98, 42, 0.25);
+    --border:       #2a2d3a;
+    --border-light: #3a3e50;
 
-    /* Typography */
-    --font-display:   'Cinzel', serif;
-    --font-body:      'DM Sans', system-ui, sans-serif;
-    --font-narrative: 'Crimson Pro', serif;
-    --font-mono:      'JetBrains Mono', monospace;
+    /* Text */
+    --text:          #e8e4dc;
+    --text-secondary:#b8b4aa;
+    --text-dim:      #6b6860;
+    --text-label:    #8a8680;
+
+    /* Accent — torchlight amber */
+    --amber:     #e8a44a;
+    --amber-dim: rgba(232,164,74,0.15);
+    --amber-glow:rgba(232,164,74,0.08);
+
+    /* Status */
+    --red:      #e85454;
+    --red-dim:  rgba(232,84,84,0.15);
+    --green:    #4abe7a;
+    --green-dim:rgba(74,190,122,0.15);
+    --blue:     #5b8def;
+    --blue-dim: rgba(91,141,239,0.12);
+    --violet:   #a78bfa;
+    --violet-dim:rgba(167,139,250,0.12);
+    --warning:  #eab308;
+    --warning-dim:rgba(234,179,8,0.12);
 
     /* Stat accent colors */
     --stat-vigor:    #d4622a;
@@ -55,34 +51,34 @@
     --stat-presence: #f472b6;
     --stat-lore:     #5865F2;
 
+    /* Layout */
+    --rail-width:   64px;
+    --bottom-height:52px;
+    --right-width:  320px;
+
+    /* Typography */
+    --font-display:   'Cinzel', serif;
+    --font-body:      'DM Sans', system-ui, sans-serif;
+    --font-narrative: 'Crimson Pro', serif;
+    --font-mono:      'JetBrains Mono', monospace;
+
     /* Radius */
     --radius:    8px;
     --radius-sm: 6px;
-    --radius-lg: 12px;
+    --radius-lg: 10px;
     --radius-pill: 20px;
-
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-
-    /* Layout */
-    --sidebar-width: 220px;
-    --header-height: 48px;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    background: var(--background);
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-app);
     color: var(--text);
     font-family: var(--font-body);
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.5;
-    height: 100vh;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: var(--sidebar-width) 1fr;
-    grid-template-rows: var(--header-height) 1fr;
   }
 
   /* Noise texture overlay */
@@ -98,312 +94,155 @@
     background-size: 256px 256px;
   }
 
-  /* ================= SCROLLBAR ================= */
+  /* Scrollbar */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
 
-  /* ================= HEADER ================= */
-  .header {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    height: var(--header-height);
-    display: flex;
-    align-items: center;
-    padding: 0 1.25rem;
-    background: var(--surface-2);
-    border-bottom: 1px solid var(--border);
-    z-index: 10;
+  /* ================= APP SHELL ================= */
+  .app-shell {
+    display: grid;
+    grid-template-columns: var(--rail-width) 1fr var(--right-width);
+    grid-template-rows: 1fr var(--bottom-height);
+    height: 100vh;
+    width: 100vw;
   }
 
-  .header-brand {
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--primary);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    white-space: nowrap;
+  .app-shell.right-collapsed {
+    grid-template-columns: var(--rail-width) 1fr 0px;
   }
 
-  .header-title {
-    flex: 1;
-    text-align: center;
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    letter-spacing: 0.06em;
-  }
+  .app-shell.right-collapsed .right-drawer { display: none; }
 
-  .header-meta {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--text-dim);
-    white-space: nowrap;
-  }
-
-  /* ================= SIDEBAR ================= */
-  .sidebar {
+  /* ================= LEFT RAIL ================= */
+  .left-rail {
     grid-column: 1;
-    grid-row: 2;
-    background: var(--surface-1);
+    grid-row: 1 / -1;
+    background: var(--bg-rail);
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    align-items: center;
+    padding: 12px 0;
+    gap: 4px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-  /* Character mini-card */
-  .sidebar-minicard {
-    padding: 0.85rem 0.75rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .mini-name {
-    font-family: var(--font-display);
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: 0.02em;
-    margin-bottom: 0.1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .mini-subtitle {
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-  }
-
-  .mini-hp-track {
-    width: 100%;
-    height: 14px;
-    background: var(--surface-3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 0.4rem;
-  }
-
-  .mini-hp-fill {
-    height: 100%;
-    border-radius: var(--radius-sm);
-    background: linear-gradient(90deg, #b84520, var(--primary), var(--primary-bright));
-    transition: width 0.4s ease;
-  }
-
-  .mini-hp-fill.low { background: linear-gradient(90deg, #8b1a1a, var(--danger)); }
-
-  .mini-hp-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    font-weight: 500;
-    color: var(--text);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
-  }
-
-  .mini-stats {
-    display: flex;
-    gap: 0.6rem;
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    color: var(--text-muted);
-  }
-
-  .mini-stats .val { color: var(--text); font-weight: 500; }
-  .mini-stats .gold { color: var(--warning); }
-
-  /* Navigation */
-  .sidebar-nav {
-    padding: 0.6rem 0;
-    flex: 1;
-  }
-
-  .nav-label {
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    font-weight: 500;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 0.4rem 0.75rem 0.25rem;
-  }
-
-  .nav-item {
+  .rail-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--amber-dim);
+    border: 1px solid var(--amber);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.75rem;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--text-muted);
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 8px;
     cursor: pointer;
+    color: var(--amber);
+    font-weight: 700;
+    font-family: var(--font-display);
+  }
+
+  .rail-divider {
+    width: 28px;
+    height: 1px;
+    background: var(--border);
+    margin: 6px 0;
+  }
+
+  .rail-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius);
+    background: transparent;
     border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-    font-family: var(--font-body);
-    border-left: 2px solid transparent;
-    transition: color 0.15s, background 0.15s;
-  }
-
-  .nav-item:hover {
-    color: var(--text-secondary);
-    background: var(--surface-2);
-  }
-
-  .nav-item.active {
-    color: var(--text);
-    background: var(--surface-2);
-    border-left-color: var(--primary);
-  }
-
-  .nav-icon {
-    font-size: 0.85rem;
-    width: 1.25rem;
-    text-align: center;
-    flex-shrink: 0;
-  }
-
-  /* Sidebar footer */
-  .sidebar-footer {
-    padding: 0.65rem 0.75rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .footer-location {
+    color: var(--text-dim);
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.35rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .footer-location .loc-icon { color: var(--text-dim); }
-
-  /* Level indicator (replaces XP bar) */
-  .level-label {
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: var(--text-dim);
-  }
-
-  /* Portent track (doom portent bars) */
-  .portent-track {
-    width: 100%;
-    height: 8px;
-    background: var(--surface-1);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
+    justify-content: center;
+    transition: all 0.15s;
     position: relative;
+    font-size: 16px;
   }
 
-  .portent-fill {
+  .rail-btn:hover {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+  }
+
+  .rail-btn.active {
+    background: var(--amber-dim);
+    color: var(--amber);
+  }
+
+  .rail-btn .tooltip {
+    display: none;
+    position: absolute;
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    white-space: nowrap;
+    color: var(--text);
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .rail-btn:hover .tooltip { display: block; }
+
+  .rail-spacer { flex: 1; }
+
+  /* Rail minicard */
+  .rail-minicard {
+    width: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 0;
+    margin-top: auto;
+  }
+
+  .minicard-hp {
+    width: 36px;
+    height: 4px;
+    background: var(--bg-card);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .minicard-hp-fill {
     height: 100%;
-    border-radius: 4px;
-    transition: width 0.4s ease;
+    background: var(--green);
+    border-radius: 2px;
+    transition: width 0.3s;
   }
 
-  .portent-fill.low    { background: var(--success); }
-  .portent-fill.mid    { background: var(--warning); }
-  .portent-fill.high   { background: var(--primary); }
-  .portent-fill.crit   { background: var(--danger); }
+  .minicard-hp-fill.wounded { background: var(--amber); }
+  .minicard-hp-fill.critical { background: var(--red); }
 
-  .doom-item {
-    margin-bottom: 0.5rem;
-  }
-
-  .doom-name {
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 0.15rem;
-  }
-
-  .doom-portent-label {
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
+  .minicard-label {
+    font-size: 9px;
     color: var(--text-dim);
-    margin-top: 0.1rem;
-  }
-
-  /* Progress clock (segmented circles) */
-  .clock-row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .clock-svg {
-    flex-shrink: 0;
-  }
-
-  .clock-label {
-    font-size: 0.72rem;
-    color: var(--text-secondary);
-  }
-
-  .clock-meta {
+    text-align: center;
+    line-height: 1.2;
     font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: var(--text-dim);
   }
 
-  /* Countdown dice */
-  .cd-item {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.15rem 0;
-    font-size: 0.72rem;
-    color: var(--text-secondary);
-  }
-
-  .cd-die {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 500;
-    padding: 0.1rem 0.35rem;
-    border-radius: var(--radius-sm);
-    background: var(--surface-4);
-    border: 1px solid var(--border);
-  }
-
-  .cd-die.cd-ok       { color: var(--success); border-color: var(--success); }
-  .cd-die.cd-warn     { color: var(--warning); border-color: var(--warning); }
-  .cd-die.cd-danger   { color: var(--danger); border-color: var(--danger); }
-  .cd-die.cd-dead     { color: var(--text-dim); border-color: var(--text-dim); text-decoration: line-through; }
-
-  .danger-badge {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    font-weight: 500;
-  }
-
-  .danger-safe    { color: var(--success); }
-  .danger-unsafe  { color: var(--warning); }
-  .danger-risky   { color: var(--primary); }
-  .danger-deadly  { color: var(--danger); }
-
-  /* ================= CONTENT AREA ================= */
-  .content {
+  /* ================= CENTER WORKSPACE ================= */
+  .center-workspace {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 1;
+    background: var(--bg-app);
     overflow: hidden;
     position: relative;
   }
@@ -413,56 +252,88 @@
     position: absolute;
     inset: 0;
     overflow-y: auto;
+    padding: 20px 24px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
   }
 
-  .view.active { display: grid; }
+  .view::-webkit-scrollbar { width: 6px; }
+  .view::-webkit-scrollbar-track { background: transparent; }
+  .view::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-  /* ================= SHARED COMPONENTS ================= */
+  .view.active { display: block; }
 
-  /* Card */
+  /* View header */
+  .view-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .view-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .view-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-left: 12px;
+  }
+
+  /* ================= CARDS ================= */
   .card {
-    background: var(--surface-3);
+    background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 12px;
     overflow: hidden;
-    min-height: 0;
   }
 
   .card-header {
-    padding: 0.55rem 0.75rem;
-    border-bottom: 1px solid var(--border);
-    font-family: var(--font-display);
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    flex-shrink: 0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
   }
 
-  .card-header .chevron { color: var(--primary); }
+  .card-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-label);
+    font-weight: 600;
+  }
+
+  .card-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-card);
+    color: var(--text-dim);
+  }
 
   .card-body {
-    padding: 0.65rem 0.75rem;
-    overflow-y: auto;
-    flex: 1;
-    min-height: 0;
+    padding: 12px 16px;
   }
 
-  /* Pill badges */
+  /* ================= PILLS & BADGES ================= */
   .pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    padding: 0.1rem 0.45rem;
+    gap: 4px;
+    padding: 1px 8px;
     border-radius: var(--radius-pill);
     font-family: var(--font-mono);
-    font-size: 0.58rem;
+    font-size: 10px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -476,38 +347,36 @@
     flex-shrink: 0;
   }
 
-  .pill-alive { background: var(--success-soft); color: var(--success); }
-  .pill-alive .pill-dot { background: var(--success); }
-  .pill-deceased { background: var(--danger-soft); color: var(--danger); }
-  .pill-deceased .pill-dot { background: var(--danger); }
-  .pill-friendly { background: var(--success-soft); color: var(--success); }
-  .pill-wary { background: var(--warning-soft); color: var(--warning); }
-  .pill-hostile { background: var(--danger-soft); color: var(--danger); }
-  .pill-neutral { background: rgba(122, 118, 128, 0.1); color: var(--text-muted); }
-
-  .pill-active { background: var(--primary-soft); color: var(--primary); }
-  .pill-developing { background: var(--discord-soft); color: var(--discord); }
-  .pill-completed { background: rgba(122, 118, 128, 0.1); color: var(--text-dim); }
+  .pill-alive { background: var(--green-dim); color: var(--green); }
+  .pill-alive .pill-dot { background: var(--green); }
+  .pill-deceased { background: var(--red-dim); color: var(--red); }
+  .pill-deceased .pill-dot { background: var(--red); }
+  .pill-friendly { background: var(--green-dim); color: var(--green); }
+  .pill-wary { background: var(--warning-dim); color: var(--warning); }
+  .pill-hostile { background: var(--red-dim); color: var(--red); }
+  .pill-neutral { background: rgba(107,104,96,0.12); color: var(--text-dim); }
+  .pill-active { background: var(--green-dim); color: var(--green); }
+  .pill-developing { background: var(--blue-dim); color: var(--blue); }
+  .pill-completed { background: rgba(107,104,96,0.12); color: var(--text-dim); }
 
   /* Journal tag pills */
   .tag {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.52rem;
+    font-size: 9px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    padding: 0.06rem 0.3rem;
-    border-radius: var(--radius-sm);
-    margin-right: 0.25rem;
-    vertical-align: middle;
+    padding: 1px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
   }
 
-  .tag-event       { background: var(--primary-soft); color: var(--primary); }
-  .tag-discovery   { background: var(--success-soft); color: var(--success); }
-  .tag-thread      { background: var(--discord-soft); color: var(--discord); }
-  .tag-ruling      { background: var(--violet-soft); color: var(--violet); }
-  .tag-world-advance { background: var(--warning-soft); color: var(--warning); }
+  .tag-event       { background: var(--amber-dim); color: var(--amber); }
+  .tag-discovery   { background: var(--green-dim); color: var(--green); }
+  .tag-thread      { background: var(--blue-dim); color: var(--blue); }
+  .tag-ruling      { background: var(--violet-dim); color: var(--violet); }
+  .tag-world-advance { background: var(--red-dim); color: var(--red); }
 
   /* Sub-tabs within cards */
   .sub-tabs {
@@ -518,9 +387,9 @@
   }
 
   .sub-tab {
-    padding: 0.35rem 0.65rem;
+    padding: 8px 14px;
     font-family: var(--font-body);
-    font-size: 0.7rem;
+    font-size: 11px;
     font-weight: 500;
     color: var(--text-dim);
     cursor: pointer;
@@ -530,83 +399,42 @@
     transition: color 0.15s;
   }
 
-  .sub-tab:hover { color: var(--text-muted); }
+  .sub-tab:hover { color: var(--text-secondary); }
 
-  .sub-tab.active {
-    color: var(--primary);
-  }
+  .sub-tab.active { color: var(--amber); }
 
   .sub-tab.active::after {
     content: '';
     position: absolute;
     bottom: -1px;
-    left: 0.65rem;
-    right: 0.65rem;
+    left: 14px;
+    right: 14px;
     height: 2px;
-    background: var(--primary);
+    background: var(--amber);
     border-radius: 2px 2px 0 0;
   }
 
   .sub-pane { display: none; }
   .sub-pane.active { display: block; }
 
-  /* HP bar (reusable) */
-  .hp-track {
-    width: 100%;
-    height: 20px;
-    background: var(--surface-1);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hp-fill {
-    height: 100%;
-    border-radius: var(--radius-sm);
-    background: linear-gradient(90deg, #b84520, var(--primary), var(--primary-bright));
-    transition: width 0.4s ease;
-  }
-
-  .hp-fill.low { background: linear-gradient(90deg, #8b1a1a, var(--danger)); }
-
-  .hp-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 500;
-    color: var(--text);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
-  }
-
-  /* Compact HP bar (NPCs) */
-  .hp-track-sm {
-    width: 100%;
-    height: 10px;
-    background: var(--surface-1);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hp-track-sm .hp-fill { border-radius: 3px; }
-
-  /* Section heading */
-  .section-heading {
-    font-family: var(--font-display);
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--text-muted);
+  /* Danger badge */
+  .danger-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    font-family: var(--font-mono);
   }
 
-  .section-heading .chevron { color: var(--primary); margin-right: 0.3rem; }
+  .danger-safe   { background: var(--green-dim); color: var(--green); }
+  .danger-unsafe { background: var(--amber-dim); color: var(--amber); }
+  .danger-risky  { background: var(--red-dim); color: var(--red); }
+  .danger-deadly { background: var(--red-dim); color: var(--red); }
 
   /* No-content fallback */
   .no-content {
@@ -614,129 +442,139 @@
     color: var(--text-dim);
     font-style: italic;
     font-family: var(--font-narrative);
-    font-size: 0.95rem;
-    padding: 3rem 0;
+    font-size: 14px;
+    padding: 40px 0;
   }
 
-  /* ================= VIEW 1: PLAYER ================= */
-  .view-player {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 0.75rem;
-    padding: 0.75rem;
+  /* Two-column layout helper */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
-  /* Hero banner — full width */
-  .player-hero {
-    grid-column: 1;
-    grid-row: 1;
-    background: var(--surface-2);
+  /* ================= PLAYER VIEW ================= */
+  .char-hero {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 1rem 1.25rem;
+    margin-bottom: 16px;
   }
 
-  .hero-top {
+  .char-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-light);
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 0.65rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
   }
 
-  .hero-identity {
-    flex: 1;
-    min-width: 180px;
-  }
-
-  .hero-name {
+  .char-identity h2 {
     font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
     color: var(--text);
-    letter-spacing: 0.03em;
-    margin-bottom: 0.1rem;
+    line-height: 1.2;
   }
 
-  .hero-subtitle {
-    font-size: 0.82rem;
-    color: var(--text-secondary);
+  .char-identity .char-meta {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
   }
 
-  .hero-vitals {
+  .char-vitals {
     display: flex;
-    gap: 1.25rem;
-    flex-shrink: 0;
+    gap: 12px;
+    align-items: center;
   }
 
-  .vital-item {
+  .vital-block {
     text-align: center;
-  }
-
-  .vital-label {
-    font-family: var(--font-mono);
-    font-size: 0.52rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.1rem;
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    min-width: 56px;
   }
 
   .vital-value {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.1;
-  }
-
-  .vital-value.gold { color: var(--warning); }
-
-  .hero-hp-row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .hero-hp-row .hp-track { flex: 1; }
-
-  .death-clock {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    flex-shrink: 0;
-  }
-
-  .death-clock-label {
     font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: var(--danger);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .vital-label {
+    font-size: 9px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin-top: 1px;
   }
 
-  /* Stat strip — horizontal medallions */
-  .player-stats {
-    grid-column: 1;
-    grid-row: 2;
+  /* HP Bar */
+  .hp-bar-container {
+    padding: 12px 20px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 16px;
+  }
+
+  .hp-bar-header {
     display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 6px;
   }
 
-  .stat-medallion {
-    flex: 1;
-    min-width: 120px;
-    background: var(--surface-2);
+  .hp-bar-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+  .hp-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+
+  .hp-bar {
+    height: 8px;
+    background: var(--bg-card);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .hp-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--green);
+    transition: width 0.4s ease;
+  }
+
+  .hp-bar-fill.wounded { background: var(--amber); }
+  .hp-bar-fill.critical { background: var(--red); }
+
+  /* Stats grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .stat-cell {
+    text-align: center;
+    padding: 10px 6px 8px;
+    background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 0.5rem 0.6rem 0.45rem;
     position: relative;
     overflow: hidden;
   }
 
-  .stat-medallion::before {
+  .stat-cell::before {
     content: '';
     position: absolute;
     top: 0;
@@ -746,607 +584,445 @@
     background: var(--stat-color, var(--border));
   }
 
-  .stat-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.15rem;
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
   }
 
-  .stat-label {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    font-weight: 500;
+  .stat-name {
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--stat-color, var(--text-muted));
+    color: var(--text-dim);
+    margin-top: 4px;
   }
 
   .stat-dc {
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: 9px;
     color: var(--text-dim);
-    background: var(--surface-4);
-    padding: 0.05rem 0.3rem;
-    border-radius: var(--radius-sm);
-  }
-
-  .stat-value {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1;
-    text-align: center;
-    margin: 0.1rem 0;
+    margin-top: 2px;
   }
 
   .stat-trained {
-    border-top: 1px solid var(--border);
-    margin-top: 0.35rem;
-    padding-top: 0.3rem;
+    font-size: 9px;
+    color: var(--amber);
+    margin-top: 2px;
+    line-height: 1.3;
+    word-break: break-word;
   }
 
-  .stat-skill {
-    font-size: 0.65rem;
-    color: var(--text-secondary);
-    padding: 0.06rem 0;
+  /* Training pills */
+  .training-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .training-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: var(--amber-dim);
+    color: var(--amber);
+    border: 1px solid rgba(232,164,74,0.2);
+  }
+
+  /* Countdown dice */
+  .countdown-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+
+  .countdown-row:last-child { border-bottom: none; }
+  .countdown-name { color: var(--text-secondary); }
+
+  .countdown-die {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-card);
+    color: var(--text);
+  }
+
+  .countdown-die.low { color: var(--red); background: var(--red-dim); }
+
+  /* Inventory */
+  .inventory-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
   }
 
-  .stat-skill-name {
-    color: var(--stat-color, var(--text-secondary));
+  .inventory-item:last-child { border-bottom: none; }
+
+  .inventory-item-name {
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .stat-skill-dc {
+  .inventory-item-detail {
     font-family: var(--font-mono);
-    font-size: 0.58rem;
+    font-size: 11px;
     color: var(--text-dim);
   }
 
-  /* Details grid — two columns below stats */
-  .player-details {
-    grid-column: 1;
-    grid-row: 3;
-    display: grid;
-    grid-template-columns: 55fr 45fr;
-    gap: 0.75rem;
-  }
-
-  .player-col-left,
-  .player-col-right {
+  /* Death clock */
+  .death-clock {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 6px;
   }
 
-  /* Inventory slot pip visualization */
-  .inv-slots-visual {
+  .death-clock-pips {
     display: flex;
     gap: 3px;
-    flex-wrap: wrap;
-    margin-bottom: 0.4rem;
   }
 
-  .inv-slot-pip {
-    width: 14px;
-    height: 14px;
-    border-radius: 3px;
-    background: var(--surface-1);
-    border: 1px solid var(--border);
+  .death-pip {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--red);
   }
 
-  .inv-slot-pip.filled {
-    background: var(--primary-soft);
-    border-color: var(--primary);
-  }
+  .death-pip.filled { background: var(--red); }
 
-  /* Enhanced inventory items */
-  .inv-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    padding: 0.18rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .inv-item:last-child { border-bottom: none; }
-
-  .inv-item-name { flex: 1; }
-
-  .inv-item-meta {
+  .death-clock-label {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
-    color: var(--text-dim);
-    margin-left: 0.5rem;
-    flex-shrink: 0;
-  }
-
-  /* Worn items as pill badges */
-  .worn-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    margin-top: 0.4rem;
-    padding-top: 0.35rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .worn-pill {
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.62rem;
-    font-family: var(--font-mono);
-    color: var(--text-secondary);
-    background: var(--surface-4);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-pill);
-    padding: 0.1rem 0.45rem;
-  }
-
-  /* Countdown die chain visualization */
-  .cd-visual {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.25rem 0;
-  }
-
-  .cd-name {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    min-width: 60px;
-  }
-
-  .cd-chain {
-    display: flex;
-    gap: 2px;
-    align-items: center;
-  }
-
-  .cd-step {
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    font-weight: 500;
-    padding: 0.1rem 0.25rem;
-    border-radius: 3px;
-    background: var(--surface-4);
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-  }
-
-  .cd-step.current {
-    color: var(--text);
-    font-weight: 700;
-    border-color: var(--primary);
-    background: var(--primary-soft);
-  }
-
-  .cd-step.past {
-    text-decoration: line-through;
-    color: var(--text-dim);
-    opacity: 0.5;
-  }
-
-  .cd-step.exhausted {
-    color: var(--danger);
-    border-color: var(--danger);
-    background: var(--danger-soft);
-    font-weight: 700;
-  }
-
-  /* Inventory list */
-  .inv-list { list-style: none; }
-
-  .inv-list li {
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    padding: 0.18rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .inv-list li:last-child { border-bottom: none; }
-
-  .inv-slot-count {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    margin-top: 0.35rem;
-  }
-
-  .inv-worn-label {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    color: var(--text-muted);
+    font-size: 9px;
+    color: var(--red);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-top: 0.5rem;
-    margin-bottom: 0.2rem;
-    padding-top: 0.35rem;
-    border-top: 1px solid var(--border);
   }
 
-  /* Spell list */
-  .spell-item {
-    font-size: 0.78rem;
+  /* Feature & spell items */
+  .feature-item {
+    font-size: 12px;
     color: var(--text-secondary);
-    padding: 0.15rem 0;
+    padding: 3px 0;
+    line-height: 1.5;
+  }
+
+  .spell-item {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 3px 0;
   }
 
   .spell-item::before {
     content: '\2022';
-    color: var(--primary);
-    margin-right: 0.35rem;
+    color: var(--amber);
+    margin-right: 6px;
   }
 
-  /* Feature list */
-  .feature-item {
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    padding: 0.15rem 0;
-  }
-
-  .feature-item::before {
-    content: '\2022';
-    color: var(--text-dim);
-    margin-right: 0.35rem;
-  }
-
-  /* Location card */
-  .loc-name {
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.15rem;
-  }
-
-  .loc-meta {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    margin-bottom: 0.4rem;
-  }
-
+  /* Location */
   .loc-desc {
     font-family: var(--font-narrative);
-    font-size: 0.85rem;
+    font-size: 13px;
     font-style: italic;
     color: var(--text-secondary);
-    line-height: 1.55;
+    line-height: 1.6;
+    margin-top: 6px;
   }
 
-  /* ================= VIEW 2: GM SCREEN ================= */
-  .view-gm {
-    grid-template-columns: 1fr 1fr 320px;
-    grid-template-rows: auto auto;
-    gap: 0.75rem;
-    padding: 0.75rem;
+  /* ================= GM VIEW ================= */
+  .gm-section {
+    margin-bottom: 4px;
   }
 
-  .gm-quests {
-    grid-column: 1 / 3;
-    grid-row: 1;
+  .secret-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
   }
 
-  .gm-npcs {
-    grid-column: 1 / 3;
-    grid-row: 2;
-  }
+  .secret-item:last-child { border-bottom: none; }
 
-  .gm-encounter {
-    grid-column: 3;
-    grid-row: 1 / 3;
-  }
-
-  /* Quest cards */
-  .quest-card {
-    background: var(--surface-4);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.5rem 0.65rem;
-    margin-bottom: 0.4rem;
-    border-left: 3px solid var(--primary);
-  }
-
-  .quest-card.developing { border-left-color: var(--discord); }
-  .quest-card.completed { border-left-color: var(--text-dim); }
-
-  .quest-name {
+  .secret-label {
     font-weight: 600;
-    font-size: 0.8rem;
     color: var(--text);
+    margin-bottom: 2px;
   }
 
-  .quest-desc {
-    font-size: 0.72rem;
+  .secret-info {
     color: var(--text-secondary);
-    font-style: italic;
-    margin-top: 0.1rem;
+    line-height: 1.5;
   }
 
-  .quest-progress {
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    margin-top: 0.1rem;
+  .secret-discovery {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 4px;
   }
 
-  /* NPC grid */
-  .npc-grid {
+  /* NPC combat grid */
+  .npc-combat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0.5rem;
+    gap: 8px;
   }
 
-  .npc-card {
-    background: var(--surface-4);
+  .npc-combat-card {
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 0.55rem 0.65rem;
+    padding: 10px 12px;
   }
 
-  .npc-name {
+  .npc-combat-name {
     font-family: var(--font-display);
-    font-size: 0.78rem;
+    font-size: 12px;
     font-weight: 600;
     color: var(--text);
-    margin-bottom: 0.2rem;
+    margin-bottom: 6px;
   }
 
-  .npc-name.deceased {
-    text-decoration: line-through;
-    color: var(--danger);
-  }
-
-  .npc-badges {
-    display: flex;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.25rem;
-  }
-
-  .npc-location {
+  .npc-stat-row {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
-    color: var(--text-muted);
-    margin-bottom: 0.2rem;
-  }
-
-  .npc-desc {
-    font-size: 0.72rem;
-    color: var(--text-secondary);
-    line-height: 1.4;
-  }
-
-  .npc-combat {
-    margin-top: 0.3rem;
-    padding-top: 0.3rem;
-    border-top: 1px solid var(--border);
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--text-muted);
+    font-size: 11px;
+    color: var(--text-dim);
     display: flex;
-    gap: 0.5rem;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
-  .npc-combat .val { color: var(--text); }
+  .npc-stat-row .val { color: var(--text); }
 
-  /* Encounter panel sections */
-  .encounter-section {
-    margin-bottom: 0.6rem;
-  }
-
-  .encounter-label {
-    font-family: var(--font-display);
-    font-size: 0.6rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.3rem;
-  }
-
-  .encounter-text {
-    font-size: 0.72rem;
-    color: var(--text-secondary);
-    line-height: 1.45;
-  }
-
-  .dc-table {
+  .dc-reference {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.8;
   }
 
-  .dc-table dt {
-    display: inline;
-    color: var(--text-muted);
-  }
-
-  .dc-table dd {
-    display: inline;
-    color: var(--text);
-    margin-left: 0.25rem;
-    margin-right: 0.75rem;
-  }
-
-  .log-entry {
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    padding: 0.12rem 0;
+  /* Doom portent pips */
+  .doom-track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
     border-bottom: 1px solid var(--border);
-    line-height: 1.4;
   }
 
-  .log-entry:last-child { border-bottom: none; }
+  .doom-track:last-child { border-bottom: none; }
 
-  .thread-item {
-    font-size: 0.72rem;
+  .doom-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    min-width: 120px;
+  }
+
+  .doom-pips {
+    display: flex;
+    gap: 4px;
+  }
+
+  .doom-pip {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-light);
+  }
+
+  .doom-pip.filled { background: var(--red); border-color: var(--red); }
+
+  .doom-portent-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    min-width: 40px;
+    text-align: right;
+  }
+
+  /* Progress clock */
+  .clock-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .clock-svg { flex-shrink: 0; }
+
+  .clock-label {
+    font-size: 12px;
     color: var(--text-secondary);
-    padding: 0.15rem 0;
   }
 
-  .thread-item::before {
-    content: '\203A';
-    color: var(--discord);
-    margin-right: 0.35rem;
-    font-weight: 700;
+  .clock-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
   }
 
-  .advance-item {
-    font-size: 0.72rem;
-    color: var(--text-secondary);
-    padding: 0.15rem 0;
-  }
-
-  .advance-item::before {
-    content: '\2022';
-    color: var(--warning);
-    margin-right: 0.35rem;
-  }
-
-  /* ================= VIEW 3: CAMPAIGN ================= */
-  .view-campaign {
-    grid-template-columns: 1fr 320px;
-    grid-template-rows: auto auto auto;
-    gap: 0.75rem;
-    padding: 0.75rem;
-  }
-
+  /* ================= CAMPAIGN VIEW ================= */
   .campaign-banner {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    background: var(--surface-2);
+    background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 1rem 1.25rem;
+    padding: 16px 20px;
+    margin-bottom: 16px;
   }
 
   .campaign-title {
     font-family: var(--font-display);
-    font-size: 1.3rem;
+    font-size: 18px;
     font-weight: 700;
     color: var(--text);
     letter-spacing: 0.04em;
-    margin-bottom: 0.15rem;
+    margin-bottom: 2px;
   }
 
   .campaign-subtitle {
     font-family: var(--font-narrative);
-    font-size: 0.9rem;
+    font-size: 13px;
     font-style: italic;
-    color: var(--text-muted);
-    margin-bottom: 0.3rem;
+    color: var(--text-dim);
+    margin-bottom: 4px;
   }
 
   .campaign-meta {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 11px;
     color: var(--text-dim);
   }
 
-  .campaign-quests {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .campaign-timeline {
-    grid-column: 1;
-    grid-row: 3;
-  }
-
-  .campaign-right-top {
-    grid-column: 2;
-    grid-row: 2;
-  }
-
-  .campaign-right-bottom {
-    grid-column: 2;
-    grid-row: 3;
-  }
-
-  /* Faction cards */
-  .faction-card {
-    background: var(--surface-4);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.5rem 0.65rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .faction-name {
+  /* Calendar card */
+  .calendar-date {
     font-family: var(--font-display);
-    font-size: 0.78rem;
+    font-size: 14px;
     font-weight: 600;
     color: var(--text);
-    margin-bottom: 0.15rem;
+    margin-bottom: 4px;
   }
 
-  .faction-goals {
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    font-style: italic;
-  }
-
-  /* Session timeline */
-  .timeline-session {
-    margin-bottom: 0.65rem;
-  }
-
-  .timeline-label {
-    font-family: var(--font-display);
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: 0.04em;
-    padding-bottom: 0.2rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 0.25rem;
-  }
-
-  .timeline-entry {
-    font-size: 0.72rem;
-    color: var(--text-secondary);
-    padding: 0.1rem 0 0.1rem 0.5rem;
-    border-left: 1px solid var(--border);
-    margin-left: 0.25rem;
-  }
-
-  /* World state summary */
-  .world-state-text {
-    font-family: var(--font-narrative);
-    font-size: 0.88rem;
-    font-style: italic;
+  .calendar-detail {
+    font-size: 12px;
     color: var(--text-secondary);
     line-height: 1.6;
   }
 
-  /* ================= VIEW 4: STORY & AUDIO ================= */
-  .view-media {
-    grid-template-columns: 260px 1fr;
+  /* World state */
+  .world-state-text {
+    font-family: var(--font-narrative);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* Faction cards */
+  .faction-card {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faction-card:last-child { border-bottom: none; }
+
+  .faction-name {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .faction-goals {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  /* Quest cards */
+  .quest-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-left: 3px solid var(--green);
+  }
+
+  .quest-card.developing { border-left-color: var(--blue); }
+  .quest-card.completed { border-left-color: var(--text-dim); }
+
+  .quest-name {
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .quest-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+
+  /* Timeline */
+  .timeline-session { margin-bottom: 12px; }
+
+  .timeline-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.04em;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+
+  .timeline-entry {
+    font-size: 11px;
+    color: var(--text-secondary);
+    padding: 2px 0 2px 12px;
+    border-left: 1px solid var(--border);
+    margin-left: 4px;
+  }
+
+  /* ================= MEDIA VIEW ================= */
+  .media-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
     grid-template-rows: 1fr auto;
     gap: 0;
+    position: absolute;
+    inset: 0;
   }
 
   .media-list {
     grid-column: 1;
     grid-row: 1;
-    background: var(--surface-1);
+    background: var(--bg-surface);
     border-right: 1px solid var(--border);
     overflow-y: auto;
-    padding: 0.5rem 0;
+    padding: 8px 0;
   }
 
   .chapter-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.55rem 0.75rem;
-    font-size: 0.78rem;
-    color: var(--text-muted);
+    gap: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    color: var(--text-dim);
     cursor: pointer;
     border: none;
     background: none;
@@ -1358,49 +1034,53 @@
 
   .chapter-item:hover {
     color: var(--text-secondary);
-    background: var(--surface-2);
+    background: var(--bg-card);
   }
 
   .chapter-item.active {
     color: var(--text);
-    background: var(--surface-2);
+    background: var(--bg-card);
   }
 
-  .chapter-item .ch-num {
+  .ch-num {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: 10px;
     color: var(--text-dim);
     flex-shrink: 0;
   }
 
-  .chapter-item .ch-title {
+  .ch-title {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .chapter-item .ch-audio {
-    font-size: 0.75rem;
+  .ch-status {
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 600;
     flex-shrink: 0;
-    opacity: 0.5;
   }
 
-  /* Audio player at bottom of list */
+  .ch-status-read { background: var(--green-dim); color: var(--green); }
+  .ch-status-audio { background: var(--blue-dim); color: var(--blue); }
+
   .media-player {
     grid-column: 1;
     grid-row: 2;
-    background: var(--surface-2);
+    background: var(--bg-surface);
     border-right: 1px solid var(--border);
     border-top: 1px solid var(--border);
-    padding: 0.6rem 0.75rem;
+    padding: 10px 14px;
   }
 
   .player-title {
-    font-size: 0.68rem;
+    font-size: 11px;
     font-weight: 500;
     color: var(--text-secondary);
-    margin-bottom: 0.35rem;
+    margin-bottom: 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1413,26 +1093,25 @@
     outline: none;
   }
 
-  audio::-webkit-media-controls-panel { background: var(--surface-1); }
+  audio::-webkit-media-controls-panel { background: var(--bg-rail); }
   audio::-webkit-media-controls-current-time-display,
   audio::-webkit-media-controls-time-remaining-display {
-    color: var(--text-muted);
-    font-size: 0.65rem;
+    color: var(--text-dim);
+    font-size: 10px;
   }
 
-  /* Reader pane */
   .media-reader {
     grid-column: 2;
     grid-row: 1 / 3;
     overflow-y: auto;
-    padding: 2rem 3rem;
+    padding: 40px 48px;
   }
 
   .chapter-prose {
     max-width: 640px;
     margin: 0 auto;
     font-family: var(--font-narrative);
-    font-size: 1.05rem;
+    font-size: 16px;
     font-weight: 300;
     line-height: 1.75;
     color: var(--text-secondary);
@@ -1440,104 +1119,391 @@
 
   .chapter-prose h1 {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 22px;
     font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 0.5rem;
+    color: var(--amber);
+    margin-bottom: 8px;
     letter-spacing: 0.04em;
   }
 
   .chapter-prose hr {
     border: none;
     border-top: 1px solid var(--border);
-    margin: 1.8rem auto;
+    margin: 28px auto;
     width: 40%;
   }
 
   .chapter-prose p {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
     text-indent: 1.5em;
   }
 
   .chapter-prose p:first-of-type,
   .chapter-prose hr + p { text-indent: 0; }
 
-  .chapter-prose em { color: var(--text-muted); }
+  .chapter-prose em { color: var(--text-dim); }
 
   .chapter-prose .epigraph {
     text-align: center;
     font-style: italic;
-    color: var(--text-muted);
-    margin: 1.5rem 0;
+    color: var(--text-dim);
+    margin: 24px 0;
     text-indent: 0;
   }
 
+  /* ================= ANALYTICS VIEW ================= */
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .analytics-stat {
+    text-align: center;
+    padding: 16px 8px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .analytics-value {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .analytics-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  .chart-placeholder {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: center;
+    padding: 40px;
+    font-style: italic;
+  }
+
+  /* ================= RIGHT DRAWER ================= */
+  .right-drawer {
+    grid-column: 3;
+    grid-row: 1 / -1;
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .drawer-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .drawer-close {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .drawer-close:hover { background: var(--bg-card); color: var(--text-secondary); }
+
+  .drawer-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .drawer-tab {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-dim);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .drawer-tab:hover { color: var(--text-secondary); }
+  .drawer-tab.active { color: var(--amber); border-bottom-color: var(--amber); }
+
+  .drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .drawer-content { display: none; }
+  .drawer-content.active { display: block; }
+
+  /* Drawer quest items */
+  .dq-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dq-item:last-child { border-bottom: none; }
+
+  .dq-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+  }
+
+  .dq-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .dq-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* Drawer NPC items */
+  .dn-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dn-item:last-child { border-bottom: none; }
+
+  .dn-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .dn-meta {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .dn-disposition {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-top: 4px;
+  }
+
+  .dn-disposition.friendly { background: var(--green-dim); color: var(--green); }
+  .dn-disposition.neutral  { background: var(--blue-dim); color: var(--blue); }
+  .dn-disposition.wary     { background: var(--warning-dim); color: var(--warning); }
+  .dn-disposition.hostile  { background: var(--red-dim); color: var(--red); }
+
+  /* Drawer log entries */
+  .dl-entry {
+    display: flex;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+
+  .dl-entry:last-child { border-bottom: none; }
+
+  .dl-text { color: var(--text-secondary); line-height: 1.5; }
+
+  /* ================= BOTTOM BAR ================= */
+  .bottom-bar {
+    grid-column: 2 / -1;
+    background: var(--bg-rail);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 20px;
+    font-size: 11px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .bottom-bar::-webkit-scrollbar { display: none; }
+
+  .bar-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .bar-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+  }
+
+  .bar-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  .bar-countdown {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .bar-countdown-icon { font-size: 12px; }
+  .bar-countdown.low { color: var(--red); }
+
+  .bar-clock {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .clock-segments {
+    display: flex;
+    gap: 2px;
+  }
+
+  .clock-seg {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    border: 1px solid var(--border-light);
+    background: transparent;
+  }
+
+  .clock-seg.filled { background: var(--amber); border-color: var(--amber); }
+
+  .bar-clock-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bar-doom {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .bar-doom-pips {
+    display: flex;
+    gap: 2px;
+  }
+
+  .bar-doom-pip {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--border-light);
+  }
+
+  .bar-doom-pip.filled { background: var(--red); border-color: var(--red); }
+
+  .bar-doom-label {
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+
+  .bar-calendar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+    font-size: 11px;
+  }
+
+  .bar-calendar-icon { font-size: 13px; }
+
+  .bar-right {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
   /* ================= RESPONSIVE ================= */
+  @media (max-width: 1200px) {
+    .app-shell {
+      grid-template-columns: var(--rail-width) 1fr 0px;
+    }
+    .right-drawer { display: none; }
+  }
+
   @media (max-width: 900px) {
-    body {
+    .app-shell {
       grid-template-columns: 1fr;
-      grid-template-rows: var(--header-height) auto 1fr;
+      grid-template-rows: 48px 1fr var(--bottom-height);
     }
 
-    .sidebar {
-      grid-row: 2;
-      grid-column: 1;
+    .left-rail {
+      grid-row: 1;
       flex-direction: row;
+      padding: 0 8px;
+      gap: 2px;
       border-right: none;
       border-bottom: 1px solid var(--border);
       overflow-x: auto;
+      overflow-y: hidden;
     }
 
-    .sidebar-minicard { display: none; }
-    .sidebar-footer { display: none; }
+    .rail-logo { margin-bottom: 0; margin-right: 8px; width: 32px; height: 32px; }
+    .rail-divider { width: 1px; height: 24px; margin: 0 4px; }
+    .rail-spacer { display: none; }
+    .rail-minicard { display: none; }
+    .rail-btn .tooltip { display: none !important; }
 
-    .sidebar-nav {
-      display: flex;
-      padding: 0;
-      flex: none;
-    }
+    .center-workspace { grid-row: 2; }
+    .right-drawer { display: none; }
 
-    .nav-label { display: none; }
-
-    .nav-item {
-      border-left: none;
-      border-bottom: 2px solid transparent;
-      padding: 0.45rem 0.75rem;
-      white-space: nowrap;
-    }
-
-    .nav-item.active { border-bottom-color: var(--primary); }
-
-    .content {
+    .bottom-bar {
       grid-column: 1;
-      grid-row: 3;
+      padding: 0 12px;
+      gap: 12px;
     }
 
-    .stat-medallion { min-width: calc(33.3% - 0.5rem); }
+    .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .analytics-grid { grid-template-columns: repeat(2, 1fr); }
 
-    .player-details { grid-template-columns: 1fr; }
-
-    .view-gm {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto;
-    }
-
-    .gm-quests { grid-column: 1; grid-row: 1; }
-    .gm-npcs { grid-column: 1; grid-row: 2; }
-    .gm-encounter { grid-column: 1; grid-row: 3; }
-
-    .view-campaign {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto auto auto;
-    }
-
-    .campaign-banner { grid-column: 1; }
-    .campaign-quests { grid-column: 1; grid-row: 2; }
-    .campaign-right-top { grid-column: 1; grid-row: 3; }
-    .campaign-timeline { grid-column: 1; grid-row: 4; }
-    .campaign-right-bottom { grid-column: 1; grid-row: 5; }
-
-    .view-media {
+    .media-layout {
       grid-template-columns: 1fr;
       grid-template-rows: auto 1fr auto;
     }
@@ -1550,69 +1516,92 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .media-reader { grid-column: 1; grid-row: 2; padding: 1.5rem 1rem; }
+    .media-reader { grid-column: 1; grid-row: 2; padding: 20px 16px; }
     .media-player { grid-column: 1; grid-row: 3; border-right: none; }
   }
 
   @media (max-width: 600px) {
-    .header-brand { font-size: 0.72rem; }
-    .header-title { font-size: 0.7rem; }
-    .header-meta { display: none; }
-
-    .stat-medallion { min-width: calc(50% - 0.5rem); }
-
-    .hero-vitals { flex-wrap: wrap; gap: 0.75rem; }
-
-    .media-reader { padding: 1rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .char-hero { grid-template-columns: 1fr; }
+    .char-avatar { display: none; }
+    .char-vitals { flex-wrap: wrap; gap: 8px; }
+    .media-reader { padding: 16px 12px; }
+    .chapter-prose { font-size: 14px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ================= HEADER ================= -->
-<div class="header">
-  <span class="header-brand">Glintlock</span>
-  <span class="header-title" id="header-title"></span>
-  <span class="header-meta" id="header-meta"></span>
-</div>
+<div class="app-shell" id="appShell">
 
-<!-- ================= SIDEBAR ================= -->
-<div class="sidebar">
-  <div class="sidebar-minicard" id="sidebar-minicard"></div>
-  <div class="sidebar-nav">
-    <div class="nav-label">Dashboards</div>
-    <button class="nav-item active" data-view="player" onclick="switchView('player')">
-      <span class="nav-icon">&#9876;</span> Character
-    </button>
-    <button class="nav-item" data-view="gm" onclick="switchView('gm')">
-      <span class="nav-icon">&#9881;</span> GM Screen
-    </button>
-    <button class="nav-item" data-view="campaign" onclick="switchView('campaign')">
-      <span class="nav-icon">&#9734;</span> Campaign
-    </button>
-    <button class="nav-item" data-view="media" onclick="switchView('media')">
-      <span class="nav-icon">&#9836;</span> Story & Audio
-    </button>
-  </div>
-  <div class="sidebar-footer" id="sidebar-footer"></div>
-</div>
+  <!-- LEFT RAIL -->
+  <nav class="left-rail">
+    <div class="rail-logo" onclick="switchView('player')">G</div>
+    <div class="rail-divider"></div>
 
-<!-- ================= CONTENT ================= -->
-<div class="content">
-  <div class="view view-player active" id="view-player"></div>
-  <div class="view view-gm" id="view-gm"></div>
-  <div class="view view-campaign" id="view-campaign"></div>
-  <div class="view view-media" id="view-media"></div>
+    <button class="rail-btn active" data-view="player" onclick="switchView('player')">
+      &#9876;<span class="tooltip">Player</span>
+    </button>
+    <button class="rail-btn" data-view="gm" onclick="switchView('gm')">
+      &#9881;<span class="tooltip">GM Screen</span>
+    </button>
+    <button class="rail-btn" data-view="campaign" onclick="switchView('campaign')">
+      &#9734;<span class="tooltip">Campaign</span>
+    </button>
+    <button class="rail-btn" data-view="media" onclick="switchView('media')">
+      &#9836;<span class="tooltip">Media</span>
+    </button>
+    <button class="rail-btn" data-view="analytics" onclick="switchView('analytics')">
+      &#9783;<span class="tooltip">Analytics</span>
+    </button>
+
+    <div class="rail-divider"></div>
+
+    <button class="rail-btn" onclick="toggleDrawer()">
+      &#9776;<span class="tooltip">Toggle Drawer</span>
+    </button>
+
+    <div class="rail-spacer"></div>
+
+    <div class="rail-minicard" id="rail-minicard"></div>
+  </nav>
+
+  <!-- CENTER WORKSPACE -->
+  <main class="center-workspace">
+    <div class="view active" id="view-player"></div>
+    <div class="view" id="view-gm"></div>
+    <div class="view" id="view-campaign"></div>
+    <div class="view" id="view-media"></div>
+    <div class="view" id="view-analytics"></div>
+  </main>
+
+  <!-- RIGHT DRAWER -->
+  <aside class="right-drawer" id="rightDrawer">
+    <div class="drawer-header">
+      <span class="drawer-title">Context</span>
+      <button class="drawer-close" onclick="toggleDrawer()">&#10005;</button>
+    </div>
+    <div class="drawer-tabs">
+      <button class="drawer-tab active" onclick="switchDrawerTab(this,'quests')">Quests</button>
+      <button class="drawer-tab" onclick="switchDrawerTab(this,'npcs')">NPCs</button>
+      <button class="drawer-tab" onclick="switchDrawerTab(this,'log')">Log</button>
+    </div>
+    <div class="drawer-body">
+      <div class="drawer-content active" id="drawer-quests"></div>
+      <div class="drawer-content" id="drawer-npcs"></div>
+      <div class="drawer-content" id="drawer-log"></div>
+    </div>
+  </aside>
+
+  <!-- BOTTOM BAR -->
+  <footer class="bottom-bar" id="bottom-bar"></footer>
+
 </div>
 
 <script>
 const DATA = DASHBOARD_DATA;
 
 /* ==================== Utilities ==================== */
-function difficulty(stat, trained) {
-  return trained ? Math.max(1, 20 - stat * 2) : Math.max(1, 20 - stat);
-}
-
 function esc(s) {
   if (s == null) return '';
   const d = document.createElement('div');
@@ -1620,26 +1609,46 @@ function esc(s) {
   return d.innerHTML;
 }
 
-function hpBar(cur, max, cls) {
+function difficulty(stat, trained) {
+  return trained ? Math.max(1, 20 - stat * 2) : Math.max(1, 20 - stat);
+}
+
+function hpState(cur, max) {
+  const pct = cur / Math.max(max, 1);
+  if (pct > 0.5) return 'healthy';
+  if (pct > 0.25) return 'wounded';
+  return 'critical';
+}
+
+function hpBarHtml(cur, max) {
   const pct = Math.max(0, Math.min(100, (cur / Math.max(max, 1)) * 100));
-  const low = pct <= 35;
-  const track = cls || 'hp-track';
-  return '<div class="' + track + '"><div class="hp-fill' + (low ? ' low' : '') + '" style="width:' + pct + '%"></div>' +
-    (cls ? '' : '<div class="hp-text">HP ' + cur + ' / ' + max + '</div>') + '</div>';
+  const state = hpState(cur, max);
+  const cls = state === 'critical' ? ' critical' : (state === 'wounded' ? ' wounded' : '');
+  return '<div class="hp-bar-container">' +
+    '<div class="hp-bar-header"><span class="hp-bar-label">Hit Points</span>' +
+    '<span class="hp-bar-value">' + cur + ' / ' + max + '</span></div>' +
+    '<div class="hp-bar"><div class="hp-bar-fill' + cls + '" style="width:' + pct + '%"></div></div></div>';
 }
 
 function pillBadge(text, cls) {
-  return '<span class="pill ' + cls + '">' + (cls.indexOf('pill-alive') >= 0 || cls.indexOf('pill-deceased') >= 0 ? '<span class="pill-dot"></span>' : '') + esc(text) + '</span>';
+  const hasDot = cls.indexOf('pill-alive') >= 0 || cls.indexOf('pill-deceased') >= 0;
+  return '<span class="pill ' + cls + '">' + (hasDot ? '<span class="pill-dot"></span>' : '') + esc(text) + '</span>';
 }
 
 function dispositionPill(d) {
   const map = { friendly: 'pill-friendly', wary: 'pill-wary', hostile: 'pill-hostile', neutral: 'pill-neutral' };
-  return pillBadge(d, map[d] || 'pill-neutral');
+  return pillBadge(d, map[(d || '').toLowerCase()] || 'pill-neutral');
 }
 
 function tagSpan(tag) {
   const tc = { event: 'tag-event', discovery: 'tag-discovery', ruling: 'tag-ruling', thread: 'tag-thread', 'world-advance': 'tag-world-advance' };
   return '<span class="tag ' + (tc[tag] || 'tag-event') + '">' + tag + '</span>';
+}
+
+function dangerBadge(level) {
+  const l = (level || 'safe').toLowerCase();
+  const cls = l === 'deadly' ? 'danger-deadly' : (l === 'risky' ? 'danger-risky' : (l === 'unsafe' ? 'danger-unsafe' : 'danger-safe'));
+  return '<span class="danger-badge ' + cls + '">' + esc(level || 'Safe') + '</span>';
 }
 
 function md2html(text) {
@@ -1650,7 +1659,7 @@ function md2html(text) {
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
   const parts = html.split(/\n\n+/);
-  return parts.map(p => {
+  return parts.map(function(p) {
     p = p.trim();
     if (!p) return '';
     if (p.startsWith('<h1>') || p.startsWith('<hr') || p.startsWith('<p class="epigraph">')) return p;
@@ -1658,55 +1667,55 @@ function md2html(text) {
   }).join('\n');
 }
 
-/* Portent level to CSS class */
-function portentClass(level) {
-  if (level <= 1) return 'low';
-  if (level <= 3) return 'mid';
-  if (level <= 5) return 'high';
-  return 'crit';
+function doomPipsHtml(level, total) {
+  total = total || 6;
+  let html = '<div class="doom-pips">';
+  for (var i = 0; i < total; i++) {
+    html += '<div class="doom-pip' + (i < level ? ' filled' : '') + '"></div>';
+  }
+  html += '</div>';
+  return html;
 }
 
-/* Countdown die CSS class */
-function cdClass(die) {
-  if (die === 0) return 'cd-dead';
-  if (die <= 4) return 'cd-danger';
-  if (die <= 6) return 'cd-warn';
-  return 'cd-ok';
+function clockSegmentsHtml(filled, total) {
+  let html = '<div class="clock-segments">';
+  for (var i = 0; i < total; i++) {
+    html += '<div class="clock-seg' + (i < filled ? ' filled' : '') + '"></div>';
+  }
+  html += '</div>';
+  return html;
 }
 
-/* Draw a progress clock SVG */
 function clockSvg(filled, total, size) {
   size = size || 32;
-  const r = size / 2 - 2;
-  const cx = size / 2;
-  const cy = size / 2;
-  let svg = '<svg class="clock-svg" width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">';
-  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="var(--surface-1)" stroke="var(--border)" stroke-width="1.5"/>';
-  for (let i = 0; i < total; i++) {
-    const startAngle = (i / total) * 2 * Math.PI - Math.PI / 2;
-    const endAngle = ((i + 1) / total) * 2 * Math.PI - Math.PI / 2;
-    const x1 = cx + r * Math.cos(startAngle);
-    const y1 = cy + r * Math.sin(startAngle);
-    const x2 = cx + r * Math.cos(endAngle);
-    const y2 = cy + r * Math.sin(endAngle);
-    const largeArc = (endAngle - startAngle > Math.PI) ? 1 : 0;
+  var r = size / 2 - 2;
+  var cx = size / 2;
+  var cy = size / 2;
+  var svg = '<svg class="clock-svg" width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">';
+  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>';
+  for (var i = 0; i < total; i++) {
+    var startAngle = (i / total) * 2 * Math.PI - Math.PI / 2;
+    var endAngle = ((i + 1) / total) * 2 * Math.PI - Math.PI / 2;
+    var x1 = cx + r * Math.cos(startAngle);
+    var y1 = cy + r * Math.sin(startAngle);
+    var x2 = cx + r * Math.cos(endAngle);
+    var y2 = cy + r * Math.sin(endAngle);
+    var largeArc = (endAngle - startAngle > Math.PI) ? 1 : 0;
     if (i < filled) {
-      svg += '<path d="M' + cx + ',' + cy + ' L' + x1 + ',' + y1 + ' A' + r + ',' + r + ' 0 ' + largeArc + ',1 ' + x2 + ',' + y2 + ' Z" fill="var(--primary)" opacity="0.85"/>';
+      svg += '<path d="M' + cx + ',' + cy + ' L' + x1 + ',' + y1 + ' A' + r + ',' + r + ' 0 ' + largeArc + ',1 ' + x2 + ',' + y2 + ' Z" fill="var(--amber)" opacity="0.85"/>';
     }
-    /* Segment line */
     svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x1 + '" y2="' + y1 + '" stroke="var(--border)" stroke-width="1"/>';
   }
   svg += '</svg>';
   return svg;
 }
 
-/* Parse journal entries into session groups */
 function parseJournal(journal) {
-  const groups = [];
-  let current = { label: 'Journal', entries: [] };
-  (journal || []).forEach(e => {
-    const str = typeof e === 'string' ? e : '';
-    const m = str.match(/^##?\s*Session\s+(\d+)/);
+  var groups = [];
+  var current = { label: 'Journal', entries: [] };
+  (journal || []).forEach(function(e) {
+    var str = typeof e === 'string' ? e : '';
+    var m = str.match(/^##?\s*Session\s+(\d+)/);
     if (m) {
       if (current.entries.length) groups.push(current);
       current = { label: 'Session ' + m[1], entries: [] };
@@ -1718,78 +1727,8 @@ function parseJournal(journal) {
   return groups;
 }
 
-/* ==================== View switching ==================== */
-const viewTitles = { player: 'Character Sheet', gm: 'GM Screen', campaign: 'Campaign Overview', media: 'Story & Audio' };
-
-function switchView(name) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  const target = document.getElementById('view-' + name);
-  if (target) target.classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const btn = document.querySelector('.nav-item[data-view="' + name + '"]');
-  if (btn) btn.classList.add('active');
-  document.getElementById('header-title').textContent = viewTitles[name] || '';
-}
-
-/* ==================== Sub-tab switching ==================== */
-function switchSubTab(groupId, tabName) {
-  const group = document.getElementById(groupId);
-  if (!group) return;
-  group.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
-  group.querySelectorAll('.sub-pane').forEach(p => p.classList.remove('active'));
-  const tab = group.querySelector('.sub-tab[data-tab="' + tabName + '"]');
-  const pane = group.querySelector('.sub-pane[data-pane="' + tabName + '"]');
-  if (tab) tab.classList.add('active');
-  if (pane) pane.classList.add('active');
-}
-
-/* ==================== Render: Header ==================== */
-function renderHeader() {
-  const meta = DATA.session_metadata || {};
-  const parts = [];
-  if (meta.sessions_played) parts.push(meta.sessions_played + ' sessions');
-  if (meta.last_played) parts.push(meta.last_played);
-  document.getElementById('header-meta').textContent = parts.join(' \u00b7 ');
-  document.getElementById('header-title').textContent = viewTitles[DATA.dashboard_type || 'player'] || 'Character Sheet';
-}
-
-/* ==================== Render: Sidebar ==================== */
-function renderSidebar() {
-  const c = DATA.character;
-  const mc = document.getElementById('sidebar-minicard');
-  if (!c) { mc.innerHTML = ''; return; }
-
-  const hpCur = c.hp ? c.hp.current : 0;
-  const hpMax = c.hp ? c.hp.max : 1;
-  const hpPct = Math.max(0, Math.min(100, (hpCur / Math.max(hpMax, 1)) * 100));
-
-  let h = '<div class="mini-name">' + esc(c.name) + '</div>';
-  h += '<div class="mini-subtitle">' + esc((c.ancestry || '') + ' ' + (c.class || '') + ' ' + (c.level || 1)) + '</div>';
-  h += '<div class="mini-hp-track"><div class="mini-hp-fill' + (hpPct <= 35 ? ' low' : '') + '" style="width:' + hpPct + '%"></div>';
-  h += '<div class="mini-hp-text">HP ' + hpCur + '/' + hpMax + '</div></div>';
-  h += '<div class="mini-stats">';
-  h += '<span>Armor <span class="val">' + (c.armor || 0) + '</span></span>';
-  h += '<span class="gold">Gold <span class="val">' + (c.gold || 0) + '</span></span>';
-  h += '</div>';
-  mc.innerHTML = h;
-
-  /* Footer */
-  const foot = document.getElementById('sidebar-footer');
-  const loc = DATA.location;
-  let fh = '';
-  if (loc) {
-    const dcls = 'danger-' + (loc.danger_level || 'safe');
-    fh += '<div class="footer-location"><span class="loc-icon">&#9679;</span> ' + esc(loc.name);
-    fh += ' <span class="danger-badge ' + dcls + '">' + esc(loc.danger_level || 'safe') + '</span></div>';
-  }
-  /* Level indicator (milestone advancement) */
-  const lvl = c.level || 1;
-  fh += '<div class="level-label">Level ' + lvl + ' / 10</div>';
-  foot.innerHTML = fh;
-}
-
-/* ==================== Player View Helpers ==================== */
-const SKILL_STAT_MAP = {
+/* Stat mapping */
+var SKILL_STAT_MAP = {
   'Athletics': 'vigor', 'Endurance': 'vigor',
   'Acrobatics': 'reflex', 'Stealth': 'reflex', 'Sleight': 'reflex',
   'Awareness': 'wits', 'Survival': 'wits', 'Tinker': 'wits',
@@ -1798,611 +1737,63 @@ const SKILL_STAT_MAP = {
   'Arcana': 'lore', 'Medicine': 'lore', 'History': 'lore'
 };
 
-const STAT_COLORS = {
+var STAT_COLORS = {
   vigor: 'var(--stat-vigor)', reflex: 'var(--stat-reflex)', wits: 'var(--stat-wits)',
   resolve: 'var(--stat-resolve)', presence: 'var(--stat-presence)', lore: 'var(--stat-lore)'
 };
 
-function cdChainHtml(currentDie) {
-  const steps = [12, 10, 8, 6, 4, 0];
-  let html = '<div class="cd-chain">';
-  steps.forEach(s => {
-    const label = s === 0 ? 'OUT' : 'd' + s;
-    let cls = 'cd-step';
-    if (currentDie === s) {
-      cls += s === 0 ? ' exhausted' : ' current';
-    } else if (s > currentDie) {
-      cls += ' past';
-    }
-    html += '<span class="' + cls + '">' + label + '</span>';
-  });
-  html += '</div>';
-  return html;
+/* ==================== Layout Functions ==================== */
+var viewTitles = { player: 'Character Sheet', gm: 'GM Screen', campaign: 'Campaign Overview', media: 'Story & Audio', analytics: 'Analytics' };
+
+function switchView(name) {
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+  var target = document.getElementById('view-' + name);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('.rail-btn[data-view]').forEach(function(b) { b.classList.remove('active'); });
+  var btn = document.querySelector('.rail-btn[data-view="' + name + '"]');
+  if (btn) btn.classList.add('active');
 }
 
-function slotPipsHtml(used, max) {
-  let html = '<div class="inv-slots-visual">';
-  for (let i = 0; i < max; i++) {
-    html += '<div class="inv-slot-pip' + (i < used ? ' filled' : '') + '"></div>';
-  }
-  html += '</div>';
-  return html;
+function toggleDrawer() {
+  document.getElementById('appShell').classList.toggle('right-collapsed');
 }
 
-/* ==================== Render: Player View ==================== */
-function renderPlayer() {
-  const c = DATA.character;
-  const el = document.getElementById('view-player');
-  if (!c) { el.innerHTML = '<div class="no-content">No character data.</div>'; return; }
-
-  const hpCur = c.hp ? c.hp.current : 0;
-  const hpMax = c.hp ? c.hp.max : 1;
-  const stats = c.stats || {};
-  const statNames = ['vigor', 'reflex', 'wits', 'resolve', 'presence', 'lore'];
-  const statLabels = { vigor: 'VIG', reflex: 'REF', wits: 'WIT', resolve: 'RES', presence: 'PRE', lore: 'LOR' };
-  const training = c.training || [];
-
-  /* Build skill→stat lookup for trained skills only */
-  const trainedBystat = {};
-  statNames.forEach(s => { trainedBystat[s] = []; });
-  training.forEach(sk => {
-    const mapped = SKILL_STAT_MAP[sk];
-    if (mapped && trainedBystat[mapped]) {
-      trainedBystat[mapped].push(sk);
-    }
-  });
-
-  let html = '';
-
-  /* ===== Hero Banner ===== */
-  html += '<div class="player-hero">';
-  html += '<div class="hero-top">';
-  html += '<div class="hero-identity">';
-  html += '<div class="hero-name">' + esc(c.name) + '</div>';
-  html += '<div class="hero-subtitle">' + esc((c.ancestry || '') + ' ' + (c.class || '') + ' ' + (c.level || 1));
-  if (c.background) html += ' \u00b7 ' + esc(c.background);
-  html += '</div></div>';
-  html += '<div class="hero-vitals">';
-  html += '<div class="vital-item"><div class="vital-label">Armor</div><div class="vital-value">' + (c.armor || 0) + '</div></div>';
-  if (c.hp_die) html += '<div class="vital-item"><div class="vital-label">HP Die</div><div class="vital-value">' + esc(c.hp_die) + '</div></div>';
-  html += '<div class="vital-item"><div class="vital-label">Level</div><div class="vital-value">' + (c.level || 1) + '</div></div>';
-  html += '<div class="vital-item"><div class="vital-label">Gold</div><div class="vital-value gold">' + (c.gold || 0) + '</div></div>';
-  html += '</div></div>';
-  /* HP bar row + optional death clock */
-  html += '<div class="hero-hp-row">';
-  html += hpBar(hpCur, hpMax);
-  const deathClock = c.death_clock || 0;
-  if (deathClock > 0) {
-    html += '<div class="death-clock">';
-    html += clockSvg(deathClock, 4, 28);
-    html += '<span class="death-clock-label">Death</span>';
-    html += '</div>';
-  }
-  html += '</div></div>';
-
-  /* ===== Stat Strip ===== */
-  html += '<div class="player-stats">';
-  statNames.forEach(s => {
-    const val = stats[s] || 5;
-    const dc = difficulty(val, false);
-    const color = STAT_COLORS[s];
-    const skills = trainedBystat[s] || [];
-    html += '<div class="stat-medallion" style="--stat-color:' + color + '">';
-    html += '<div class="stat-header"><span class="stat-label">' + statLabels[s] + '</span><span class="stat-dc">DC ' + dc + '</span></div>';
-    html += '<div class="stat-value">' + val + '</div>';
-    if (skills.length) {
-      html += '<div class="stat-trained">';
-      skills.forEach(sk => {
-        const trainedDc = difficulty(val, true);
-        html += '<div class="stat-skill"><span class="stat-skill-name">' + esc(sk) + '</span><span class="stat-skill-dc">DC ' + trainedDc + '</span></div>';
-      });
-      html += '</div>';
-    }
-    html += '</div>';
-  });
-  html += '</div>';
-
-  /* ===== Details Grid ===== */
-  html += '<div class="player-details">';
-
-  /* — Left Column — */
-  html += '<div class="player-col-left">';
-
-  /* Inventory */
-  html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Inventory</div><div class="card-body">';
-  const used = c.used_gear_slots || (c.inventory ? c.inventory.length : 0);
-  const max = c.max_gear_slots || 10;
-  html += slotPipsHtml(used, max);
-  html += '<div style="font-family:var(--font-mono);font-size:0.58rem;color:var(--text-dim);margin-bottom:0.4rem">' + used + '/' + max + ' slots</div>';
-  if (c.inventory && c.inventory.length) {
-    c.inventory.forEach(i => {
-      const item = typeof i === 'string' ? i : (i.name || '');
-      const meta = typeof i === 'object' ? (i.qty || i.notes || '') : '';
-      html += '<div class="inv-item"><span class="inv-item-name">' + esc(item) + '</span>';
-      if (meta) html += '<span class="inv-item-meta">' + esc(meta) + '</span>';
-      html += '</div>';
-    });
-  } else {
-    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">Empty</div>';
-  }
-  const worn = c.worn || [];
-  if (worn.length) {
-    html += '<div class="worn-pills">';
-    worn.forEach(w => { html += '<span class="worn-pill">' + esc(w) + '</span>'; });
-    html += '</div>';
-  }
-  html += '</div></div>';
-
-  /* Countdown dice */
-  const cdice = DATA.countdown_dice || [];
-  if (cdice.length) {
-    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Countdown Dice</div><div class="card-body">';
-    cdice.forEach(function(cd) {
-      html += '<div class="cd-visual">';
-      html += '<span class="cd-name">' + esc(cd.name);
-      if (cd.category) html += ' <span style="color:var(--text-dim);font-size:0.58rem">(' + esc(cd.category) + ')</span>';
-      html += '</span>';
-      html += cdChainHtml(cd.current_die);
-      html += '</div>';
-    });
-    html += '</div></div>';
-  }
-
-  /* Training & languages */
-  const langs = c.languages || [];
-  if (training.length || langs.length) {
-    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Training & Languages</div><div class="card-body">';
-    if (training.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:0.3rem">' + esc(training.join(', ')) + '</div>';
-    if (langs.length) html += '<div style="font-size:0.72rem;color:var(--text-secondary)"><span style="color:var(--text-muted)">Languages:</span> ' + esc(langs.join(', ')) + '</div>';
-    html += '</div></div>';
-  }
-
-  html += '</div>';
-
-  /* — Right Column — */
-  html += '<div class="player-col-right">';
-
-  /* Location */
-  const loc = DATA.location;
-  if (loc) {
-    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Location</div><div class="card-body">';
-    html += '<div class="loc-name">' + esc(loc.name) + '</div>';
-    const dcls = 'danger-' + (loc.danger_level || 'safe');
-    html += '<div class="loc-meta"><span class="danger-badge ' + dcls + '">' + esc(loc.danger_level || 'safe') + '</span>';
-    if (loc.light) html += ' \u00b7 ' + esc(loc.light);
-    html += '</div>';
-    if (loc.description) html += '<div class="loc-desc">' + esc(loc.description) + '</div>';
-    html += '</div></div>';
-  }
-
-  /* Tabbed Features & Talents */
-  const classFeatures = c.class_features || [];
-  const ancestryTraits = c.ancestry_traits || [];
-  const talents = c.talents || [];
-  if (classFeatures.length || ancestryTraits.length || talents.length) {
-    html += '<div class="card" id="player-feat-card">';
-    html += '<div class="sub-tabs">';
-    html += '<button class="sub-tab active" data-tab="pclass" onclick="switchSubTab(\'player-feat-card\',\'pclass\')">Class</button>';
-    html += '<button class="sub-tab" data-tab="pancestry" onclick="switchSubTab(\'player-feat-card\',\'pancestry\')">Ancestry</button>';
-    if (talents.length) html += '<button class="sub-tab" data-tab="ptalents" onclick="switchSubTab(\'player-feat-card\',\'ptalents\')">Talents</button>';
-    html += '</div>';
-    html += '<div class="card-body">';
-    html += '<div class="sub-pane active" data-pane="pclass">';
-    if (classFeatures.length) { classFeatures.forEach(f => { html += '<div class="feature-item">' + esc(f) + '</div>'; }); }
-    else { html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">None</div>'; }
-    html += '</div>';
-    html += '<div class="sub-pane" data-pane="pancestry">';
-    if (ancestryTraits.length) { ancestryTraits.forEach(f => { html += '<div class="feature-item">' + esc(f) + '</div>'; }); }
-    else { html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">None</div>'; }
-    html += '</div>';
-    if (talents.length) {
-      html += '<div class="sub-pane" data-pane="ptalents">';
-      talents.forEach(t => { html += '<div class="feature-item">' + esc(t) + '</div>'; });
-      html += '</div>';
-    }
-    html += '</div></div>';
-  }
-
-  /* Spells */
-  const spells = c.spells || [];
-  if (spells.length) {
-    html += '<div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Spells</div><div class="card-body">';
-    spells.forEach(s => { html += '<div class="spell-item">' + esc(s) + '</div>'; });
-    html += '</div></div>';
-  }
-
-  html += '</div>';
-
-  html += '</div>';
-
-  el.innerHTML = html;
+function switchDrawerTab(btn, tabName) {
+  document.querySelectorAll('.drawer-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.drawer-content').forEach(function(c) { c.classList.remove('active'); });
+  var el = document.getElementById('drawer-' + tabName);
+  if (el) el.classList.add('active');
 }
 
-/* ==================== Render: GM View ==================== */
-function renderGM() {
-  const el = document.getElementById('view-gm');
-  let html = '';
-
-  /* Quests/Threads tabbed card */
-  html += '<div class="gm-quests"><div class="card" id="gm-qt-card">';
-  html += '<div class="sub-tabs">';
-  html += '<button class="sub-tab active" data-tab="quests" onclick="switchSubTab(\'gm-qt-card\',\'quests\')">Active Quests</button>';
-  html += '<button class="sub-tab" data-tab="threads" onclick="switchSubTab(\'gm-qt-card\',\'threads\')">Threads</button>';
-  html += '</div>';
-  html += '<div class="card-body">';
-
-  /* Quests pane */
-  html += '<div class="sub-pane active" data-pane="quests">';
-  const q = DATA.quests;
-  if (q) {
-    (q.active || []).forEach(i => {
-      const name = typeof i === 'string' ? i : (i.name || i);
-      const desc = typeof i === 'object' ? i.desc : null;
-      html += '<div class="quest-card"><div class="quest-name">' + esc(name) + '</div>';
-      if (desc) html += '<div class="quest-desc">' + esc(desc) + '</div>';
-      html += '</div>';
-    });
-    (q.developing || []).forEach(i => {
-      const name = typeof i === 'string' ? i : (i.name || i);
-      const desc = typeof i === 'object' ? i.desc : null;
-      html += '<div class="quest-card developing"><div class="quest-name">' + esc(name) + '</div>';
-      if (desc) html += '<div class="quest-desc">' + esc(desc) + '</div>';
-      html += '</div>';
-    });
-    if (!(q.active || []).length && !(q.developing || []).length) {
-      html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No active quests</div>';
-    }
-  } else {
-    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No quest data</div>';
-  }
-  html += '</div>';
-
-  /* Threads pane */
-  html += '<div class="sub-pane" data-pane="threads">';
-  const threads = DATA.open_threads || [];
-  if (threads.length) {
-    threads.forEach(t => {
-      const text = typeof t === 'string' ? t : (t.text || t.name || '');
-      html += '<div class="thread-item">' + esc(text) + '</div>';
-    });
-  } else {
-    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No open threads</div>';
-  }
-  html += '</div>';
-
-  html += '</div></div></div>';
-
-  /* NPC grid */
-  html += '<div class="gm-npcs"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> NPC Quick Reference</div>';
-  html += '<div class="card-body">';
-  const npcs = DATA.npcs || [];
-  if (npcs.length) {
-    html += '<div class="npc-grid">';
-    npcs.forEach(n => {
-      const dead = (n.status || 'alive') === 'deceased';
-      html += '<div class="npc-card">';
-      html += '<div class="npc-name' + (dead ? ' deceased' : '') + '">' + esc(n.name) + '</div>';
-      html += '<div class="npc-badges">';
-      html += pillBadge(dead ? 'deceased' : 'alive', dead ? 'pill-deceased' : 'pill-alive');
-      if (n.disposition) html += dispositionPill(n.disposition);
-      html += '</div>';
-      if (n.location) html += '<div class="npc-location">' + esc(n.location) + '</div>';
-      if (n.description) html += '<div class="npc-desc">' + esc(n.description) + '</div>';
-      /* Combat stats if available */
-      if (n.hp || n.armor || n.attack_die) {
-        html += '<div class="npc-combat">';
-        if (n.hp) html += '<span>HP <span class="val">' + (typeof n.hp === 'object' ? n.hp.current + '/' + n.hp.max : n.hp) + '</span></span>';
-        if (n.armor) html += '<span>Armor <span class="val">' + n.armor + '</span></span>';
-        if (n.attack_die) html += '<span>Atk <span class="val">' + esc(n.attack_die) + '</span></span>';
-        if (n.zone) html += '<span>Zone <span class="val">' + esc(n.zone) + '</span></span>';
-        if (n.morale) html += '<span>ML <span class="val">' + n.morale + '</span></span>';
-        html += '</div>';
-      }
-      html += '</div>';
-    });
-    html += '</div>';
-  } else {
-    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No known NPCs</div>';
-  }
-  html += '</div></div></div>';
-
-  /* Encounter / reference panel */
-  html += '<div class="gm-encounter"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Session Tools</div>';
-  html += '<div class="card-body">';
-
-  /* Session info */
-  const meta = DATA.session_metadata || {};
-  html += '<div class="encounter-section">';
-  html += '<div class="encounter-label">Session</div>';
-  html += '<div class="encounter-text">';
-  if (meta.sessions_played) html += 'Session ' + meta.sessions_played;
-  if (meta.last_played) html += ' \u00b7 ' + esc(meta.last_played);
-  html += '</div></div>';
-
-  /* Recent log entries */
-  const journal = DATA.journal || [];
-  const recentEntries = journal.filter(e => typeof e === 'string' && e.trim() && !e.match(/^##?\s/) && !e.match(/^#/)).slice(-5);
-  if (recentEntries.length) {
-    html += '<div class="encounter-section">';
-    html += '<div class="encounter-label">Recent Events</div>';
-    recentEntries.forEach(e => {
-      const m = e.match(/\[(\w[\w-]*)\]/);
-      const tag = m ? m[1] : null;
-      const text = e.replace(/\[[\w-]+\]\s*/, '').replace(/^-\s*/, '');
-      html += '<div class="log-entry">' + (tag ? tagSpan(tag) : '') + esc(text) + '</div>';
-    });
-    html += '</div>';
-  }
-
-  /* GM Notes */
-  const prep = DATA.gm_notes;
-  if (prep) {
-    html += '<div class="encounter-section">';
-    html += '<div class="encounter-label">GM Notes</div>';
-    if (prep.strong_start) html += '<div class="encounter-text" style="margin-bottom:0.3rem"><strong style="color:var(--text-muted)">Start:</strong> ' + esc(prep.strong_start) + '</div>';
-    if (prep.secrets && prep.secrets.length) {
-      html += '<div class="encounter-text" style="margin-bottom:0.3rem"><strong style="color:var(--text-muted)">Secrets:</strong> ' + esc(prep.secrets.slice(0, 3).join('; ')) + '</div>';
-    }
-    if (prep.npcs_to_use && prep.npcs_to_use.length) {
-      html += '<div class="encounter-text"><strong style="color:var(--text-muted)">NPCs:</strong> ' + esc(prep.npcs_to_use.join(', ')) + '</div>';
-    }
-    html += '</div>';
-  }
-
-  /* Quick reference */
-  html += '<div class="encounter-section">';
-  html += '<div class="encounter-label">Quick Reference</div>';
-  html += '<div class="encounter-text" style="font-size:0.65rem;color:var(--text-dim)">Difficulty = 20 \u2212 Stat (untrained)<br>Difficulty = 20 \u2212 Stat\u00d72 (trained)<br>Critical: beat DC by 5+<br>Death Clock: 4 segments, 1/turn</div>';
-  html += '</div>';
-
-  /* World advances */
-  const advances = DATA.world_advances || [];
-  if (advances.length) {
-    html += '<div class="encounter-section">';
-    html += '<div class="encounter-label">World Advances</div>';
-    advances.forEach(a => {
-      const text = typeof a === 'string' ? a : (a.text || '');
-      html += '<div class="advance-item">' + esc(text.replace(/\[world-advance\]\s*/i, '').replace(/^-\s*/, '')) + '</div>';
-    });
-    html += '</div>';
-  }
-
-  /* Doom portent tracks */
-  const dooms = DATA.dooms || [];
-  if (dooms.length) {
-    html += '<div class="encounter-section">';
-    html += '<div class="encounter-label">Doom Portents</div>';
-    dooms.forEach(function(m) {
-      const pct = Math.max(0, Math.min(100, (m.portent_level / 6) * 100));
-      html += '<div class="doom-item">';
-      html += '<div class="doom-name">' + esc(m.name) + '</div>';
-      html += '<div class="portent-track"><div class="portent-fill ' + portentClass(m.portent_level) + '" style="width:' + pct + '%"></div></div>';
-      html += '<div class="doom-portent-label">Portent ' + m.portent_level + '/6' + (m.current_portent ? ' \u2014 ' + esc(m.current_portent) : '') + '</div>';
-      html += '</div>';
-    });
-    html += '</div>';
-  }
-
-  /* Progress clocks */
-  const clocks = DATA.clocks || [];
-  if (clocks.length) {
-    html += '<div class="encounter-section">';
-    html += '<div class="encounter-label">Progress Clocks</div>';
-    clocks.forEach(function(cl) {
-      html += '<div class="clock-row">';
-      html += clockSvg(cl.segments_filled, cl.total_segments);
-      html += '<div><div class="clock-label">' + esc(cl.name) + '</div>';
-      html += '<div class="clock-meta">' + cl.segments_filled + '/' + cl.total_segments;
-      if (cl.trigger) html += ' \u2014 ' + esc(cl.trigger);
-      html += '</div></div></div>';
-    });
-    html += '</div>';
-  }
-
-  html += '</div></div></div>';
-
-  el.innerHTML = html;
+function switchSubTab(groupId, tabName) {
+  var group = document.getElementById(groupId);
+  if (!group) return;
+  group.querySelectorAll('.sub-tab').forEach(function(t) { t.classList.remove('active'); });
+  group.querySelectorAll('.sub-pane').forEach(function(p) { p.classList.remove('active'); });
+  var tab = group.querySelector('.sub-tab[data-tab="' + tabName + '"]');
+  var pane = group.querySelector('.sub-pane[data-pane="' + tabName + '"]');
+  if (tab) tab.classList.add('active');
+  if (pane) pane.classList.add('active');
 }
 
-/* ==================== Render: Campaign View ==================== */
-function renderCampaign() {
-  const el = document.getElementById('view-campaign');
-  let html = '';
-
-  /* Banner */
-  const ctx = DATA.campaign_context || {};
-  const mem = DATA.campaign_memory || {};
-  const meta = DATA.session_metadata || {};
-
-  html += '<div class="campaign-banner">';
-  html += '<div class="campaign-title">' + esc(ctx.name || ctx.setting || 'Campaign') + '</div>';
-  if (ctx.tone || ctx.premise) html += '<div class="campaign-subtitle">"' + esc(ctx.tone || ctx.premise) + '"</div>';
-  const bannerParts = [];
-  if (meta.sessions_played) bannerParts.push(meta.sessions_played + ' sessions');
-  if (meta.first_played) bannerParts.push('Started ' + meta.first_played);
-  else if (meta.last_played) bannerParts.push('Last played ' + meta.last_played);
-  if (bannerParts.length) html += '<div class="campaign-meta">' + esc(bannerParts.join(' \u00b7 ')) + '</div>';
-  html += '</div>';
-
-  /* Quest tracker */
-  html += '<div class="campaign-quests"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Quest Progress</div>';
-  html += '<div class="card-body">';
-  const q = DATA.quests;
-  if (q) {
-    if ((q.active || []).length) {
-      html += '<div class="section-heading" style="margin-top:0"><span class="chevron">&rsaquo;</span> Active (' + q.active.length + ')</div>';
-      (q.active || []).forEach(i => {
-        const name = typeof i === 'string' ? i : (i.name || i);
-        const desc = typeof i === 'object' ? i.desc : null;
-        const progress = typeof i === 'object' ? i.progress : null;
-        html += '<div class="quest-card"><div class="quest-name">' + esc(name) + '</div>';
-        if (desc) html += '<div class="quest-desc">' + esc(desc) + '</div>';
-        if (progress) html += '<div class="quest-progress">' + esc(progress) + '</div>';
-        html += '</div>';
-      });
-    }
-    if ((q.developing || []).length) {
-      html += '<div class="section-heading" style="margin-top:0.5rem"><span class="chevron" style="color:var(--discord)">&rsaquo;</span> Developing (' + q.developing.length + ')</div>';
-      (q.developing || []).forEach(i => {
-        const name = typeof i === 'string' ? i : (i.name || i);
-        html += '<div class="quest-card developing"><div class="quest-name">' + esc(name) + '</div></div>';
-      });
-    }
-    if ((q.completed || []).length) {
-      html += '<div class="section-heading" style="margin-top:0.5rem"><span class="chevron" style="color:var(--text-dim)">&rsaquo;</span> Completed (' + q.completed.length + ')</div>';
-      (q.completed || []).forEach(i => {
-        const name = typeof i === 'string' ? i : (i.name || i);
-        html += '<div class="quest-card completed"><div class="quest-name" style="color:var(--text-muted)">' + esc(name) + '</div></div>';
-      });
-    }
-    if (!(q.active || []).length && !(q.developing || []).length && !(q.completed || []).length) {
-      html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No quests yet</div>';
-    }
-  }
-  html += '</div></div></div>';
-
-  /* Session timeline */
-  html += '<div class="campaign-timeline"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Session Timeline</div>';
-  html += '<div class="card-body">';
-  const groups = parseJournal(DATA.journal);
-  if (groups.length) {
-    groups.slice().reverse().forEach(g => {
-      html += '<div class="timeline-session">';
-      html += '<div class="timeline-label">' + esc(g.label) + '</div>';
-      g.entries.slice(0, 8).forEach(e => {
-        const text = e.replace(/\[[\w-]+\]\s*/, '').replace(/^-\s*/, '');
-        html += '<div class="timeline-entry">' + esc(text) + '</div>';
-      });
-      if (g.entries.length > 8) {
-        html += '<div class="timeline-entry" style="color:var(--text-dim)">+ ' + (g.entries.length - 8) + ' more...</div>';
-      }
-      html += '</div>';
-    });
-  } else {
-    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No session history</div>';
-  }
-  html += '</div></div></div>';
-
-  /* Factions + world state (right top) */
-  html += '<div class="campaign-right-top"><div class="card"><div class="card-header"><span class="chevron">&rsaquo;</span> Factions</div>';
-  html += '<div class="card-body">';
-  const factions = DATA.factions || [];
-  if (factions.length) {
-    factions.forEach(f => {
-      html += '<div class="faction-card">';
-      html += '<div class="faction-name">' + esc(f.name) + '</div>';
-      html += '<div class="npc-badges">';
-      if (f.disposition) html += dispositionPill(f.disposition);
-      if (f.members) html += '<span class="pill pill-neutral">' + f.members + ' members</span>';
-      html += '</div>';
-      if (f.goals) html += '<div class="faction-goals">' + esc(f.goals) + '</div>';
-      html += '</div>';
-    });
-  } else {
-    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No factions known</div>';
-  }
-  html += '</div></div></div>';
-
-  /* Active threads + world state (right bottom) */
-  html += '<div class="campaign-right-bottom"><div class="card" id="camp-world-card">';
-  html += '<div class="sub-tabs">';
-  html += '<button class="sub-tab active" data-tab="worldstate" onclick="switchSubTab(\'camp-world-card\',\'worldstate\')">World State</button>';
-  html += '<button class="sub-tab" data-tab="campthreads" onclick="switchSubTab(\'camp-world-card\',\'campthreads\')">Threads</button>';
-  html += '</div>';
-  html += '<div class="card-body">';
-
-  /* World state pane */
-  html += '<div class="sub-pane active" data-pane="worldstate">';
-  if (mem.world_state) {
-    html += '<div class="world-state-text">' + esc(mem.world_state) + '</div>';
-  } else {
-    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No world state recorded</div>';
-  }
-  html += '</div>';
-
-  /* Threads pane */
-  html += '<div class="sub-pane" data-pane="campthreads">';
-  const campThreads = (mem.active_threads || DATA.open_threads || []);
-  if (campThreads.length) {
-    campThreads.forEach(t => {
-      const text = typeof t === 'string' ? t : (t.text || t.name || '');
-      html += '<div class="thread-item">' + esc(text) + '</div>';
-    });
-  } else {
-    html += '<div style="color:var(--text-dim);font-style:italic;font-size:0.78rem">No threads</div>';
-  }
-  html += '</div>';
-
-  html += '</div></div></div>';
-
-  el.innerHTML = html;
-}
-
-/* ==================== Render: Media View ==================== */
-let currentChapter = 0;
-
-function renderMedia() {
-  const el = document.getElementById('view-media');
-  const chapters = DATA.chapters || [];
-  const audiobooks = DATA.audiobooks || [];
-
-  if (!chapters.length && !audiobooks.length) {
-    el.innerHTML = '<div class="media-list"></div><div class="media-reader"><div class="no-content">No chronicles written yet. Use /glintlock:chronicle to generate a chapter.</div></div><div class="media-player"></div>';
-    return;
-  }
-
-  /* Build audio lookup */
-  const audioMap = {};
-  audiobooks.forEach(ab => { audioMap[ab.chapter] = ab; });
-
-  /* Chapter list */
-  let html = '<div class="media-list">';
-  chapters.forEach((ch, i) => {
-    const hasAudio = !!audioMap[ch.number];
-    html += '<button class="chapter-item' + (i === 0 ? ' active' : '') + '" data-idx="' + i + '" onclick="selectChapter(' + i + ')">';
-    html += '<span class="ch-num">Ch ' + ch.number + '</span>';
-    html += '<span class="ch-title">' + esc(ch.title) + '</span>';
-    if (hasAudio) html += '<span class="ch-audio">&#9835;</span>';
-    html += '</button>';
-  });
-  html += '</div>';
-
-  /* Audio player */
-  html += '<div class="media-player" id="media-player-wrap">';
-  html += '<div class="player-title" id="player-title">No audio selected</div>';
-  html += '<audio id="audio-player" controls preload="metadata" style="display:none"></audio>';
-  html += '</div>';
-
-  /* Reader */
-  html += '<div class="media-reader"><div id="chapter-content" class="chapter-prose"></div></div>';
-
-  el.innerHTML = html;
-
-  if (chapters.length) selectChapter(0);
-}
+var currentChapter = 0;
 
 function selectChapter(idx) {
-  const chapters = DATA.chapters || [];
-  const ch = chapters[idx];
+  var chapters = DATA.chapters || [];
+  var ch = chapters[idx];
   if (!ch) return;
   currentChapter = idx;
-
-  /* Update active state */
-  document.querySelectorAll('.chapter-item').forEach(ci => ci.classList.remove('active'));
-  const btn = document.querySelector('.chapter-item[data-idx="' + idx + '"]');
+  document.querySelectorAll('.chapter-item').forEach(function(ci) { ci.classList.remove('active'); });
+  var btn = document.querySelector('.chapter-item[data-idx="' + idx + '"]');
   if (btn) btn.classList.add('active');
-
-  /* Update reader */
   document.getElementById('chapter-content').innerHTML = md2html(ch.content);
-
-  /* Update audio player */
-  const audiobooks = DATA.audiobooks || [];
-  const audioMap = {};
-  audiobooks.forEach(ab => { audioMap[ab.chapter] = ab; });
-  const audio = audioMap[ch.number];
-  const player = document.getElementById('audio-player');
-  const title = document.getElementById('player-title');
-
+  var audiobooks = DATA.audiobooks || [];
+  var audioMap = {};
+  audiobooks.forEach(function(ab) { audioMap[ab.chapter] = ab; });
+  var audio = audioMap[ch.number];
+  var player = document.getElementById('audio-player');
+  var title = document.getElementById('player-title');
   if (audio) {
     title.textContent = 'Ch ' + ch.number + ': ' + ch.title;
     player.src = audio.file;
@@ -2414,16 +1805,819 @@ function selectChapter(idx) {
   }
 }
 
+/* ==================== Render: Rail Minicard ==================== */
+function renderRail() {
+  var c = DATA.character;
+  var el = document.getElementById('rail-minicard');
+  if (!c) { el.innerHTML = ''; return; }
+  var cur = c.hp ? c.hp.current : 0;
+  var max = c.hp ? c.hp.max : 1;
+  var pct = Math.max(0, Math.min(100, (cur / Math.max(max, 1)) * 100));
+  var state = hpState(cur, max);
+  var cls = state === 'critical' ? ' critical' : (state === 'wounded' ? ' wounded' : '');
+  var h = '<div style="font-size:18px">&#9876;</div>';
+  h += '<div class="minicard-hp"><div class="minicard-hp-fill' + cls + '" style="width:' + pct + '%"></div></div>';
+  h += '<div class="minicard-label">' + cur + '/' + max + '</div>';
+  h += '<div class="minicard-label" style="color:var(--amber)">A' + (c.armor || 0) + '</div>';
+  el.innerHTML = h;
+}
+
+/* ==================== Render: Bottom Bar ==================== */
+function renderBottomBar() {
+  var el = document.getElementById('bottom-bar');
+  var h = '';
+
+  /* Resources — countdown dice */
+  var cdice = DATA.countdown_dice || [];
+  if (cdice.length) {
+    h += '<div class="bar-section"><span class="bar-label">Resources</span>';
+    cdice.forEach(function(cd) {
+      var low = cd.current_die <= 4;
+      var icon = '';
+      var cat = (cd.category || cd.name || '').toLowerCase();
+      if (cat.indexOf('torch') >= 0) icon = '&#128293;';
+      else if (cat.indexOf('ration') >= 0 || cat.indexOf('food') >= 0) icon = '&#127830;';
+      else if (cat.indexOf('arrow') >= 0 || cat.indexOf('ammo') >= 0) icon = '&#127993;';
+      else icon = '&#9670;';
+      var label = cd.current_die === 0 ? 'OUT' : 'd' + cd.current_die;
+      h += '<span class="bar-countdown' + (low ? ' low' : '') + '"><span class="bar-countdown-icon">' + icon + '</span> ' + label + '</span>';
+    });
+    h += '</div><div class="bar-divider"></div>';
+  }
+
+  /* Clocks */
+  var clocks = DATA.clocks || [];
+  var activeClocks = clocks.slice(0, 3);
+  if (activeClocks.length) {
+    h += '<div class="bar-section"><span class="bar-label">Clocks</span>';
+    activeClocks.forEach(function(cl) {
+      h += '<div class="bar-clock">' + clockSegmentsHtml(cl.segments_filled, cl.total_segments);
+      h += '<span class="bar-clock-label">' + esc(cl.name) + '</span></div>';
+    });
+    h += '</div><div class="bar-divider"></div>';
+  }
+
+  /* Doom portents */
+  var dooms = DATA.dooms || [];
+  var activeDooms = dooms.filter(function(d) { return d.portent_level > 0; }).slice(0, 3);
+  if (activeDooms.length) {
+    h += '<div class="bar-section"><span class="bar-label">Portents</span>';
+    activeDooms.forEach(function(d) {
+      h += '<div class="bar-doom">';
+      h += '<div class="bar-doom-pips">';
+      for (var i = 0; i < 6; i++) {
+        h += '<div class="bar-doom-pip' + (i < d.portent_level ? ' filled' : '') + '"></div>';
+      }
+      h += '</div><span class="bar-doom-label">' + esc(d.name) + '</span></div>';
+    });
+    h += '</div><div class="bar-divider"></div>';
+  }
+
+  /* Calendar date */
+  var cal = DATA.calendar || {};
+  var dateStr = cal.date || null;
+  h += '<div class="bar-section"><div class="bar-calendar"><span class="bar-calendar-icon">&#128197;</span> ' + esc(dateStr || '\u2014') + '</div></div>';
+
+  /* Danger level */
+  var loc = DATA.location || {};
+  h += '<div class="bar-right">' + dangerBadge(loc.danger_level) + '</div>';
+
+  el.innerHTML = h;
+}
+
+/* ==================== Render: Drawer ==================== */
+function renderDrawer() {
+  /* Quests tab */
+  var qEl = document.getElementById('drawer-quests');
+  var q = DATA.quests || {};
+  var qh = '';
+
+  var active = q.active || [];
+  var developing = q.developing || [];
+  var completed = q.completed || [];
+
+  if (active.length) {
+    qh += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:6px">Active</div>';
+    active.forEach(function(i) {
+      var name = typeof i === 'string' ? i : (i.name || i);
+      var desc = typeof i === 'object' ? i.desc : null;
+      qh += '<div class="dq-item"><div class="dq-header"><span class="pill pill-active">Active</span><span class="dq-name">' + esc(name) + '</span></div>';
+      if (desc) qh += '<div class="dq-desc">' + esc(desc) + '</div>';
+      qh += '</div>';
+    });
+  }
+
+  if (developing.length) {
+    qh += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin:12px 0 6px">Developing</div>';
+    developing.forEach(function(i) {
+      var name = typeof i === 'string' ? i : (i.name || i);
+      var desc = typeof i === 'object' ? i.desc : null;
+      qh += '<div class="dq-item"><div class="dq-header"><span class="pill pill-developing">Developing</span><span class="dq-name">' + esc(name) + '</span></div>';
+      if (desc) qh += '<div class="dq-desc">' + esc(desc) + '</div>';
+      qh += '</div>';
+    });
+  }
+
+  if (completed.length) {
+    qh += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin:12px 0 6px">Completed</div>';
+    completed.forEach(function(i) {
+      var name = typeof i === 'string' ? i : (i.name || i);
+      qh += '<div class="dq-item"><div class="dq-header"><span class="pill pill-completed">Done</span><span class="dq-name" style="color:var(--text-dim)">' + esc(name) + '</span></div></div>';
+    });
+  }
+
+  if (!active.length && !developing.length && !completed.length) {
+    qh = '<div class="no-content" style="padding:20px 0">No quests yet</div>';
+  }
+  qEl.innerHTML = qh;
+
+  /* NPCs tab */
+  var nEl = document.getElementById('drawer-npcs');
+  var npcs = DATA.npcs || [];
+  var nh = '';
+  if (npcs.length) {
+    npcs.forEach(function(n) {
+      nh += '<div class="dn-item">';
+      nh += '<div class="dn-name">' + esc(n.name) + '</div>';
+      if (n.location) nh += '<div class="dn-meta">' + esc(n.location) + '</div>';
+      if (n.disposition) nh += '<span class="dn-disposition ' + ((n.disposition || '').toLowerCase()) + '">' + esc(n.disposition) + '</span>';
+      nh += '</div>';
+    });
+  } else {
+    nh = '<div class="no-content" style="padding:20px 0">No NPCs known</div>';
+  }
+  nEl.innerHTML = nh;
+
+  /* Log tab */
+  var lEl = document.getElementById('drawer-log');
+  var journal = DATA.journal || [];
+  var entries = journal.filter(function(e) { return typeof e === 'string' && e.trim() && !e.match(/^##?\s/) && !e.match(/^#/); });
+  var recent = entries.slice(-20).reverse();
+  var lh = '';
+  if (recent.length) {
+    recent.forEach(function(e) {
+      var m = e.match(/\[(\w[\w-]*)\]/);
+      var tag = m ? m[1] : null;
+      var text = e.replace(/\[[\w-]+\]\s*/g, '').replace(/^-\s*/, '');
+      lh += '<div class="dl-entry">';
+      if (tag) lh += tagSpan(tag);
+      lh += '<span class="dl-text">' + esc(text) + '</span></div>';
+    });
+  } else {
+    lh = '<div class="no-content" style="padding:20px 0">No log entries</div>';
+  }
+  lEl.innerHTML = lh;
+}
+
+/* ==================== Render: Player View ==================== */
+function renderPlayer() {
+  var c = DATA.character;
+  var el = document.getElementById('view-player');
+  if (!c) { el.innerHTML = '<div class="no-content">No character data.</div>'; return; }
+
+  var hpCur = c.hp ? c.hp.current : 0;
+  var hpMax = c.hp ? c.hp.max : 1;
+  var stats = c.stats || {};
+  var statNames = ['vigor', 'reflex', 'wits', 'resolve', 'presence', 'lore'];
+  var statLabels = { vigor: 'VIG', reflex: 'REF', wits: 'WIT', resolve: 'RES', presence: 'PRE', lore: 'LOR' };
+  var training = c.training || [];
+
+  /* Build skill->stat lookup */
+  var trainedByStat = {};
+  statNames.forEach(function(s) { trainedByStat[s] = []; });
+  training.forEach(function(sk) {
+    var mapped = SKILL_STAT_MAP[sk];
+    if (mapped && trainedByStat[mapped]) trainedByStat[mapped].push(sk);
+  });
+
+  var h = '';
+
+  /* View header */
+  h += '<div class="view-header"><div style="display:flex;align-items:baseline;gap:8px">';
+  h += '<span class="view-title">Character Sheet</span>';
+  h += '</div></div>';
+
+  /* Hero banner */
+  h += '<div class="char-hero">';
+  h += '<div class="char-avatar">&#9876;</div>';
+  h += '<div class="char-identity"><h2>' + esc(c.name) + '</h2>';
+  h += '<div class="char-meta">' + esc((c.ancestry || '') + ' ' + (c.class || '') + ' \u2014 Level ' + (c.level || 1));
+  if (c.background) h += ' \u00b7 ' + esc(c.background);
+  h += '</div></div>';
+  h += '<div class="char-vitals">';
+  h += '<div class="vital-block"><div class="vital-value">' + hpCur + '</div><div class="vital-label">HP</div></div>';
+  h += '<div class="vital-block"><div class="vital-value">' + (c.armor || 0) + '</div><div class="vital-label">Armor</div></div>';
+  h += '<div class="vital-block"><div class="vital-value" style="color:var(--amber)">' + (c.gold || 0) + '</div><div class="vital-label">Gold</div></div>';
+  h += '</div></div>';
+
+  /* HP bar */
+  h += hpBarHtml(hpCur, hpMax);
+
+  /* Death clock */
+  var deathClock = c.death_clock || 0;
+  if (deathClock > 0) {
+    h += '<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;padding:8px 16px;background:var(--red-dim);border:1px solid var(--red);border-radius:var(--radius-lg)">';
+    h += '<div class="death-clock"><div class="death-clock-pips">';
+    for (var di = 0; di < 4; di++) {
+      h += '<div class="death-pip' + (di < deathClock ? ' filled' : '') + '"></div>';
+    }
+    h += '</div><span class="death-clock-label">Death Clock ' + deathClock + '/4</span></div></div>';
+  }
+
+  /* Stats grid */
+  h += '<div class="stats-grid">';
+  statNames.forEach(function(s) {
+    var val = stats[s] || 5;
+    var dc = difficulty(val, false);
+    var color = STAT_COLORS[s];
+    var skills = trainedByStat[s] || [];
+    h += '<div class="stat-cell" style="--stat-color:' + color + '">';
+    h += '<div class="stat-value">' + val + '</div>';
+    h += '<div class="stat-name">' + statLabels[s] + '</div>';
+    h += '<div class="stat-dc">DC ' + dc + '</div>';
+    if (skills.length) {
+      h += '<div class="stat-trained">' + skills.join(', ') + '</div>';
+    }
+    h += '</div>';
+  });
+  h += '</div>';
+
+  /* Two-col: Training + Countdown Dice */
+  h += '<div class="two-col">';
+
+  /* Training */
+  h += '<div class="card"><div class="card-header"><span class="card-title">Training</span></div><div class="card-body">';
+  if (training.length) {
+    h += '<div class="training-list">';
+    training.forEach(function(t) { h += '<span class="training-pill">' + esc(t) + '</span>'; });
+    h += '</div>';
+    var langs = c.languages || [];
+    if (langs.length) h += '<div style="font-size:11px;color:var(--text-dim);margin-top:8px">Languages: ' + esc(langs.join(', ')) + '</div>';
+  } else {
+    h += '<div style="color:var(--text-dim);font-style:italic;font-size:12px">No training</div>';
+  }
+  h += '</div></div>';
+
+  /* Countdown dice */
+  var cdice = DATA.countdown_dice || [];
+  h += '<div class="card"><div class="card-header"><span class="card-title">Countdown Dice</span></div><div class="card-body">';
+  if (cdice.length) {
+    cdice.forEach(function(cd) {
+      var low = cd.current_die <= 4 && cd.current_die > 0;
+      var label = cd.current_die === 0 ? 'OUT' : 'd' + cd.current_die;
+      h += '<div class="countdown-row"><span class="countdown-name">' + esc(cd.name) + '</span>';
+      h += '<span class="countdown-die' + (low ? ' low' : '') + '">' + label + '</span></div>';
+    });
+  } else {
+    h += '<div style="color:var(--text-dim);font-style:italic;font-size:12px">No active dice</div>';
+  }
+  h += '</div></div>';
+
+  h += '</div>';
+
+  /* Inventory */
+  var inv = c.inventory || [];
+  var used = c.used_gear_slots || inv.length;
+  var maxSlots = c.max_gear_slots || 10;
+  h += '<div class="card"><div class="card-header"><span class="card-title">Inventory</span>';
+  h += '<span class="card-badge">' + used + ' / ' + maxSlots + ' slots</span></div><div class="card-body">';
+  if (inv.length) {
+    inv.forEach(function(i) {
+      var name = typeof i === 'string' ? i : (i.name || '');
+      var detail = typeof i === 'object' ? (i.notes || i.qty || '') : '';
+      h += '<div class="inventory-item"><span class="inventory-item-name">' + esc(name) + '</span>';
+      if (detail) h += '<span class="inventory-item-detail">' + esc(detail) + '</span>';
+      h += '</div>';
+    });
+  } else {
+    h += '<div style="color:var(--text-dim);font-style:italic;font-size:12px">Empty</div>';
+  }
+  var worn = c.worn || [];
+  if (worn.length) {
+    h += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:11px;color:var(--text-dim)">';
+    h += 'Worn: ' + esc(worn.join(', ')) + '</div>';
+  }
+  h += '</div></div>';
+
+  /* Two-col: Class features + Ancestry traits */
+  var classFeatures = c.class_features || [];
+  var ancestryTraits = c.ancestry_traits || [];
+  var talents = c.talents || [];
+  if (classFeatures.length || ancestryTraits.length || talents.length) {
+    h += '<div class="two-col">';
+
+    h += '<div class="card" id="player-feat-card"><div class="sub-tabs">';
+    h += '<button class="sub-tab active" data-tab="pclass" onclick="switchSubTab(\'player-feat-card\',\'pclass\')">Class</button>';
+    h += '<button class="sub-tab" data-tab="pancestry" onclick="switchSubTab(\'player-feat-card\',\'pancestry\')">Ancestry</button>';
+    if (talents.length) h += '<button class="sub-tab" data-tab="ptalents" onclick="switchSubTab(\'player-feat-card\',\'ptalents\')">Talents</button>';
+    h += '</div><div class="card-body">';
+    h += '<div class="sub-pane active" data-pane="pclass">';
+    if (classFeatures.length) classFeatures.forEach(function(f) { h += '<div class="feature-item">' + esc(f) + '</div>'; });
+    else h += '<div style="color:var(--text-dim);font-style:italic;font-size:12px">None</div>';
+    h += '</div>';
+    h += '<div class="sub-pane" data-pane="pancestry">';
+    if (ancestryTraits.length) ancestryTraits.forEach(function(f) { h += '<div class="feature-item">' + esc(f) + '</div>'; });
+    else h += '<div style="color:var(--text-dim);font-style:italic;font-size:12px">None</div>';
+    h += '</div>';
+    if (talents.length) {
+      h += '<div class="sub-pane" data-pane="ptalents">';
+      talents.forEach(function(t) { h += '<div class="feature-item">' + esc(t) + '</div>'; });
+      h += '</div>';
+    }
+    h += '</div></div>';
+
+    /* Spells (right column of two-col) */
+    var spells = c.spells || [];
+    if (spells.length) {
+      h += '<div class="card"><div class="card-header"><span class="card-title">Spells</span></div><div class="card-body">';
+      spells.forEach(function(s) { h += '<div class="spell-item">' + esc(s) + '</div>'; });
+      h += '</div></div>';
+    } else {
+      /* Location as fallback for right column */
+      var loc = DATA.location;
+      if (loc) {
+        h += '<div class="card"><div class="card-header"><span class="card-title">Location</span>' + dangerBadge(loc.danger_level) + '</div><div class="card-body">';
+        h += '<div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">' + esc(loc.name) + '</div>';
+        if (loc.description) h += '<div class="loc-desc">' + esc(loc.description) + '</div>';
+        h += '</div></div>';
+      }
+    }
+
+    h += '</div>';
+  }
+
+  /* Location card (if not rendered in two-col above) */
+  var loc = DATA.location;
+  if (loc && (c.spells || []).length > 0) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Current Location</span>' + dangerBadge(loc.danger_level) + '</div><div class="card-body">';
+    h += '<div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">' + esc(loc.name) + '</div>';
+    if (loc.light) h += '<div style="font-size:11px;color:var(--text-dim);margin-bottom:4px">Light: ' + esc(loc.light) + '</div>';
+    if (loc.description) h += '<div class="loc-desc">' + esc(loc.description) + '</div>';
+    h += '</div></div>';
+  }
+
+  el.innerHTML = h;
+}
+
+/* ==================== Render: GM View ==================== */
+function renderGM() {
+  var el = document.getElementById('view-gm');
+  var h = '';
+  var prep = DATA.gm_notes || {};
+
+  /* View header */
+  h += '<div class="view-header"><span class="view-title">GM Screen</span></div>';
+
+  /* Strong Start */
+  if (prep.strong_start) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Strong Start</span></div>';
+    h += '<div class="card-body"><div style="font-size:12px;color:var(--text-secondary);line-height:1.7">' + esc(prep.strong_start) + '</div></div></div>';
+  }
+
+  /* Secrets */
+  var secrets = prep.secrets || [];
+  if (secrets.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Active Secrets</span>';
+    h += '<span class="card-badge">' + secrets.length + ' secrets</span></div><div class="card-body">';
+    secrets.forEach(function(s) {
+      h += '<div class="secret-item">';
+      if (typeof s === 'object' && s !== null) {
+        h += '<div class="secret-label">' + esc(s.label || s.name || '') + '</div>';
+        if (s.info) h += '<div class="secret-info">' + esc(s.info) + '</div>';
+        if (s.discovery) {
+          var paths = Array.isArray(s.discovery) ? s.discovery.join(' \u00b7 ') : s.discovery;
+          h += '<div class="secret-discovery">Discovery: ' + esc(paths) + '</div>';
+        }
+      } else {
+        h += '<div class="secret-info">' + esc(s) + '</div>';
+      }
+      h += '</div>';
+    });
+    h += '</div></div>';
+  }
+
+  /* NPC Moves */
+  var npcMoves = prep.npcs_to_use || prep.npc_moves || [];
+  if (npcMoves.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">NPC Moves</span></div><div class="card-body">';
+    h += '<div style="font-size:12px;color:var(--text-secondary);line-height:1.6">';
+    npcMoves.forEach(function(n) {
+      if (typeof n === 'object' && n !== null) {
+        h += '<div style="margin-bottom:8px"><strong style="color:var(--text)">' + esc(n.name || '') + '</strong>';
+        if (n.action || n.move) h += ' \u2014 ' + esc(n.action || n.move);
+        h += '</div>';
+      } else {
+        h += '<div style="margin-bottom:4px">' + esc(n) + '</div>';
+      }
+    });
+    h += '</div></div></div>';
+  }
+
+  /* Scenes */
+  var scenes = prep.scenes || [];
+  if (scenes.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Potential Scenes</span></div><div class="card-body">';
+    h += '<div style="font-size:12px;color:var(--text-secondary);line-height:1.6">';
+    scenes.forEach(function(s) {
+      if (typeof s === 'object' && s !== null) {
+        h += '<div style="margin-bottom:8px"><strong style="color:var(--text)">' + esc(s.name || s.label || '') + '</strong>';
+        if (s.description || s.info) h += ' \u2014 ' + esc(s.description || s.info);
+        h += '</div>';
+      } else {
+        h += '<div style="margin-bottom:4px">\u203A ' + esc(s) + '</div>';
+      }
+    });
+    h += '</div></div></div>';
+  }
+
+  /* Encounters + Treasure in two-col */
+  var encounters = prep.encounters || [];
+  var treasure = prep.treasure || [];
+  if (encounters.length || treasure.length) {
+    h += '<div class="two-col">';
+    if (encounters.length) {
+      h += '<div class="card"><div class="card-header"><span class="card-title">Encounters</span></div><div class="card-body">';
+      h += '<div style="font-size:12px;color:var(--text-secondary);line-height:1.6">';
+      encounters.forEach(function(e) {
+        if (typeof e === 'object' && e !== null) {
+          h += '<div style="margin-bottom:6px"><strong style="color:var(--text)">' + esc(e.name || e.label || '') + '</strong>';
+          if (e.description || e.info) h += ' \u2014 ' + esc(e.description || e.info);
+          h += '</div>';
+        } else {
+          h += '<div style="margin-bottom:4px">\u2022 ' + esc(e) + '</div>';
+        }
+      });
+      h += '</div></div></div>';
+    }
+    if (treasure.length) {
+      h += '<div class="card"><div class="card-header"><span class="card-title">Treasure</span></div><div class="card-body">';
+      h += '<div style="font-size:12px;color:var(--text-secondary);line-height:1.6">';
+      treasure.forEach(function(t) {
+        if (typeof t === 'object' && t !== null) {
+          h += '<div style="margin-bottom:6px"><strong style="color:var(--amber)">' + esc(t.name || t.label || '') + '</strong>';
+          if (t.description || t.info) h += ' \u2014 ' + esc(t.description || t.info);
+          h += '</div>';
+        } else {
+          h += '<div style="margin-bottom:4px">\u2022 ' + esc(t) + '</div>';
+        }
+      });
+      h += '</div></div></div>';
+    }
+    h += '</div>';
+  }
+
+  /* NPC Combat Stats Grid */
+  var npcs = DATA.npcs || [];
+  var combatNpcs = npcs.filter(function(n) { return n.hp || n.armor || n.attack_die; });
+  if (combatNpcs.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">NPC Combat Stats</span></div><div class="card-body">';
+    h += '<div class="npc-combat-grid">';
+    combatNpcs.forEach(function(n) {
+      h += '<div class="npc-combat-card">';
+      h += '<div class="npc-combat-name">' + esc(n.name) + '</div>';
+      h += '<div class="npc-stat-row">';
+      if (n.hp) h += '<span>HP <span class="val">' + (typeof n.hp === 'object' ? n.hp.current + '/' + n.hp.max : n.hp) + '</span></span>';
+      if (n.armor) h += '<span>Armor <span class="val">' + n.armor + '</span></span>';
+      if (n.attack_die) h += '<span>Atk <span class="val">' + esc(n.attack_die) + '</span></span>';
+      if (n.zone) h += '<span>Zone <span class="val">' + esc(n.zone) + '</span></span>';
+      if (n.morale) h += '<span>ML <span class="val">' + n.morale + '</span></span>';
+      if (n.weakness) h += '<span>Weak <span class="val">' + esc(n.weakness) + '</span></span>';
+      h += '</div></div>';
+    });
+    h += '</div></div></div>';
+  }
+
+  /* Doom portent tracks */
+  var dooms = DATA.dooms || [];
+  if (dooms.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Doom Portents</span></div><div class="card-body">';
+    dooms.forEach(function(d) {
+      h += '<div class="doom-track">';
+      h += '<span class="doom-name">' + esc(d.name) + '</span>';
+      h += doomPipsHtml(d.portent_level, 6);
+      h += '<span class="doom-portent-label">' + d.portent_level + '/6</span>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+  }
+
+  /* Progress clocks */
+  var clocks = DATA.clocks || [];
+  if (clocks.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Progress Clocks</span></div><div class="card-body">';
+    clocks.forEach(function(cl) {
+      h += '<div class="clock-row">';
+      h += clockSvg(cl.segments_filled, cl.total_segments);
+      h += '<div><div class="clock-label">' + esc(cl.name) + '</div>';
+      h += '<div class="clock-meta">' + cl.segments_filled + '/' + cl.total_segments;
+      if (cl.trigger) h += ' \u2014 ' + esc(cl.trigger);
+      h += '</div></div></div>';
+    });
+    h += '</div></div>';
+  }
+
+  /* Difficulty Reference */
+  h += '<div class="card"><div class="card-header"><span class="card-title">Difficulty Reference</span></div><div class="card-body">';
+  h += '<div class="dc-reference">Difficulty = 20 \u2212 Stat (untrained)<br>Difficulty = 20 \u2212 Stat\u00d72 (trained)<br>Critical: beat DC by 5+<br>Death Clock: 4 segments, 1 per failed death save</div>';
+  h += '</div></div>';
+
+  el.innerHTML = h;
+}
+
+/* ==================== Render: Campaign View ==================== */
+function renderCampaign() {
+  var el = document.getElementById('view-campaign');
+  var h = '';
+  var ctx = DATA.campaign_context || {};
+  var mem = DATA.campaign_memory || {};
+  var meta = DATA.session_metadata || {};
+
+  /* View header */
+  h += '<div class="view-header"><span class="view-title">Campaign Overview</span></div>';
+
+  /* Campaign banner */
+  h += '<div class="campaign-banner">';
+  h += '<div class="campaign-title">' + esc(ctx.name || ctx.setting || 'Campaign') + '</div>';
+  if (ctx.tone || ctx.premise) h += '<div class="campaign-subtitle">"' + esc(ctx.tone || ctx.premise) + '"</div>';
+  var bannerParts = [];
+  if (meta.sessions_played) bannerParts.push(meta.sessions_played + ' sessions');
+  if (meta.first_played) bannerParts.push('Started ' + meta.first_played);
+  if (bannerParts.length) h += '<div class="campaign-meta">' + esc(bannerParts.join(' \u00b7 ')) + '</div>';
+  h += '</div>';
+
+  /* Calendar */
+  var cal = DATA.calendar || {};
+  if (cal.date || cal.season || cal.weather) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Calendar</span></div><div class="card-body">';
+    if (cal.date) h += '<div class="calendar-date">' + esc(cal.date) + '</div>';
+    var details = [];
+    if (cal.season) details.push(cal.season);
+    if (cal.weather) details.push(cal.weather);
+    if (details.length) h += '<div class="calendar-detail">' + esc(details.join(' \u00b7 ')) + '</div>';
+    h += '</div></div>';
+  }
+
+  /* World State */
+  if (mem.world_state) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">World State</span></div><div class="card-body">';
+    h += '<div class="world-state-text">' + esc(mem.world_state) + '</div>';
+    h += '</div></div>';
+  }
+
+  /* Doom portent tracks */
+  var dooms = DATA.dooms || [];
+  if (dooms.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Doom Portents</span></div><div class="card-body">';
+    dooms.forEach(function(d) {
+      h += '<div class="doom-track">';
+      h += '<span class="doom-name">' + esc(d.name) + '</span>';
+      h += doomPipsHtml(d.portent_level, 6);
+      h += '<span class="doom-portent-label">' + d.portent_level + '/6';
+      if (d.current_portent) h += ' \u2014 ' + esc(d.current_portent);
+      h += '</span></div>';
+    });
+    h += '</div></div>';
+  }
+
+  /* Factions */
+  var factions = DATA.factions || [];
+  if (factions.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Factions</span></div><div class="card-body">';
+    factions.forEach(function(f) {
+      h += '<div class="faction-card">';
+      h += '<div class="faction-name">' + esc(f.name) + '</div>';
+      var badges = '';
+      if (f.disposition) badges += dispositionPill(f.disposition);
+      if (f.members) badges += ' <span class="pill pill-neutral">' + esc(f.members) + '</span>';
+      if (badges) h += '<div style="margin:4px 0">' + badges + '</div>';
+      if (f.goals) h += '<div class="faction-goals">' + esc(f.goals) + '</div>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+  }
+
+  /* Quest tracker */
+  var q = DATA.quests || {};
+  var qActive = q.active || [];
+  var qDeveloping = q.developing || [];
+  var qCompleted = q.completed || [];
+  if (qActive.length || qDeveloping.length || qCompleted.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Quest Tracker</span></div><div class="card-body">';
+    if (qActive.length) {
+      h += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:6px">Active (' + qActive.length + ')</div>';
+      qActive.forEach(function(i) {
+        var name = typeof i === 'string' ? i : (i.name || i);
+        var desc = typeof i === 'object' ? i.desc : null;
+        var progress = typeof i === 'object' ? i.progress : null;
+        h += '<div class="quest-card"><div class="quest-name">' + esc(name) + '</div>';
+        if (desc) h += '<div class="quest-desc">' + esc(desc) + '</div>';
+        if (progress) h += '<div style="font-size:10px;color:var(--text-dim);margin-top:2px">' + esc(progress) + '</div>';
+        h += '</div>';
+      });
+    }
+    if (qDeveloping.length) {
+      h += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin:10px 0 6px">Developing (' + qDeveloping.length + ')</div>';
+      qDeveloping.forEach(function(i) {
+        var name = typeof i === 'string' ? i : (i.name || i);
+        h += '<div class="quest-card developing"><div class="quest-name">' + esc(name) + '</div></div>';
+      });
+    }
+    if (qCompleted.length) {
+      h += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin:10px 0 6px">Completed (' + qCompleted.length + ')</div>';
+      qCompleted.forEach(function(i) {
+        var name = typeof i === 'string' ? i : (i.name || i);
+        h += '<div class="quest-card completed"><div class="quest-name" style="color:var(--text-dim)">' + esc(name) + '</div></div>';
+      });
+    }
+    h += '</div></div>';
+  }
+
+  /* Session timeline */
+  var groups = parseJournal(DATA.journal);
+  if (groups.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Session Timeline</span></div><div class="card-body">';
+    groups.slice().reverse().forEach(function(g) {
+      h += '<div class="timeline-session">';
+      h += '<div class="timeline-label">' + esc(g.label) + '</div>';
+      g.entries.slice(0, 8).forEach(function(e) {
+        var text = e.replace(/\[[\w-]+\]\s*/g, '').replace(/^-\s*/, '');
+        h += '<div class="timeline-entry">' + esc(text) + '</div>';
+      });
+      if (g.entries.length > 8) {
+        h += '<div class="timeline-entry" style="color:var(--text-dim)">+ ' + (g.entries.length - 8) + ' more...</div>';
+      }
+      h += '</div>';
+    });
+    h += '</div></div>';
+  }
+
+  /* Active threads */
+  var threads = (mem.active_threads || DATA.open_threads || []);
+  if (threads.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Active Threads</span></div><div class="card-body">';
+    h += '<div style="font-size:12px;color:var(--text-secondary)">';
+    threads.forEach(function(t) {
+      var text = typeof t === 'string' ? t : (t.text || t.name || '');
+      h += '<div style="padding:2px 0">\u203A ' + esc(text) + '</div>';
+    });
+    h += '</div></div></div>';
+  }
+
+  el.innerHTML = h;
+}
+
+/* ==================== Render: Media View ==================== */
+function renderMedia() {
+  var el = document.getElementById('view-media');
+  var chapters = DATA.chapters || [];
+  var audiobooks = DATA.audiobooks || [];
+
+  if (!chapters.length && !audiobooks.length) {
+    el.innerHTML = '<div class="view-header"><span class="view-title">Story & Audio</span></div>' +
+      '<div class="no-content">No chronicles written yet. Use /glintlock:chronicle to generate a chapter.</div>';
+    return;
+  }
+
+  var audioMap = {};
+  audiobooks.forEach(function(ab) { audioMap[ab.chapter] = ab; });
+
+  var h = '<div class="media-layout">';
+
+  /* Chapter list */
+  h += '<div class="media-list">';
+  chapters.forEach(function(ch, i) {
+    var hasAudio = !!audioMap[ch.number];
+    h += '<button class="chapter-item' + (i === 0 ? ' active' : '') + '" data-idx="' + i + '" onclick="selectChapter(' + i + ')">';
+    h += '<span class="ch-num">Ch ' + ch.number + '</span>';
+    h += '<span class="ch-title">' + esc(ch.title) + '</span>';
+    if (hasAudio) h += '<span class="ch-status ch-status-audio">Audio</span>';
+    else h += '<span class="ch-status ch-status-read">Read</span>';
+    h += '</button>';
+  });
+  h += '</div>';
+
+  /* Audio player */
+  h += '<div class="media-player" id="media-player-wrap">';
+  h += '<div class="player-title" id="player-title">No audio selected</div>';
+  h += '<audio id="audio-player" controls preload="metadata" style="display:none"></audio>';
+  h += '</div>';
+
+  /* Reader */
+  h += '<div class="media-reader"><div id="chapter-content" class="chapter-prose"></div></div>';
+
+  h += '</div>';
+
+  el.innerHTML = h;
+  if (chapters.length) selectChapter(0);
+}
+
+/* ==================== Render: Analytics View ==================== */
+function renderAnalytics() {
+  var el = document.getElementById('view-analytics');
+  var meta = DATA.session_metadata || {};
+  var npcs = DATA.npcs || [];
+  var dooms = DATA.dooms || [];
+  var journal = DATA.journal || [];
+
+  var h = '';
+
+  /* View header */
+  h += '<div class="view-header"><span class="view-title">Analytics</span><span class="view-subtitle">Campaign statistics</span></div>';
+
+  /* Summary stats */
+  var daysActive = '\u2014';
+  if (meta.first_played && meta.last_played) {
+    var d1 = new Date(meta.first_played);
+    var d2 = new Date(meta.last_played);
+    var diff = Math.max(1, Math.round((d2 - d1) / (1000 * 60 * 60 * 24)));
+    daysActive = diff;
+  }
+
+  h += '<div class="analytics-grid">';
+  h += '<div class="analytics-stat"><div class="analytics-value">' + daysActive + '</div><div class="analytics-label">Days Active</div></div>';
+  h += '<div class="analytics-stat"><div class="analytics-value">' + (meta.sessions_played || '\u2014') + '</div><div class="analytics-label">Play Sessions</div></div>';
+  h += '<div class="analytics-stat"><div class="analytics-value">' + npcs.length + '</div><div class="analytics-label">NPCs Met</div></div>';
+  h += '<div class="analytics-stat"><div class="analytics-value">' + dooms.length + '</div><div class="analytics-label">Active Dooms</div></div>';
+  h += '</div>';
+
+  /* Doom portent summary */
+  if (dooms.length) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Doom Status Overview</span></div><div class="card-body">';
+    dooms.forEach(function(d) {
+      h += '<div class="doom-track">';
+      h += '<span class="doom-name">' + esc(d.name) + '</span>';
+      h += doomPipsHtml(d.portent_level, 6);
+      h += '<span class="doom-portent-label">' + d.portent_level + '/6</span>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+  }
+
+  /* Activity distribution placeholder */
+  h += '<div class="card"><div class="card-header"><span class="card-title">Activity Distribution</span></div><div class="card-body">';
+  var eventCount = 0, discoveryCount = 0, threadCount = 0, advanceCount = 0, rulingCount = 0;
+  journal.forEach(function(e) {
+    if (typeof e !== 'string') return;
+    if (e.indexOf('[event]') >= 0) eventCount++;
+    if (e.indexOf('[discovery]') >= 0) discoveryCount++;
+    if (e.indexOf('[thread]') >= 0) threadCount++;
+    if (e.indexOf('[world-advance]') >= 0) advanceCount++;
+    if (e.indexOf('[ruling]') >= 0) rulingCount++;
+  });
+  var categories = [
+    [eventCount, 'var(--amber)', 'Events'],
+    [discoveryCount, 'var(--green)', 'Discoveries'],
+    [threadCount, 'var(--blue)', 'Threads'],
+    [advanceCount, 'var(--red)', 'World Advances'],
+    [rulingCount, 'var(--violet)', 'Rulings']
+  ];
+  h += '<div style="display:flex;gap:8px;margin-bottom:12px">';
+  categories.forEach(function(cat) {
+    var numColor = cat[0] > 0 ? cat[1] : 'var(--text-dim)';
+    h += '<div style="flex:1;display:flex;flex-direction:column;align-items:center">';
+    h += '<div style="font-family:var(--font-mono);font-size:20px;color:' + numColor + '">' + cat[0] + '</div>';
+    h += '<div style="font-size:10px;color:var(--text-dim)">' + cat[2] + '</div></div>';
+  });
+  h += '</div>';
+
+  var total = eventCount + discoveryCount + threadCount + advanceCount + rulingCount;
+  if (total > 0) {
+    /* Simple bar chart */
+    var maxCount = Math.max(eventCount, discoveryCount, threadCount, advanceCount, rulingCount, 1);
+    h += '<div style="display:flex;gap:4px;height:60px;align-items:flex-end">';
+    categories.forEach(function(cat) {
+      var pct = Math.max(4, (cat[0] / maxCount) * 100);
+      h += '<div style="flex:1;background:' + cat[1] + ';height:' + pct + '%;border-radius:3px 3px 0 0;opacity:0.7"></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div></div>';
+
+  /* Character progression note */
+  var c = DATA.character || {};
+  if (c.name) {
+    h += '<div class="card"><div class="card-header"><span class="card-title">Character Summary</span></div><div class="card-body">';
+    h += '<div style="font-size:12px;color:var(--text-secondary);line-height:1.7">';
+    h += '<strong style="color:var(--text)">' + esc(c.name) + '</strong> \u2014 Level ' + (c.level || 1) + ' ' + esc(c.ancestry || '') + ' ' + esc(c.class || '');
+    if (c.hp) h += '<br>HP: ' + (c.hp.current || 0) + '/' + (c.hp.max || 0);
+    h += '<br>Armor: ' + (c.armor || 0) + ' \u00b7 Gold: ' + (c.gold || 0);
+    h += '</div></div></div>';
+  }
+
+  el.innerHTML = h;
+}
+
 /* ==================== Init ==================== */
-renderHeader();
-renderSidebar();
+renderRail();
+renderBottomBar();
+renderDrawer();
 renderPlayer();
 renderGM();
 renderCampaign();
 renderMedia();
+renderAnalytics();
 
-/* Set initial view from DATA */
-const initView = DATA.dashboard_type || 'player';
+var initView = DATA.dashboard_type || 'player';
 if (initView !== 'player') switchView(initView);
 </script>
 </body>

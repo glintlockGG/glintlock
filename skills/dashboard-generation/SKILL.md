@@ -9,14 +9,22 @@ Generate a campaign dashboard from the world state files. The dashboard is a sin
 
 ## Overview
 
-The dashboard is a VTT-style, viewport-locked multi-view layout with a persistent sidebar and four switchable dashboard views:
+The dashboard uses a Discord-style layout with four persistent zones and five switchable views:
 
-1. **Player (Character Sheet)** — Stats (1-10), hero banner with HP/Armor/Level, inventory, training, countdown dice, location, spells, features
-2. **GM Screen** — Tabbed quests/threads, NPC quick reference grid (with combat stats), session tools panel (GM notes, Difficulty reference, recent events, world advances), doom portent tracks, progress clocks
-3. **Campaign Overview** — Campaign banner, quest progress tracker, session timeline, factions, doom status, world state summary, active threads
-4. **Story & Audio** — Chapter list with audio indicators, prose reader, Spotify-style audio player
+### Layout Zones
 
-The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navigation links, current location with danger badge, and level/milestone indicator — all persistent across views.
+- **Left Rail (64px)** — Logo, 5 navigation icons with tooltips, drawer toggle, character minicard (HP bar, Armor badge)
+- **Center Workspace (fluid)** — Scrollable content area, switches between 5 views
+- **Right Drawer (320px, collapsible)** — Three tabs: Quests (active/developing/completed), NPCs (name/location/disposition), Log (recent entries with tag badges)
+- **Bottom Bar (52px)** — Persistent strip: countdown dice, progress clocks (cap 3), doom portent pips (cap 3, only if >0), calendar date, danger level badge
+
+### Views
+
+1. **Player (Character Sheet)** — Hero banner with 3-state HP bar (green/amber/red), 6-stat grid with color-coded top borders, training pills + countdown dice, inventory with slot counter, class/ancestry features, location card, death clock (if >0)
+2. **GM Screen** — Strong start, secrets (structured: label/info/discovery paths), NPC moves, scenes, encounters, treasure, NPC combat grid (filtered to those with stats), doom portent tracks, progress clocks, difficulty reference
+3. **Campaign Overview** — Campaign banner, calendar card (date/season/weather), world state, doom portent pip tracks, factions, quest tracker, session timeline
+4. **Story & Audio** — Chapter list with status badges (Read/Writing/Audio), prose reader (Crimson Pro), native audio player
+5. **Analytics** — Summary stats (days active, sessions, NPCs met), doom overview, activity distribution bar chart, character summary
 
 ## Instructions
 
@@ -34,6 +42,7 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
    - `world/campaign-context.md` (if exists)
    - `world/CLAUDE.md` — campaign memory (if exists)
    - `world/gm-notes.md` (if exists)
+   - `world/calendar.md` (if exists) — extract date, season, weather
    - Chronicle chapters from `world/chronicles/chapter-*.md` (read each file's content)
    - Check for audiobook files: glob `world/audiobooks/chapter-*.mp3`
    - Read session metadata if available
@@ -71,6 +80,7 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
      "audiobooks": [
        { "chapter": 1, "title": "The Living Marble", "file": "chapter-01-the-living-marble.mp3" }
      ],
+     "calendar": { "date": "Day 14, Harvest Moon", "season": "Late autumn", "weather": "First frosts" },
      "session_metadata": { "sessions_played": 3, "last_played": "2026-02-11", "first_played": "2026-02-09" }
    }
    ```
@@ -114,7 +124,13 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
 
    ### Extracting GM notes
 
-   - **`gm_notes`**: From `world/gm-notes.md` — extract `strong_start`, `secrets` (array), `npcs_to_use` (array of names), `scenes` (array), `encounters` (array), `treasure` (array). These appear in the GM Screen's Session Tools panel.
+   - **`gm_notes`**: From `world/gm-notes.md` — extract `strong_start`, `secrets`, `npcs_to_use` (or `npc_moves`), `scenes`, `encounters`, `treasure`. These appear in the GM Screen view.
+
+     Each sub-field supports two formats for backward compatibility:
+     - **String array**: `["A secret", "Another secret"]` — rendered as plain text items
+     - **Object array**: `[{ "label": "The Vault", "info": "Contains the relic", "discovery": "Search the archives" }]` — rendered with structured label/info/discovery layout
+
+     The template checks `typeof item === 'object'` and renders accordingly. Similarly, `npcs_to_use` / `npc_moves` supports both `["NPC Name"]` strings and `{ "name": "NPC", "action": "What they're doing" }` objects.
 
    ### Extracting filtered log entries
 
@@ -129,7 +145,11 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
 
    ### Dashboard type
 
-   Set `dashboard_type` to control which view opens by default: `"player"`, `"gm"`, `"campaign"`, or `"media"`.
+   Set `dashboard_type` to control which view opens by default: `"player"`, `"gm"`, `"campaign"`, `"media"`, or `"analytics"`.
+
+   ### Extracting calendar data
+
+   - **`calendar`**: From `world/calendar.md` — extract `date` (in-game date string), `season`, and `weather`. Falls back gracefully if calendar file doesn't exist (bottom bar and campaign view show "—" for missing data).
 
 4. Inject the JSON into the HTML template below and Write it to `world/dashboard.html`.
 
@@ -138,16 +158,21 @@ The sidebar shows a character mini-card (name, class, HP bar, Armor, gold), navi
 The full HTML/CSS/JS template is in `references/dashboard-template.html`. Write it to `world/dashboard.html`, replacing the `DASHBOARD_DATA` placeholder with the actual JSON object.
 
 The template uses:
-- CSS Grid layout: sidebar (220px) + header (48px) + content area
-- Sidebar: character mini-card, Discord-style navigation, location + XP footer
-- 4 views: Player, GM Screen, Campaign Overview, Story & Audio
+- CSS Grid layout: left rail (64px) + center workspace (fluid) + right drawer (320px, collapsible) + bottom bar (52px)
+- Left rail: logo, 5 navigation icons with tooltips, drawer toggle, character minicard
+- Right drawer: 3 tabs (Quests, NPCs, Log) — toggled via `toggleDrawer()`
+- Bottom bar: countdown dice, clocks, doom portent pips, calendar date, danger badge
+- 5 views: Player, GM Screen, Campaign Overview, Story & Audio, Analytics
 - `switchView(name)` for navigation between views
+- `toggleDrawer()` for collapsing/expanding the right drawer
+- `switchDrawerTab(btn, tabName)` for drawer tab switching
 - `switchSubTab(groupId, tabName)` for tabbed panels within cards
 - `selectChapter(idx)` for chapter selection in media view
 - `md2html(text)` for rendering chapter prose
 - Google Fonts: Cinzel (display), DM Sans (body), Crimson Pro (narrative), JetBrains Mono (code)
-- Dark theme with deep navy surfaces and warm parchment text
-- Responsive: sidebar collapses to horizontal nav at 900px, single-column at 600px
+- Dark theme with deep navy surfaces (`#0f1117`) and amber accent (`#e8a44a`)
+- 3-state HP bar: green (>50%), amber (25-50%), red (<25%)
+- Responsive: drawer collapses at 1200px, rail becomes horizontal strip at 900px, single-column at 600px
 
 Replace `DASHBOARD_DATA` with the actual JSON object (no quotes around it — it should be a JavaScript object literal). For example: `const DATA = {"character":{"name":"Elindos",...},...};`
 

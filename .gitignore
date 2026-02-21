@@ -13,3 +13,7 @@ world-*/
 
 # Engram project journal (local developer state)
 .engram/
+
+# Dispatch artifacts
+DISPATCH.md
+new-dash.zip

@@ -11,7 +11,7 @@ allowed-tools:
 
 Generate the campaign dashboard. Load the `dashboard-generation` skill for the HTML template and instructions.
 
-If the user provided a `[type]` argument (`player`, `gm`, `campaign`, or `media`), use it as the `dashboard_type` field. Otherwise default to `"player"`.
+If the user provided a `[type]` argument (`player`, `gm`, `campaign`, `media`, or `analytics`), use it as the `dashboard_type` field. Otherwise default to `"player"`.
 
 ## Data Extraction Steps
 
@@ -28,13 +28,14 @@ If the user provided a `[type]` argument (`player`, `gm`, `campaign`, or `media`
 11. Read `world/campaign-context.md` if it exists
 12. Read `world/CLAUDE.md` (campaign memory) if it exists — extract `world_state`, `active_threads`, `play_style` from the markdown tables
 13. Read `world/gm-notes.md` if it exists — extract `strong_start`, `secrets`, `npcs_to_use`, `scenes`, `encounters`, `treasure`
-14. Glob `world/chronicles/chapter-*.md` — read each chapter file's full content
-15. Glob `world/audiobooks/chapter-*.mp3` — collect audiobook file paths
-16. Call `get_session_metadata` with action "read" for session count and dates
-17. Extract structured data from YAML frontmatter and markdown content
-18. Assemble the dashboard JSON (see schema below)
-19. Inject into the HTML template from the dashboard-generation skill
-20. Write to `world/dashboard.html`
+14. Read `world/calendar.md` if it exists — extract `date`, `season`, `weather` for the calendar object
+15. Glob `world/chronicles/chapter-*.md` — read each chapter file's full content
+16. Glob `world/audiobooks/chapter-*.mp3` — collect audiobook file paths
+17. Call `get_session_metadata` with action "read" for session count and dates
+18. Extract structured data from YAML frontmatter and markdown content
+19. Assemble the dashboard JSON (see schema below)
+20. Inject into the HTML template from the dashboard-generation skill
+21. Write to `world/dashboard.html`
 
 ## Character Extraction
 
@@ -101,6 +102,6 @@ For each audiobook file:
 
 ## Dashboard Type
 
-Set `dashboard_type` to the user's `[type]` argument if provided, otherwise `"player"`. Valid values: `"player"`, `"gm"`, `"campaign"`, `"media"`.
+Set `dashboard_type` to the user's `[type]` argument if provided, otherwise `"player"`. Valid values: `"player"`, `"gm"`, `"campaign"`, `"media"`, `"analytics"`.
 
 Tell the player the dashboard has been generated and they can open `world/dashboard.html` in their browser.
